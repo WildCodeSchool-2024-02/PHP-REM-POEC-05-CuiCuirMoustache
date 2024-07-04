@@ -1,0 +1,53 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheet %}
+    <style>
+        h1 {
+        color: red;
+        text-align: center;
+    }
+
+    .display {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .basket {
+        color: black;
+        background-color: #A46C35;
+        border-radius: 15px;
+        height: 90vh;
+        width: 60%;
+    }
+
+    .checkout {
+        background-color: #CEA56A;
+        height: 20vh;
+        width: 30%;
+        border-radius: 15px;
+        color: #EEE6D8;
+        text-align: center;
+    }
+    
+    .button {
+        color: #EEE6D8;
+        background-color: #1c2a33;
+        border: none;
+        border-radius: 10px;
+        width: 200px;
+        height: 40px;
+        cursor: pointer;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Votre panier !</h1>
+    <div class="display">
+        <div class="basket"><p>Basket</p></div>
+        <div class="checkout">
+            <p>Sous-total (x) articles: total €</p>
+            <button class="button">Passer la commande</button>
+        </div>
+    </div>
+{% endblock %}
