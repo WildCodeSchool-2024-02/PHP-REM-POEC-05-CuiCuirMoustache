@@ -22,4 +22,15 @@ class CartController extends AbstractController
 
         return $this->twig->render('Cart/show.html.twig', ['product' => $cart]);
     }
+
+    public function delete(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = trim($_POST['id']);
+            $cartManager = new CartManager();
+            $cartManager->delete((int)$id);
+
+            header('Location:/cart');
+        }
+    }
 }

@@ -3,7 +3,6 @@
 {% block stylesheet %}
 <style>
     h1 {
-        color: red;
         text-align: center;
     }
 
@@ -11,36 +10,65 @@
         display: flex;
         justify-content: center;
         gap: 30px;
+        margin-top: 10px;
     }
 
     .basket {
         color: black;
-        background-color: #A46C35;
+        background-color: var(--secondary-color);
         border-radius: 15px;
         height: 60vh;
         width: 60%;
     }
 
     .checkout {
-        background-color: #CEA56A;
+        background-color: var(--tertiary-color);
         height: 20vh;
         width: 30%;
         border-radius: 15px;
-        color: #EEE6D8;
+        color: var(--sixnary-color);
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15%;
     }
 
-    .button {
-        color: #EEE6D8;
-        background-color: #1c2a33;
+    .list {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    button {
+        color: var(--sixnary-color);
+        background-color: var(--quaternary-color);
         border: none;
         border-radius: 10px;
-        width: 200px;
-        height: 40px;
+        width: 70%;
+        min-height: 40px;
         cursor: pointer;
     }
+
+    .cart-button {
+        width: 100px;
+        height: 25px;
+        margin-top: 10px;
+        margin-right: 20px;
+        background-color: #d9534f;
+    }
+
     li {
         list-style: none;
+    }
+
+    .ul-bg {
+        background-color: var(--quinary-color);
+        padding-bottom: 10px;
+        border-radius: 10px;
+        width: 95%;
+        margin-left: 2%;
     }
 </style>
 {% endblock %}
@@ -49,10 +77,14 @@
 <h1>Votre panier !</h1>
 <div class="display">
     <div class="basket">
-        <p>Basket</p>
+        <h2 class="display">Vos articles</h2>
         {% for prod in product %}
-        <ul>
-            <li>{{ prod.name }}</li>
+        <ul class="list ul-bg">
+            <li><p>{{ prod.name }} - {{ prod.price }}€</p></li>
+            <form action="/cart/delete" method="POST">
+                <input type="hidden" name="id" value="{{ prod.id }}">
+                <button class="cart-button">Supprimer</button>
+            </form>
         </ul>
         {% endfor %}
     </div>
