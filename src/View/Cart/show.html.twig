@@ -1,7 +1,8 @@
 {% extends 'layout.html.twig' %}
+
 {% block stylesheet %}
-    <style>
-        h1 {
+<style>
+    h1 {
         color: red;
         text-align: center;
     }
@@ -16,7 +17,7 @@
         color: black;
         background-color: #A46C35;
         border-radius: 15px;
-        height: 90vh;
+        height: 60vh;
         width: 60%;
     }
 
@@ -28,7 +29,7 @@
         color: #EEE6D8;
         text-align: center;
     }
-    
+
     .button {
         color: #EEE6D8;
         background-color: #1c2a33;
@@ -38,16 +39,26 @@
         height: 40px;
         cursor: pointer;
     }
-    </style>
+    li {
+        list-style: none;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    <h1>Votre panier !</h1>
-    <div class="display">
-        <div class="basket"><p>Basket</p></div>
-        <div class="checkout">
-            <p>Sous-total (x) articles: total €</p>
-            <button class="button">Passer la commande</button>
-        </div>
+<h1>Votre panier !</h1>
+<div class="display">
+    <div class="basket">
+        <p>Basket</p>
+        {% for prod in product %}
+        <ul>
+            <li>{{ prod.name }}</li>
+        </ul>
+        {% endfor %}
     </div>
+    <div class="checkout">
+        <p>Sous-total (x) articles: total €</p>
+        <button class="button">Passer la commande</button>
+    </div>
+</div>
 {% endblock %}
