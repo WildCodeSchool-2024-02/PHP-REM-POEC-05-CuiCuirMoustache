@@ -17,7 +17,6 @@
         color: black;
         background-color: var(--secondary-color);
         border-radius: 15px;
-        height: 60vh;
         width: 60%;
     }
 
@@ -46,14 +45,14 @@
         background-color: var(--quaternary-color);
         border: none;
         border-radius: 10px;
-        width: 70%;
+        min-width: 70%;
         min-height: 40px;
         cursor: pointer;
     }
 
     .cart-button {
         width: 100px;
-        height: 25px;
+        min-height: 25px;
         margin-top: 10px;
         margin-right: 20px;
         background-color: #d9534f;
@@ -68,7 +67,7 @@
         padding-bottom: 10px;
         border-radius: 10px;
         width: 95%;
-        margin-left: 2%;
+        margin-left: 2.5%;
     }
 </style>
 {% endblock %}
@@ -81,6 +80,7 @@
         {% for prod in product %}
         <ul class="list ul-bg">
             <li><p>{{ prod.name }} - {{ prod.price }}€</p></li>
+            <li><p>{{ prod.description }}</p></li>
             <form action="/cart/delete" method="POST">
                 <input type="hidden" name="id" value="{{ prod.id }}">
                 <button class="cart-button">Supprimer</button>
