@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}
+<style>
+    li {
+        list-style: none;
+    }
+
+    button {
+        color: var(--sixnary-color);
+        background-color: var(--quaternary-color);
+        border: none;
+        border-radius: 10px;
+        min-width: 20%;
+        min-height: 40px;
+        margin-left: 40%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>Nos articles!</h1>
+<div>
+    <div>
+        {% for prod in product %}
+        <ul>
+            <li>
+                <p>{{ prod.name }} - {{ prod.price }}€</p>
+            </li>
+            <li>
+                <p>{{ prod.description }}</p>
+            </li>
+            <form action="/product/show?id={{ prod.id }}" method="POST">
+                <input type="hidden" name="id" value="{{ prod.id }}">
+                <button>Voir</button>
+            </form>
+        </ul>
+        {% endfor %}
+        
+{% endblock %}

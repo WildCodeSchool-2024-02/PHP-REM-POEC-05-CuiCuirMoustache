@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Produit :</h1>
+    <p>{{ product.name }}</p>
+    <p>{{ product.description }}</p>
+    {# Boutton d'ajout au panier #}
+    <form method="POST">
+        <input type="hidden" name="id" value="{{ product.id }}">
+        <button>Ajouter au panier</button>
+    </form>
+    <a href="/product">Back</a>
+{% endblock %}
