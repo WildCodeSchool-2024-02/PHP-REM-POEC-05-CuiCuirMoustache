@@ -22,15 +22,4 @@ class ProductController extends AbstractController
 
         return $this->twig->render('Product/show.html.twig', ['product' => $product]);
     }
-
-    public function delete(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = trim($_POST['id']);
-            $productManager = new ProductManager();
-            $productManager->delete((int)$id);
-
-            header('Location:/product');
-        }
-    }
 }
