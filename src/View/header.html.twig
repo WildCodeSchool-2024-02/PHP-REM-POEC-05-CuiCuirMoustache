@@ -1,0 +1,61 @@
+{% block header %}
+
+<div class="navigation-wrap bg-brun start-header start-style">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-md navbar-dark">
+                
+                    <a class="navbar-brand" href="#" target="_blank"><img src="/assets/images/logo.png" alt=""></a>	
+                    
+                    <button class="navbar-toggler p-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto py-4 py-md-0 navbar-dark">
+
+                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4 active">
+                                <a class="nav-link" href="http://localhost:8000/">Home</a>
+                            </li>
+                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                                <a class="nav-link" href="about">Qui nous sommes</a>
+                            </li>
+                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                                <a class="nav-link" href="items">items</a>
+                            </li>
+                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="categories" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="categories?id=1">Categorie 1</a>
+                                    <a class="dropdown-item" href="categories?id=1">Categorie 2</a>
+                                    <a class="dropdown-item" href="categories?id=1">Categorie 3</a>
+                                    <a class="dropdown-item" href="categories?id=1">Categorie 4</a>
+                                </div>
+                            </li>
+                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                                <a class="nav-link" href="panier"><i class="bi bi-basket2"></i> panier</a>
+                            </li>
+                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="compte" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person-fill"></i> Compte</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="login">Login</a>
+                                    <a class="dropdown-item" href="logout">Se Deconnecter</a>
+                                    <a class="dropdown-item" href="compte">Mon compte</a>
+                                    <a class="dropdown-item" href="admin">Administration</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </nav>		
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
