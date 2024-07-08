@@ -4,19 +4,41 @@ namespace App\Model;
 
 use PDO;
 
-class CartManager extends AbstractManager
+class CartManager
 {
-    public const TABLE = 'product';
-
-    /**
-     * Insert new item in database
-     */
-    public function insert(array $cart): int
+    public function __construct()
     {
-        $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE . " (`name`) VALUES (:name)");
-        $statement->bindValue('name', $cart['name'], PDO::PARAM_STR);
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+    }
 
-        $statement->execute();
-        return (int)$this->pdo->lastInsertId();
+    public function getCart()
+    {
+        return $_SESSION['cart'];
+    }
+
+    public function addProduct($productId, $qty)
+    {
+        if (!isset($_SESSION['cart'][$productId])) {
+            $_SESSION['cart'][$productId] = 0;
+        }
+
+        $_SESSION['cart'][$productId] += $qty;
+    }
+
+    public function deleteProduct($productId)
+    {
+        unset($_SESSION['cart'][$productId]);
+    }
+
+    public function updateProduct($productId, $qty)
+    {
+        $_SESSION['cart'][$productId] = $qty;
+    }
+
+    public function clear()
+    {
+        $_SESSION['cart'] = [];
     }
 }

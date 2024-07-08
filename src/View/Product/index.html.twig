@@ -26,12 +26,12 @@
         {% for prod in product %}
         <ul>
             <li>
-                <p>{{ prod.name }} - {{ prod.price }}€</p>
+                <p>{{ prod.name }} - {{ prod.price|intToCurrency }}</p>
             </li>
             <li>
                 <p>{{ prod.description }}</p>
             </li>
-            <form action="/product/show?id={{ prod.id }}" method="POST">
+            <form action="/product/show" method="GET">
                 <input type="hidden" name="id" value="{{ prod.id }}">
                 <button>Voir</button>
             </form>

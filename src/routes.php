@@ -13,8 +13,11 @@ return [
     'items/show' => ['ItemController', 'show', ['id']],
     'items/add' => ['ItemController', 'add',],
     'items/delete' => ['ItemController', 'delete',],
-    'cart' => ['CartController', 'index'],
-    'cart/delete' => ['CartController', 'delete'],
+    'cart' => ['CartController', 'index', ['status']],
+    'cart/add' => ['CartController', 'add', ['id', 'qty']],
+    'cart/update' => ['CartController', 'update', ['id', 'qty']],
+    'cart/delete' => ['CartController', 'delete', ['id']],
+    'cart/order' => ['CartController', 'order'],
     'product' => ['ProductController', 'index'],
     'product/show' => ['ProductController', 'show', ['id']],
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\CartManager;
 use App\Model\ProductManager;
 
 class ProductController extends AbstractController

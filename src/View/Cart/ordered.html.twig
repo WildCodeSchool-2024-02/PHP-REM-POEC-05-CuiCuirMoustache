@@ -63,21 +63,18 @@
     }
 
     .ul-bg {
-       
+        background-color: var(--quinary-color);
         padding-bottom: 10px;
         border-radius: 10px;
         width: 95%;
         margin-left: 2.5%;
-        align-items: baseline;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<h1>Votre panier !</h1>
-{% if status == "updated" %}<h3>Quantité mise à jour</h3>{% endif %}
-{% if status == "deleted" %}<h3>Produit supprimé</h3>{% endif %}
-{% if status == "added" %}<h3>Produit ajouté</h3>{% endif %}
+<h1>Votre commande {{ ordered_id }}!</h1>
+
 <div class="display">
     <div class="basket">
         <h2 class="display">Vos articles</h2>
@@ -86,27 +83,14 @@
             <li>
                 <p>{{ productAndQty.product.name }} - {{ productAndQty.product.price|intToCurrency }}</p>
             </li>
-            <form action="/cart/update" method="post">
-                <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
-                <input type="number" name="qty" value="{{ productAndQty.qty }}"> {{ (productAndQty.product.price *
-                productAndQty.qty) | intToCurrency }}
-                <button class="cart-button">Modifier</button>
+                </p>{{productAndQty.qty}} - {{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}</p>
             </form>
             <li>
                 <p>{{ productAndQty.product.description }}</p>
             </li>
-            <form action="/cart/delete" method="POST">
-                <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
-                <button class="cart-button">Supprimer</button>
-            </form>
         </ul>
         {% endfor %}
     </div>
-    <div class="checkout">
-        <p>Sous-total ( {{ cart.product }} ) articles: total {{ total|intToCurrency }}</p>
-        <form action="/cart/order" method="POST">
-            <button class="button">Passer la commande</button>
-        </form>
-    </div>
-</div>
+        <p>Sous-total (x) articles: total {{ total_amount|intToCurrency }}</p>
+
 {% endblock %}

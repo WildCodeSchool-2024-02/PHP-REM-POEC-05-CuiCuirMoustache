@@ -5,6 +5,7 @@ namespace App\Controller;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
+use App\Helper\Currency;
 
 /**
  * Initialized some Controller common features (Twig...)
@@ -25,5 +26,9 @@ abstract class AbstractController
             ]
         );
         $this->twig->addExtension(new DebugExtension());
+
+        //Ajout d'une fonction fitre a twig
+        $filter = new \Twig\TwigFilter('intToCurrency', 'Currency::intToCurrency');
+        $this->twig->addFilter($filter);
     }
 }
