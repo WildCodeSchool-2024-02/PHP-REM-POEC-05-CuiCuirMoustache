@@ -16,6 +16,39 @@
     --c-text-primary: var(--c-gray-100);
     --c-text-secondary: var(--c-gray-200);
     --c-text-tertiary: var(--c-gray-500);
+
+    --text-color-light: rgb(253, 253, 253);
+    --text-color-black: rgb(22, 22, 22);
+
+    --main-color: #3A1F24;
+    --secondary-color: #A46C35;
+    --tertiary-color: #CEA56A;
+    --quaternary-color: #1C2A33;
+    --quinary-color: #FFFDE5; 
+    --sixnary-color: #EEE6D8;  
+}
+.bg-brun {
+    background: var(--main-color);
+}
+
+.bg-brun-light {
+    background: var(--secondary-color);
+}
+
+.bg-brun-light-light {
+    background: var(--tertiary-color);
+}
+
+.bg-bleu {
+    background: var(--quaternary-color);
+}
+
+.bg-white {
+    background: var(--quinary-color-);
+}
+
+.bg-beige {
+    background: var(--sixnary-color);
 }
 
 body {
@@ -275,6 +308,14 @@ a {
     border-color: var(--c-text-primary);
 }
 
+.table_action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
 .user-profile {
     display: flex;
     align-items: center;
@@ -367,7 +408,7 @@ a {
 .tile {
     padding: 1rem;
     border-radius: 8px;
-    background-color: var(--c-olive-500);
+    background-color: var(--sixnary-color);
     color: var(--c-gray-900);
     min-height: 200px;
     display: flex;
@@ -382,15 +423,15 @@ a {
 }
 
 .tile:focus-within {
-    box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-olive-500);
+    box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--sixnary-color);
 }
 
 .tile:nth-child(2) {
-    background-color: var(--c-green-500);
+    background-color: var(--sixnary-color);
 }
 
 .tile:nth-child(2):focus-within {
-    box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-green-500);
+    box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--sixnary-color);
 }
 
 .tile:nth-child(3) {
@@ -611,11 +652,11 @@ a {
 }
 
 .card.green {
-    background-color: var(--c-green-500);
+    background-color: var(--sixnary-color);
 }
 
 .card.olive {
-    background-color: var(--c-olive-500);
+    background-color: var(--sixnary-color);
 }
 
 .card.gray {
