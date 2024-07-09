@@ -9,7 +9,7 @@ class ProductController extends AbstractController
 {
     public function index(): string
     {
-        //  SelectAll();
+        //  Select all
         $productManager = new ProductManager();
         $products = $productManager->selectAll('id');
 

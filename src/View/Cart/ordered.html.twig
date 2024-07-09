@@ -1,75 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block stylesheet %}
-<style>
-    h1 {
-        text-align: center;
-    }
-
-    .display {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin-top: 10px;
-    }
-
-    .basket {
-        color: black;
-        background-color: var(--secondary-color);
-        border-radius: 15px;
-        width: 60%;
-    }
-
-    .checkout {
-        background-color: var(--tertiary-color);
-        height: 20vh;
-        width: 30%;
-        border-radius: 15px;
-        color: var(--sixnary-color);
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15%;
-    }
-
-    .list {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    button {
-        color: var(--sixnary-color);
-        background-color: var(--quaternary-color);
-        border: none;
-        border-radius: 10px;
-        min-width: 70%;
-        min-height: 40px;
-        cursor: pointer;
-    }
-
-    .cart-button {
-        width: 100px;
-        min-height: 25px;
-        margin-top: 20%;
-        margin-right: 20px;
-        background-color: #d9534f;
-    }
-
-    li {
-        list-style: none;
-    }
-
-    .ul-bg {
-        background-color: var(--quinary-color);
-        padding-bottom: 10px;
-        border-radius: 10px;
-        width: 95%;
-        margin-left: 2.5%;
-    }
-</style>
+<link rel="stylesheet" href="/assets/css/cart/ordered.css">
 {% endblock %}
 
 {% block content %}
