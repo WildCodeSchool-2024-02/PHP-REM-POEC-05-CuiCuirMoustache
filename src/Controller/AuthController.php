@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-//use App\Model\AuthModel;
 use Twig\Environment;
 
 class AuthController extends AbstractController

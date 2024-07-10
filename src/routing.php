@@ -39,8 +39,8 @@ foreach ($matchingRoute[2] ?? [] as $parameter) {
     }
 }
 
-// instance the controller, call the method with given parameters
-// controller method will return a Twig template (HTML string) which is displayed here
+// Instance the controller, call the method with given parameters
+// Controller method will return a Twig template (HTML string) which is displayed here
 try {
     // Execute the controller
     // Pass the $twig instance to the controller
@@ -48,11 +48,8 @@ try {
     echo $controller->$method(...$parameters);
 } catch (Exception $e) {
     // If an exception is thrown during controller execution
-    if (isset($whoops)) {
-        echo $whoops->handleException($e);
-    } else {
-        header("HTTP/1.0 500 Internal Server Error");
-        echo '500 - Internal Server Error';
-        exit();
-    }
+    header("HTTP/1.0 500 Internal Server Error");
+    echo '500 - Internal Server Error';
+    echo '<pre>' . $e->getMessage() . '</pre>'; // Optionally, display the error message
+    exit();
 }
