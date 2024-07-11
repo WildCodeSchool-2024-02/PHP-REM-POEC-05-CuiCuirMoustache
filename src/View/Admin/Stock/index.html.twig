@@ -1,0 +1,25 @@
+{% extends 'layout_admin.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/product/product.css">
+{% endblock %}
+
+{% block content %}
+
+<h1>Le stock</h1>
+<div>
+    <div>
+        {% for stoc in stock %}
+        <ul>
+            <li>
+                <p>{{ stoc.product_id }} - {{ stoc.quantity }} - {{ stoc.supplier_id }} - {{ stoc.updated_at | date("d/m/Y g:i:sA") }}</p>
+            </li>
+            <form action="/admin/stock/update" method="POST">
+                <input type="hidden" name="id" value="{{ stoc.id }}">
+                <input type="number" class="modify" name="quantity" value="{{ stoc.quantity }}">
+                <button>Quantité</button>
+            </form>
+        </ul>
+        {% endfor %}
+        
+{% endblock %}

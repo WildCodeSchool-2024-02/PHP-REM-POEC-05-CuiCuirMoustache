@@ -22,7 +22,7 @@
             </div>
             <div class="card-subtitle">{{ productAndQty.product.description }}</div>
             <hr class="card-divider">
-            <form action="/cart/update" method="post">
+            <form action="/cart/update" method="POST">
                 <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
                 <input type="number" class="modify" name="qty" value="{{ productAndQty.qty }}">
                 <button class="cart-button">Modifier</button>

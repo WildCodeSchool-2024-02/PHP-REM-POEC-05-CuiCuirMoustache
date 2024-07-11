@@ -21,6 +21,8 @@ return [
     'cart/order' => ['CartController', 'order'],
     'product' => ['ProductController', 'index'],
     'product/show' => ['ProductController', 'show', ['id']],
+    'admin/stock' => ['admin\\StockController', 'index'],
+    'admin/stock/update' => ['admin\\StockController', 'update', ['id', 'quantity']],
     'admin/categorie' => ['admin\\CategorieController', 'index',],
     'admin/categorie/edit' => ['admin\\CategorieController', 'edit', ['id']],
     'admin/categorie/show' => ['admin\\CategorieController', 'show', ['id']],
