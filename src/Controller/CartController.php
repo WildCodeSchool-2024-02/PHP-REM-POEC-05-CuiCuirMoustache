@@ -15,6 +15,7 @@ class CartController extends AbstractController
         $cartManager = new CartManager();
         $cart = [];
         $totalPrice = 0;
+        $totalItem = 0;
         foreach ($cartManager->getCart() as $productId => $qty) {
             $product = $productManager->selectOneById($productId);
             $cart[] = [
@@ -22,13 +23,15 @@ class CartController extends AbstractController
                 'qty' => $qty
             ];
             $totalPrice += $product['price'] * $qty;
+            $totalItem += $qty;
         }
 
 
         return $this->twig->render('Cart/index.html.twig', [
             'cart' => $cart,
             'total' => $totalPrice,
-            'status' => $status
+            'status' => $status,
+            'totalItem' => $totalItem
         ]);
     }
 
@@ -68,10 +71,12 @@ class CartController extends AbstractController
         $productManager = new ProductManager();
 
         $totalAmount = 0;
+        $totalItem = 0;
         $cartToShow = [];
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
             $totalAmount += $qty * $product['price'];
+            $totalItem += $qty;
             $cartToShow[] = [
                 'product' => $product,
                 'qty' => $qty
@@ -93,7 +98,8 @@ class CartController extends AbstractController
         return $this->twig->render('Cart/ordered.html.twig', [
             'cart' => $cartToShow,
             'ordered_id' => $orderedId,
-            'total_amount' => $totalAmount
+            'total_amount' => $totalAmount,
+            'totalItem' => $totalItem
         ]);
     }
 }

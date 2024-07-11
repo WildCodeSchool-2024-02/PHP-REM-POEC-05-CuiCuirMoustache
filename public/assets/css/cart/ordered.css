@@ -11,17 +11,15 @@ h1 {
 
 .basket {
     color: black;
-    background-color: var(--secondary-color);
     border-radius: 15px;
     width: 60%;
 }
 
 .checkout {
-    background-color: var(--tertiary-color);
     height: 20vh;
     width: 30%;
-    border-radius: 15px;
-    color: var(--sixnary-color);
+    border-radius: 5px;
+    border: solid var(--main-color);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -40,28 +38,22 @@ button {
     color: var(--sixnary-color);
     background-color: var(--quaternary-color);
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     min-width: 70%;
     min-height: 40px;
     cursor: pointer;
 }
 
-.cart-button {
-    width: 100px;
-    min-height: 25px;
-    margin-top: 20%;
-    margin-right: 20px;
-    background-color: #d9534f;
-}
-
 li {
     list-style: none;
+    position: relative;
+    margin-right: 15px;
 }
 
 .ul-bg {
-    background-color: var(--quinary-color);
+    border: solid var(--main-color);
     padding-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 95%;
     margin-left: 2.5%;
 }

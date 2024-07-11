@@ -15,14 +15,17 @@
             <li>
                 <p>{{ productAndQty.product.name }} - {{ productAndQty.product.price|intToCurrency }}</p>
             </li>
-                </p>{{productAndQty.qty}} - {{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}</p>
-            </form>
             <li>
                 <p>{{ productAndQty.product.description }}</p>
+            </li>
+            <li>
+                <p>{{productAndQty.qty}} - {{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}</p>
             </li>
         </ul>
         {% endfor %}
     </div>
-        <p>Sous-total (x) articles: total {{ total_amount|intToCurrency }}</p>
+    <div class="checkout">
+        <p>Sous-total ({{ totalItem }}) articles: total {{ total_amount|intToCurrency }}</p>
+    </div>
 
-{% endblock %}
+    {% endblock %}

@@ -5,36 +5,43 @@
 {% endblock %}
 
 {% block content %}
-<h1>Votre panier !</h1>
-{% if status == "updated" %}<h3>Quantité mise à jour</h3>{% endif %}
-{% if status == "deleted" %}<h3>Produit supprimé</h3>{% endif %}
-{% if status == "added" %}<h3>Produit ajouté</h3>{% endif %}
+<div class="display-title">
+    <h1>Votre panier !</h1>
+    {% if status == "updated" %}<h3 class="align"> - Quantité mise à jour</h3>{% endif %}
+    {% if status == "deleted" %}<h3 class="align"> - Produit supprimé</h3>{% endif %}
+    {% if status == "added" %}<h3 class="align"> - Produit ajouté</h3>{% endif %}
+</div>
+<h2 class="display">Vos articles</h2>
 <div class="display">
     <div class="basket">
-        <h2 class="display">Vos articles</h2>
         {% for productAndQty in cart %}
-        <ul class="list ul-bg">
-            <li>
-                <p>{{ productAndQty.product.name }} - {{ productAndQty.product.price|intToCurrency }}</p>
-            </li>
+        <div class="card">
+            {# Pas d'images pour le moment #}
+            <div class="card-title">{{ productAndQty.product.name }} <br> {{ productAndQty.product.price|intToCurrency
+                }} x{{ productAndQty.qty }}
+            </div>
+            <div class="card-subtitle">{{ productAndQty.product.description }}</div>
+            <hr class="card-divider">
             <form action="/cart/update" method="post">
                 <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
-                <input type="number" name="qty" value="{{ productAndQty.qty }}"> {{ (productAndQty.product.price *
-                productAndQty.qty) | intToCurrency }}
+                <input type="number" class="modify" name="qty" value="{{ productAndQty.qty }}">
                 <button class="cart-button">Modifier</button>
             </form>
-            <li>
-                <p>{{ productAndQty.product.description }}</p>
-            </li>
-            <form action="/cart/delete" method="POST">
-                <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
-                <button class="cart-button">Supprimer</button>
-            </form>
-        </ul>
+            <div class="card-footer">
+                <div class="card-price">
+                    <p class="take-all-space">{{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}
+                    </p>
+                </div>
+                <form action="/cart/delete" method="POST">
+                    <input type="hidden" class="card-btn" name="id" value="{{ productAndQty.product.id }}">
+                    <button class="card-btn">Supprimer</button>
+                </form>
+            </div>
+        </div>
         {% endfor %}
     </div>
     <div class="checkout">
-        <p>Sous-total ( {{ cart.product }} ) articles: total {{ total|intToCurrency }}</p>
+        <p>Sous-total ({{ totalItem }}) articles: total {{ total|intToCurrency }}</p>
         <form action="/cart/order" method="POST">
             <button class="button">Passer la commande</button>
         </form>
