@@ -26,4 +26,9 @@ return [
     'admin/categorie/show' => ['admin\\CategorieController', 'show', ['id']],
     'admin/categorie/add' => ['admin\\CategorieController', 'add',],
     'admin/categorie/delete' => ['admin\\CategorieController', 'delete',['id']],
+    'admin/product' => ['admin\\ProductController', 'index',],
+    'admin/product/edit' => ['admin\\ProductController', 'edit', ['id']],
+    'admin/product/show' => ['admin\\ProductController', 'show', ['id']],
+    'admin/product/add' => ['admin\\ProductController', 'add',],
+    'admin/product/delete' => ['admin\\ProductController', 'delete',['id']],
 ];
