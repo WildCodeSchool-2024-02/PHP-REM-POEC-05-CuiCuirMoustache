@@ -41,18 +41,7 @@ class ProductController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
             $item = array_map('trim', $_POST);
-            if (empty($item['name']) || strlen($item['name']) > 255) {
-                $errors['name'] = 'Un nom est nécessaire et il ne doit pas dépasser 255 caractères.';
-            }
-            if (empty($item['description'])) {
-                $errors['description'] = 'Une description est obligatoire.';
-            }
-            if (!empty($item['price']) && !filter_var($item['price'], FILTER_VALIDATE_FLOAT)) {
-                $errors['price'] = 'Le prix doit être un nombre valide.';
-            }
-            if (!empty($item['category_id']) && !$categoryManager->selectOneById((int)$item['category_id'])) {
-                $errors['category_id'] = 'Category ID doit correspondre à une catégorie existante.';
-            }
+            $errors = getErrorForm($item);
 
             // if validation is ok, update and redirection
             if (empty($errors)) {
