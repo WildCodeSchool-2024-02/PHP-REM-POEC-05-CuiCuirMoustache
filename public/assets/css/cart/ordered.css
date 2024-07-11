@@ -44,22 +44,10 @@ button {
     cursor: pointer;
 }
 
-.cart-button {
-    width: 100px;
-    min-height: 25px;
-    margin-top: 20%;
-    margin-right: 20px;
-    background-color: #d9534f;
-}
-
 li {
     list-style: none;
     position: relative;
-}
-
-.li {
-    top: 5px;
-    right: 5px;
+    margin-right: 15px;
 }
 
 .ul-bg {
