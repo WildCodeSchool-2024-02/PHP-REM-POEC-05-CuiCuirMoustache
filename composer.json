@@ -22,7 +22,8 @@
     "require-dev": {
         "filp/whoops": "^2.15",
         "phpro/grumphp": "^1.9",
-        "phpstan/phpstan": "^1.10.7"
+        "phpstan/phpstan": "^1.10.7",
+        "phpunit/phpunit": "^11.2"
        
     },
     "config": {
