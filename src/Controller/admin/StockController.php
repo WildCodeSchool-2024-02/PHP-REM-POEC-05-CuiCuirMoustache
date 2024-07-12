@@ -20,23 +20,33 @@ class StockController extends AbstractController
     {
         $stockManager = new StockManager();
         $stock = $stockManager->selectOneById($id);
+        $errors = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
             $stock = array_map('trim', $_POST);
 
-            // TODO validations (length, format...)
+            // validations
+            if (!filter_var($stock['quantity'], FILTER_VALIDATE_FLOAT) && ($stock['quantity'] != 0)) {
+                $errors['quantity'] = 'La quantité doit être un nombre valide.';
+            }
+
+            if ($stock['quantity'] < 0) {
+                $errors['quantity2'] = 'Le prix doit être supérieure à 0.';
+            }
 
             // if validation is ok, update and redirection
-            $stockManager->updateStock($stock);
-            header('Location: /admin/stock');
+            if (empty($errors)) {
+                $stockManager->updateStock($stock);
+            }
 
             // we are redirecting so we don't want any content rendered
-            return null;
+            header('Location: /admin/stock');
         }
 
-        return $this->twig->render('admin/Stock/edit.html.twig', [
+        return $this->twig->render('Admin/Stock/index.html.twig', [
             'stock' => $stock,
+            'errors' => $errors
         ]);
     }
 
@@ -44,25 +54,4 @@ class StockController extends AbstractController
     {
         // TODO
     }
-
-//     function getErrorStock(array $stock): array
-// {
-//     $stockManager = new StockManager();
-//     $errors = [];
-
-//     if (empty($stock['name']) || strlen($stock['name']) > 255) {
-//         $errors['name'] = 'Un nom est nécessaire et il ne doit pas dépasser 255 caractères.';
-//     }
-//     if (empty($stock['description'])) {
-//         $errors['description'] = 'Une description est obligatoire.';
-//     }
-//     if (empty($stock['price']) || !filter_var($stock['price'], FILTER_VALIDATE_FLOAT)) {
-//         $errors['price'] = 'Le prix doit être un nombre valide.';
-//     }
-//     if (empty($stock['category_id']) || !$stockManager->selectOneById((int)$stock['category_id'])) {
-//         $errors['category_id'] = 'Category ID doit correspondre à une catégorie existante.';
-//     }
-
-//     return $errors;
-// }
 }

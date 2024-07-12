@@ -84,6 +84,9 @@ class CartController extends AbstractController
         }
 
         $orderedManager = new OrderedManager();
+
+        // createOrder(1, ...) est le user que j'ai crée directement dans la bdd,
+        // il faudra le remplacer par une variable
         $orderedId = $orderedManager->createOrder(1, $totalAmount, "order");
 
         // moins de commandes effectuer (mais moins DRY)
@@ -91,6 +94,7 @@ class CartController extends AbstractController
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
             $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
+            // ajout d'une fonction qui décrémente le stock au moment de l'achat
         }
 
 

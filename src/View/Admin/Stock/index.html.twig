@@ -12,7 +12,9 @@
         {% for stoc in stock %}
         <ul>
             <li>
-                <p>Nom du produit : {{ stoc.name }} - quantité : {{ stoc.quantity }} - date de création : {{ stoc.created_at | date("d/m/Y g:i:sA") }} - dernière modification : {{ stoc.updated_at | date("d/m/Y g:i:sA") }}</p>
+                <p>Nom du produit : {{ stoc.name }} - quantité : {{ stoc.quantity }} - date de création : {{
+                    stoc.created_at | date("d/m/Y g:i:sA") }} - dernière modification : {{ stoc.updated_at | date("d/m/Y
+                    g:i:sA") }}</p>
             </li>
             <form action="/admin/stock/update" method="POST">
                 <input type="hidden" name="id" value="{{ stoc.id }}">
@@ -20,6 +22,24 @@
                 <button>Quantité</button>
             </form>
         </ul>
+
+        {% if errors.quantity is defined %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Attention !</strong> {{ errors.quantity }}
+            <button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+            </button>
+        </div>
+        {% endif %}
+        {% if errors.quantity2 is defined %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Attention !</strong> {{ errors.quantity2 }}
+            <button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+            </button>
+        </div>
+        {% endif %}
+
         {% endfor %}
-        
+
 {% endblock %}
