@@ -11,7 +11,7 @@ class StockController extends AbstractController
     {
         //  Select all
         $stockManager = new StockManager();
-        $stock = $stockManager->selectAll('id');
+        $stock = $stockManager->selectAllFromStock();
 
         return $this->twig->render('admin/Stock/index.html.twig', ['stock' => $stock]);
     }
@@ -39,4 +39,30 @@ class StockController extends AbstractController
             'stock' => $stock,
         ]);
     }
+
+    public function import()
+    {
+        // TODO
+    }
+
+//     function getErrorStock(array $stock): array
+// {
+//     $stockManager = new StockManager();
+//     $errors = [];
+
+//     if (empty($stock['name']) || strlen($stock['name']) > 255) {
+//         $errors['name'] = 'Un nom est nécessaire et il ne doit pas dépasser 255 caractères.';
+//     }
+//     if (empty($stock['description'])) {
+//         $errors['description'] = 'Une description est obligatoire.';
+//     }
+//     if (empty($stock['price']) || !filter_var($stock['price'], FILTER_VALIDATE_FLOAT)) {
+//         $errors['price'] = 'Le prix doit être un nombre valide.';
+//     }
+//     if (empty($stock['category_id']) || !$stockManager->selectOneById((int)$stock['category_id'])) {
+//         $errors['category_id'] = 'Category ID doit correspondre à une catégorie existante.';
+//     }
+
+//     return $errors;
+// }
 }

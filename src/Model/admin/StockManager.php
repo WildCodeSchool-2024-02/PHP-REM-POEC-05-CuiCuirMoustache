@@ -9,6 +9,13 @@ class StockManager extends AbstractManager
 {
     public const TABLE = 'stock';
 
+    public function selectAllFromStock(): array
+    {
+        $query = "SELECT stock.id, product_id, quantity, stock.created_at, stock.updated_at, 
+        `name` FROM stock LEFT JOIN product AS p ON p.id=stock.product_id;";
+        return $this->pdo->query($query)->fetchAll();
+    }
+
     public function updateStock(array $stock): bool
     {
         $statement = $this->pdo->prepare("UPDATE " . self::TABLE . " SET `quantity` = :quantity WHERE id=:id");
@@ -18,9 +25,8 @@ class StockManager extends AbstractManager
         return $statement->execute();
     }
 
-    // public function idToName(array $stock): bool
-    // {
-    // $statement = $this->pdo->prepare("SELECT `name` " . self::TABLE . "
-    //  LEFT JOIN product AS p ON p.id=s.product_id;")
-    // }
+    public function add()
+    {
+        // TODO
+    }
 }

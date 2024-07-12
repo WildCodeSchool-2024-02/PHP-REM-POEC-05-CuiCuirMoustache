@@ -12,7 +12,7 @@
         {% for stoc in stock %}
         <ul>
             <li>
-                <p>{{ stoc.product_id }} - {{ stoc.quantity }} - {{ stoc.supplier_id }} - {{ stoc.updated_at | date("d/m/Y g:i:sA") }}</p>
+                <p>Nom du produit : {{ stoc.name }} - quantité : {{ stoc.quantity }} - date de création : {{ stoc.created_at | date("d/m/Y g:i:sA") }} - dernière modification : {{ stoc.updated_at | date("d/m/Y g:i:sA") }}</p>
             </li>
             <form action="/admin/stock/update" method="POST">
                 <input type="hidden" name="id" value="{{ stoc.id }}">
