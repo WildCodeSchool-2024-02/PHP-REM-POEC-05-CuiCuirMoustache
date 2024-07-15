@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Service\CartService;
 use App\Model\admin\StockManager;
-use App\Model\CartManager;
 use App\Model\OrderedManager;
 use App\Model\OrderitemManager;
 use App\Model\ProductManager;
@@ -13,11 +13,11 @@ class CartController extends AbstractController
     public function index(string $status = ""): string
     {
         $productManager = new ProductManager();
-        $cartManager = new CartManager();
+        $cartService = new CartService();
         $cart = [];
         $totalPrice = 0;
         $totalItem = 0;
-        foreach ($cartManager->getCart() as $productId => $qty) {
+        foreach ($cartService->getCart() as $productId => $qty) {
             $product = $productManager->selectOneById($productId);
             $cart[] = [
                 'product' => $product,
@@ -38,35 +38,51 @@ class CartController extends AbstractController
 
     public function add(int $id, int $qty)
     {
+        // Si session a un problème avec le string, vérif ici avec var_dump
         //ajoute au panier
-        $cartManager = new CartManager();
-        $cartManager->addProduct($id, $qty);
+        $cartService = new CartService();
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $errors = [];
+            // verifier les entrées
+            if ($qty <= 0) {
+                $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
+            }
 
-        header('Location:/cart?status=added');
+            // les données sont ok
+            if (empty($errors)) {
+                $cartService->addProduct($id, $qty);
+                header('Location: /cart?status=added');
+            } else {
+                echo 'toto';
+                // return $this->twig->render('');
+            }
+        } else {
+            header('Location: /product');
+        }
     }
 
     public function update(int $id, int $qty)
     {
-        $cartManager = new CartManager();
-        $cartManager->updateProduct($id, $qty);
+        $cartService = new CartService();
+        $cartService->updateProduct($id, $qty);
 
-        header('Location:/cart?status=updated');
+        header('Location: /cart?status=updated');
     }
 
     public function delete(int $id): void
     {
-        $cartManager = new CartManager();
-        $cartManager->deleteProduct($id);
+        $cartService = new CartService();
+        $cartService->deleteProduct($id);
 
-        header('Location:/cart?status=deleted');
+        header('Location: /cart?status=deleted');
     }
 
     public function order(): string
     {
-        $cartManager = new CartManager();
-        $cart = $cartManager->getCart();
+        $cartService = new CartService();
+        $cart = $cartService->getCart();
         if (count($cart) == 0) {
-            header('Location:/');
+            header('Location: /');
         }
 
         $productManager = new ProductManager();
@@ -84,7 +100,7 @@ class CartController extends AbstractController
                     'qty' => $qty
                 ];
             } else {
-                header('Location:/cart?status=modify');
+                header('Location: /cart?status=modify');
             }
         }
 
@@ -104,11 +120,11 @@ class CartController extends AbstractController
             if ($stock['quantity'] >= $qty) {
                 $stockManager->updateStockFromCart($product['id'], $qty);
             } else {
-                header('Location:/cart?status=modify');
+                header('Location: /cart?status=modify');
             }
         }
 
-        $cartManager->clear();
+        $cartService->clear();
         return $this->twig->render('Cart/ordered.html.twig', [
             'cart' => $cartToShow,
             'ordered_id' => $orderedId,
