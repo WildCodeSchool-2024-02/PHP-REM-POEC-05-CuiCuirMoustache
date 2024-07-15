@@ -53,20 +53,29 @@ class CartController extends AbstractController
                 $cartService->addProduct($id, $qty);
                 header('Location: /cart?status=added');
             } else {
-                echo 'toto';
-                // return $this->twig->render('');
+                header('Location: /product/show?id=' . $id);
             }
-        } else {
-            header('Location: /product');
         }
     }
 
     public function update(int $id, int $qty)
     {
         $cartService = new CartService();
-        $cartService->updateProduct($id, $qty);
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $errors = [];
+            // verifier les entrées
+            if ($qty <= 0) {
+                $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
+            }
 
-        header('Location: /cart?status=updated');
+            // les données sont ok
+            if (empty($errors)) {
+                $cartService->updateProduct($id, $qty);
+                header('Location: /cart?status=updated');
+            } else {
+                header('Location: /cart?status=falseQuantity');
+            }
+        }
     }
 
     public function delete(int $id): void
@@ -120,7 +129,7 @@ class CartController extends AbstractController
             if ($stock['quantity'] >= $qty) {
                 $stockManager->updateStockFromCart($product['id'], $qty);
             } else {
-                header('Location: /cart?status=modify');
+                header('Location: /cart?status=falseQuantity');
             }
         }
 
