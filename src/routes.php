@@ -19,6 +19,7 @@ return [
     'cart/update' => ['CartController', 'update', ['id', 'qty']],
     'cart/delete' => ['CartController', 'delete', ['id']],
     'cart/order' => ['CartController', 'order'],
+    'cart/modify' => ['CartController', 'modify', ['id', 'qty']],
     'product' => ['ProductController', 'index'],
     'product/show' => ['ProductController', 'show', ['id']],
     'admin/stock' => ['admin\\StockController', 'index'],

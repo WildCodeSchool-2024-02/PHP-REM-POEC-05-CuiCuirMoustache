@@ -20,6 +20,7 @@ h1 {
     width: 30%;
     border-radius: 5px;
     border: solid var(--main-color);
+    /* background-color: white; */
     text-align: center;
     display: flex;
     flex-direction: column;

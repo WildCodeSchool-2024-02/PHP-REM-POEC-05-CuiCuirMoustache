@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\admin\StockManager;
 use App\Model\CartManager;
 use App\Model\OrderedManager;
 use App\Model\OrderitemManager;
@@ -74,13 +75,17 @@ class CartController extends AbstractController
         $totalItem = 0;
         $cartToShow = [];
         foreach ($cart as $id => $qty) {
-            $product = $productManager->selectOneById($id);
-            $totalAmount += $qty * $product['price'];
-            $totalItem += $qty;
-            $cartToShow[] = [
-                'product' => $product,
-                'qty' => $qty
-            ];
+            if ($qty > 0) {
+                $product = $productManager->selectOneById($id);
+                $totalAmount += $qty * $product['price'];
+                $totalItem += $qty;
+                $cartToShow[] = [
+                    'product' => $product,
+                    'qty' => $qty
+                ];
+            } else {
+                header('Location:/cart?status=modify');
+            }
         }
 
         $orderedManager = new OrderedManager();
@@ -91,12 +96,17 @@ class CartController extends AbstractController
 
         // moins de commandes effectuer (mais moins DRY)
         $orderitemManager = new OrderitemManager();
+        $stockManager = new StockManager();
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
             $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
-            // ajout d'une fonction qui décrémente le stock au moment de l'achat
+            $stock = $stockManager->getStockById($id);
+            if ($stock['quantity'] >= $qty) {
+                $stockManager->updateStockFromCart($product['id'], $qty);
+            } else {
+                header('Location:/cart?status=modify');
+            }
         }
-
 
         $cartManager->clear();
         return $this->twig->render('Cart/ordered.html.twig', [
