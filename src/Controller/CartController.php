@@ -58,11 +58,14 @@ class CartController extends AbstractController
         }
     }
 
-    public function update(int $id, int $qty)
+    public function update(int $id, int $qty): void
     {
         $cartService = new CartService();
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $errors = [];
+
+            //laisser int $qty en paramètre, ou définir des restrictions ici ?
+            $qty = intval($qty);
             // verifier les entrées
             if ($qty <= 0) {
                 $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
@@ -129,7 +132,8 @@ class CartController extends AbstractController
             if ($stock['quantity'] >= $qty) {
                 $stockManager->updateStockFromCart($product['id'], $qty);
             } else {
-                header('Location: /cart?status=falseQuantity');
+                header('Location: /cart?status=unavailableQuantity');
+                exit();
             }
         }
 
@@ -138,7 +142,7 @@ class CartController extends AbstractController
             'cart' => $cartToShow,
             'ordered_id' => $orderedId,
             'total_amount' => $totalAmount,
-            'totalItem' => $totalItem
+            'totalItem' => $totalItem,
         ]);
     }
 }

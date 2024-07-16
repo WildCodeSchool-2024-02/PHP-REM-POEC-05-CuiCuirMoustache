@@ -11,17 +11,21 @@
     {% if status == "deleted" %}<h3 class="align"> - Produit supprimé</h3>{% endif %}
     {% if status == "added" %}<h3 class="align"> - Produit ajouté</h3>{% endif %}
     {% if status == "falseQuantity" %}<h3 class="align"> - La quantité est invalide</h3>{% endif %}
+    {% if status == "unavailableQuantity" %}<h3 class="align"> - Le produit n'est pas disponible dans cette quantité</h3>{% endif %}
 </div>
 <h2 class="display">Vos articles</h2>
 <div class="display">
     <div class="basket">
+        {{ dump(stock) }}
         {% for productAndQty in cart %}
         <div class="card">
             {# Pas d'images pour le moment #}
             <div class="card-title">{{ productAndQty.product.name }} <br> {{ productAndQty.product.price|intToCurrency
                 }} x{{ productAndQty.qty }}
             </div>
-            <div class="card-subtitle">{{ productAndQty.product.description }}</div>
+            <div class="card-subtitle">{{ productAndQty.product.description }}
+                {% if status == "unavailableQuantity" %}<br>Quantité restante : {{ qty }} {% endif %}
+            </div>
             <hr class="card-divider">
             <form action="/cart/update" method="POST">
                 <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
