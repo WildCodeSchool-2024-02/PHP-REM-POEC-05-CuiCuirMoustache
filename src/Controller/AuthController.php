@@ -17,6 +17,12 @@ class AuthController extends AbstractController
         $this->authModel = new AuthModel(); // Instanciate AuthModel here or use dependency injection
     }
 
+    public function login()
+    {
+        // Votre logique de connexion ici
+        return $this->twig->render('Auth/login.html.twig');
+    }
+
     public function loginOrRegister()
     {
         $errors = [];
