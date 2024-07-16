@@ -3,17 +3,15 @@
 namespace App\Controller;
 
 use App\Model\AuthModel;
-use Twig\Environment;
 
-class AuthController
+class AuthController extends AbstractController
 {
-    protected Environment $twig;
     protected AuthModel $authModel;
 
-    public function __construct(Environment $twig, AuthModel $authModel)
+    public function __construct()
     {
-        $this->twig = $twig;
-        $this->authModel = $authModel;
+        parent::__construct();
+        $this->authModel = new AuthModel(); // Instanciate AuthModel here or use dependency injection
     }
 
     public function register()
@@ -44,8 +42,8 @@ class AuthController
                 );
 
                 if ($success) {
-                    // Redirection après l'inscription réussie
-                    header('Location: /login');
+                    // Redirection après l'inscription réussie vers le Home page
+                    header('Location: /HomeController');
                     exit();
                 } else {
                     // Gestion de l'échec de l'inscription
