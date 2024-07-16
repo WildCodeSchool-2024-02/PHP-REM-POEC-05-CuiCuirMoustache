@@ -66,7 +66,7 @@ It will give access to a new menu on your IDE where you'll find the different to
 
 ## Run it on docker
 
-If you don't know what is docker, skip this chapter. ;)
+If you don't know what is docker, skip this chapter. ;
 
 Otherwise, you probably see, this project is ready to use with docker.
 

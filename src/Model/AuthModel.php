@@ -13,18 +13,24 @@ class AuthModel extends AbstractManager
         parent::__construct($pdo);
     }
 
-    public function register(string $username, string $password, string $email, string $role, string $firstName, string $lastName, string $phone): bool
-    {
-        $query = "INSERT INTO " . self::TABLE . " (username, password, email, role, first_name, last_name, phone) VALUES (:username, :password, :email, :role, :first_name, :last_name, :phone)";
+    public function register(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $password,
+        string $role,
+        string $phone
+    ): bool {
+        $query = "INSERT INTO " . self::TABLE . " (firstname, lastname, email, password, role, phone) 
+                  VALUES (:firstname, :lastname, :email, :password, :role, :phone)";
         $stmt = $this->pdo->prepare($query);
 
         return $stmt->execute([
-            'username' => $username,
-            'password' => password_hash($password, PASSWORD_BCRYPT),
+            'firstname' => $firstName,
+            'lastname' => $lastName,
             'email' => $email,
+            'password' => password_hash($password, PASSWORD_BCRYPT),
             'role' => $role,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
             'phone' => $phone
         ]);
     }
@@ -33,9 +39,7 @@ class AuthModel extends AbstractManager
     {
         $query = "SELECT password FROM " . self::TABLE . " WHERE username = :username";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute([
-            'username' => $username,
-        ]);
+        $stmt->execute(['username' => $username]);
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
