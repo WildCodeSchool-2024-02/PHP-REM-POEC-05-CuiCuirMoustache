@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/cart/ordered.css">
+{% endblock %}
+
+{% block content %}
+<h1>Votre commande {{ ordered_id }}!</h1>
+
+<div class="display">
+    <div class="basket">
+        <h2 class="display">Vos articles</h2>
+        {% for productAndQty in cart %}
+        <ul class="list ul-bg">
+            <li>
+                <p>{{ productAndQty.product.name }} - {{ productAndQty.product.price|intToCurrency }}</p>
+            </li>
+            <li>
+                <p>{{ productAndQty.product.description }}</p>
+            </li>
+            <li>
+                <p>{{productAndQty.qty}} - {{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}</p>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+    <div class="checkout">
+        <p>Sous-total ({{ totalItem }}) articles: total {{ total_amount|intToCurrency }}</p>
+    </div>
+
+    {% endblock %}

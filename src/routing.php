@@ -11,11 +11,8 @@ use App\Model\AuthModel;
 $loader = new FilesystemLoader(__DIR__ . '/../src/View');
 $twig = new Environment($loader);
 
-// Create PDO instance (assuming this is used in AuthModel constructor)
-$pdo = new PDO("mysql:host=" . APP_DB_HOST . ";dbname=" . APP_DB_NAME, APP_DB_USER, APP_DB_PASSWORD);
-
 // Create AuthModel instance
-$authModel = new AuthModel($pdo);
+$authModel = new AuthModel(); // Pas de paramètre
 
 // Get the required route (without query string) and remove trailing slashes
 $route = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '', '/');
@@ -57,4 +54,30 @@ if ($route === 'login') {
     header("HTTP/1.0 404 Not Found");
     echo '404 - Page not found';
     exit();
+}
+
+// Get the queryString values configured for the matching route (in $_GET superglobal).
+// If there are additional queryString parameters, they are ignored here, and should be
+// directly manage in the controller
+$parameters = [];
+foreach ($matchingRoute[2] ?? [] as $parameter) {
+    if (isset($_REQUEST[$parameter])) { //modification $_GET => $_REQUEST
+        $parameters[] = $_REQUEST[$parameter];
+    }
+}
+
+// instance the controller, call the method with given parameters
+// controller method will return a twig template (HTML string) which is displayed here
+try {
+    // execute the controller
+    echo (new $controller())->$method(...$parameters);
+} catch (Exception $e) {
+    // if an exception is thrown during controller execution
+    if (isset($whoops)) {
+        echo $whoops->handleException($e);
+    } else {
+        header("HTTP/1.0 500 Internal Server Error");
+        echo '500 - Internal Server Error';
+        exit();
+    }
 }

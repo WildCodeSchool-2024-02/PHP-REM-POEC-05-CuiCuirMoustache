@@ -8,11 +8,6 @@ class AuthModel extends AbstractManager
 {
     public const TABLE = 'User';
 
-    public function __construct(PDO $pdo)
-    {
-        parent::__construct($pdo);
-    }
-
     public function register(
         string $firstName,
         string $lastName,

@@ -14,9 +14,10 @@ abstract class AbstractManager
 
     public const TABLE = '';
 
-    public function __construct(PDO $pdo)
+    public function __construct()
     {
-        $this->pdo = $pdo;
+        $connection = new Connection();
+        $this->pdo = $connection->getConnection();
     }
 
     /**
