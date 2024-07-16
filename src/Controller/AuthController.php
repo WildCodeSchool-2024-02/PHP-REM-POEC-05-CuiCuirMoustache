@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Model\AuthModel;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class AuthController extends AbstractController
 {
@@ -14,52 +17,91 @@ class AuthController extends AbstractController
         $this->authModel = new AuthModel(); // Instanciate AuthModel here or use dependency injection
     }
 
-    public function register()
+    public function loginOrRegister()
     {
-        // Récupérer les données du formulaire d'inscription
+        $errors = [];
+
         if ($_SERVER["REQUEST_METHOD"] === 'POST') {
-            $userData = [
-                'firstname' => $_POST['firstname'],
-                'lastname' => $_POST['lastname'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password'],
-                'role' => $_POST['role'], // Ajout du champ 'role'
-                'phone' => $_POST['phone'] // Ajout du champ 'phone'
-            ];
-
-            // Validation des données
-            $errors = $this->validateRegistration($userData);
-
-            if (empty($errors)) {
-                // Enregistrer l'utilisateur dans la base de données
-                $success = $this->authModel->register(
-                    $userData['firstname'],
-                    $userData['lastname'],
-                    $userData['email'],
-                    $userData['password'],
-                    $userData['role'],
-                    $userData['phone']
-                );
-
-                if ($success) {
-                    // Redirection après l'inscription réussie vers le Home page
-                    header('Location: /HomeController');
-                    exit();
-                } else {
-                    // Gestion de l'échec de l'inscription
-                    $errors[] = 'Erreur lors de l\'inscription. Veuillez réessayer.';
-                }
+            if (isset($_POST['login'])) {
+                // Soumission du formulaire de connexion
+                $errors = $this->handleLogin();
+            } elseif (isset($_POST['signup'])) {
+                // Soumission du formulaire d'inscription
+                $errors = $this->handleRegistration();
             }
+        }
+        try {
+            // Afficher le formulaire de login/inscription
+            echo $this->twig->render('Auth/login.html.twig', ['errors' => $errors]);
+        } catch (LoaderError | RuntimeError | SyntaxError $e) {
+            // Gérer l'erreur de rendu Twig
+            echo "Erreur de rendu de template : " . $e->getMessage();
+        }
+    }
 
-            // Afficher le formulaire d'inscription avec les erreurs
-            return $this->twig->render('Auth/register.html.twig', [
-                'errors' => $errors,
-                'data' => $userData
-            ]);
+    private function handleLogin(): array
+    {
+        $errors = [];
+
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        // Validation des champs
+        if (empty($email)) {
+            $errors[] = 'L\'email est requis pour se connecter.';
         }
 
-        // Afficher le formulaire d'inscription
-        return $this->twig->render('Auth/register.html.twig');
+        if (empty($password)) {
+            $errors[] = 'Le mot de passe est requis pour se connecter.';
+        }
+
+        // Si les données sont valides
+        if (!$this->authModel->authenticate($email, $password)) {
+             $errors[] = 'Email ou mot de passe incorrect.';
+        }
+
+        return $errors;
+    }
+
+    private function handleRegistration(): array
+    {
+        $errors = [];
+
+        $userData = [
+            'firstname' => $_POST['firstname'] ?? '',
+            'lastname' => $_POST['lastname'] ?? '',
+            'email' => $_POST['email'] ?? '',
+            'password' => $_POST['password'] ?? '',
+            'role' => $_POST['role'] ?? '',
+            'phone' => $_POST['phone'] ?? ''
+        ];
+
+        // Validation des données d'inscription (vous pouvez implémenter une méthode de validation ici)
+
+        $errors = $this->validateRegistration($userData);
+
+        if (empty($errors)) {
+            // Enregistrer l'utilisateur dans la base de données
+            $success = $this->authModel->register(
+                $userData['firstname'],
+                $userData['lastname'],
+                $userData['email'],
+                $userData['password'],
+                $userData['role'],
+                $userData['phone']
+            );
+
+            if ($success) {
+                // Redirection après l'inscription réussie
+                header('Location: /HomeController');
+                exit();
+            } else {
+                // Gestion de l'échec de l'inscription
+                $errors[] = 'Erreur lors de l\'inscription. Veuillez réessayer.';
+            }
+        }
+
+        return $errors;
     }
 
     // Validation des données d'inscription
