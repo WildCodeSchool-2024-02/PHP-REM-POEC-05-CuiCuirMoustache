@@ -61,7 +61,15 @@ class AuthController extends AbstractController
             // Si le formulaire est valide
             if (empty($errors)) {
                 // Enregistrez l'utilisateur dans la base de données
-                $success = $this->authModel->register($username, $first_name, $last_name, $email, $password, $role, $phone);
+                $success = $this->authModel->register(
+                    $username,
+                    $first_name,
+                    $last_name,
+                    $email,
+                    $password,
+                    $role,
+                    $phone
+                );
                 if ($success) {
                     // Redirigez l'utilisateur après une inscription réussie
                     header('Location: /login');
@@ -96,16 +104,13 @@ class AuthController extends AbstractController
         if (!$this->authModel->authenticate($email, $password)) {
             $errors[] = 'Email ou mot de passe incorrect.';
         }
-
         return $errors;
     }
 
     private function handleRegistration(): array
     {
         $errors = [];
-
         $userData = [
-            
             'first_name' => $_POST['first_name'] ?? '',
             'last_name' => $_POST['last_name'] ?? '',
             'email' => $_POST['email'] ?? '',
