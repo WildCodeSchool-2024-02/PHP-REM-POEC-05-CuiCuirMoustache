@@ -19,28 +19,63 @@ class AuthController extends AbstractController
 
     public function login()
     {
-        // Votre logique de connexion ici
         return $this->twig->render('Auth/login.html.twig');
     }
 
-    public function loginOrRegister()
+    public function signup()
     {
+        // Initialisez un tableau d'erreurs pour les validations de formulaire
         $errors = [];
 
-        if ($_SERVER["REQUEST_METHOD"] === 'POST') {
-            if (isset($_POST['login'])) {
-                // Soumission du formulaire de connexion
-                $errors = $this->handleLogin();
-            } elseif (isset($_POST['signup'])) {
-                // Soumission du formulaire d'inscription
-                $errors = $this->handleRegistration();
+        // Vérifiez si le formulaire a été soumis avec la méthode POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Récupérez les données du formulaire d'inscription
+            $username = $_POST['username'] ?? '';
+            $first_name = $_POST['first_name'] ?? '';
+            $last_name = $_POST['last_name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $role = $_POST['role'] ?? '';
+            $phone = $_POST['phone'] ?? '';
+
+            // Validation des champs du formulaire
+            if (empty($first_name)) {
+                $errors[] = 'Le prénom est requis';
+            }
+            if (empty($last_name)) {
+                $errors[] = 'Le nom est requis';
+            }
+            if (empty($email)) {
+                $errors[] = 'L\'email est requis';
+            }
+            if (empty($password)) {
+                $errors[] = 'Le mot de passe est requis';
+            }
+            if (empty($role)) {
+                $errors[] = 'Le rôle est requis';
+            }
+            if (empty($phone)) {
+                $errors[] = 'Le téléphone est requis';
+            }
+
+            // Si le formulaire est valide
+            if (empty($errors)) {
+                // Enregistrez l'utilisateur dans la base de données
+                $success = $this->authModel->register($username, $first_name, $last_name, $email, $password, $role, $phone);
+                if ($success) {
+                    // Redirigez l'utilisateur après une inscription réussie
+                    header('Location: /login');
+                    exit();
+                } else {
+                    $errors[] = 'Erreur lors de l\'inscription. Veuillez réessayer.';
+                }
             }
         }
+
         try {
-            // Afficher le formulaire de login/inscription
-            echo $this->twig->render('Auth/login.html.twig', ['errors' => $errors]);
+            // Affichez le formulaire d'inscription avec les erreurs
+            echo $this->twig->render('Auth/signup.html.twig', ['errors' => $errors]);
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
-            // Gérer l'erreur de rendu Twig
             echo "Erreur de rendu de template : " . $e->getMessage();
         }
     }
@@ -52,18 +87,14 @@ class AuthController extends AbstractController
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        // Validation des champs
         if (empty($email)) {
             $errors[] = 'L\'email est requis pour se connecter.';
         }
-
         if (empty($password)) {
             $errors[] = 'Le mot de passe est requis pour se connecter.';
         }
-
-        // Si les données sont valides
         if (!$this->authModel->authenticate($email, $password)) {
-             $errors[] = 'Email ou mot de passe incorrect.';
+            $errors[] = 'Email ou mot de passe incorrect.';
         }
 
         return $errors;
@@ -74,23 +105,22 @@ class AuthController extends AbstractController
         $errors = [];
 
         $userData = [
-            'firstname' => $_POST['firstname'] ?? '',
-            'lastname' => $_POST['lastname'] ?? '',
+            
+            'first_name' => $_POST['first_name'] ?? '',
+            'last_name' => $_POST['last_name'] ?? '',
             'email' => $_POST['email'] ?? '',
             'password' => $_POST['password'] ?? '',
             'role' => $_POST['role'] ?? '',
             'phone' => $_POST['phone'] ?? ''
         ];
 
-        // Validation des données d'inscription (vous pouvez implémenter une méthode de validation ici)
-
         $errors = $this->validateRegistration($userData);
 
         if (empty($errors)) {
-            // Enregistrer l'utilisateur dans la base de données
             $success = $this->authModel->register(
-                $userData['firstname'],
-                $userData['lastname'],
+                $userData['username'],
+                $userData['first_name'],
+                $userData['last_name'],
                 $userData['email'],
                 $userData['password'],
                 $userData['role'],
@@ -98,11 +128,9 @@ class AuthController extends AbstractController
             );
 
             if ($success) {
-                // Redirection après l'inscription réussie
                 header('Location: /HomeController');
                 exit();
             } else {
-                // Gestion de l'échec de l'inscription
                 $errors[] = 'Erreur lors de l\'inscription. Veuillez réessayer.';
             }
         }
@@ -110,15 +138,14 @@ class AuthController extends AbstractController
         return $errors;
     }
 
-    // Validation des données d'inscription
     private function validateRegistration(array $data): array
     {
         $errors = [];
 
-        if (empty($data['firstname'])) {
+        if (empty($data['first_name'])) {
             $errors[] = 'Le prénom est requis';
         }
-        if (empty($data['lastname'])) {
+        if (empty($data['last_name'])) {
             $errors[] = 'Le nom est requis';
         }
         if (empty($data['email'])) {
@@ -133,8 +160,6 @@ class AuthController extends AbstractController
         if (empty($data['phone'])) {
             $errors[] = 'Le téléphone est requis';
         }
-
-        // Validation supplémentaire si nécessaire
 
         return $errors;
     }

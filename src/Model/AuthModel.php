@@ -9,20 +9,22 @@ class AuthModel extends AbstractManager
     public const TABLE = 'User';
 
     public function register(
-        string $firstName,
-        string $lastName,
+        string $username,
+        string $first_name,
+        string $last_name,
         string $email,
         string $password,
         string $role,
         string $phone
     ): bool {
-        $query = "INSERT INTO " . self::TABLE . " (firstname, lastname, email, password, role, phone) 
-                  VALUES (:firstname, :lastname, :email, :password, :role, :phone)";
+        $query = "INSERT INTO " . self::TABLE . " (username, first_name, last_name, email, password, role, phone) 
+                  VALUES (:username, :first_name, :last_name, :email, :password, :role, :phone)";
         $stmt = $this->pdo->prepare($query);
 
         return $stmt->execute([
-            'firstname' => $firstName,
-            'lastname' => $lastName,
+            'username' => $username,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT),
             'role' => $role,
