@@ -45,6 +45,16 @@
 								</div>
 								
 							{% endif %}
+							{% if errors.quantity is defined %}
+						
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<strong>Attention !</strong> {{ errors.quantity }}
+								<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+								</button>
+							</div>
+							
+							{% endif %}
 							{% if errors.category_id is defined %}
 						
 								<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -55,6 +65,7 @@
 								</div>
 								
 							{% endif %}
+
 					
 				</div>
 				<div class="card-body">
@@ -70,6 +81,10 @@
 						<div class="form-group">
 							<label for="price">Prix:</label>
 							<input type="text" class="form-control" id="price" name="price" value="{{item.price}}">
+						</div>
+						<div class="form-group">
+							<label for="quantity">Quantité:</label>
+							<input type="text" class="form-control" id="quantity" name="quantity" value="{{stock.quantity}}">
 						</div>
 						<div class="form-group">
 							<label for="category_id">Category ID:</label>

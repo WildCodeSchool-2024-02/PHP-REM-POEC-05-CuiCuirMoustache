@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Model;
+namespace App\Service;
 
 use PDO;
 
-class CartManager
+class CartService
 {
     public function __construct()
     {
