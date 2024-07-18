@@ -14,14 +14,17 @@ class CartController extends AbstractController
     {
         $productManager = new ProductManager();
         $cartService = new CartService();
+        $stockManager = new StockManager();
         $cart = [];
         $totalPrice = 0;
         $totalItem = 0;
         foreach ($cartService->getCart() as $productId => $qty) {
             $product = $productManager->selectOneById($productId);
+            $stock = $stockManager->getQuantityById($productId);
             $cart[] = [
                 'product' => $product,
-                'qty' => $qty
+                'qty' => $qty,
+                'stock' => $stock['quantity']
             ];
             $totalPrice += $product['price'] * $qty;
             $totalItem += $qty;

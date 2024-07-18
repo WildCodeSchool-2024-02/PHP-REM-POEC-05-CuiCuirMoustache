@@ -16,15 +16,13 @@
 <h2 class="display">Vos articles</h2>
 <div class="display">
     <div class="basket">
-        {{ dump(stock) }}
         {% for productAndQty in cart %}
         <div class="card">
             {# Pas d'images pour le moment #}
             <div class="card-title">{{ productAndQty.product.name }} <br> {{ productAndQty.product.price|intToCurrency
                 }} x{{ productAndQty.qty }}
             </div>
-            <div class="card-subtitle">{{ productAndQty.product.description }}
-                {% if status == "unavailableQuantity" %}<br>Quantité restante : {{ qty }} {% endif %}
+            <div class="card-subtitle">{{ productAndQty.product.description }}<br>Quantité restante : {{ productAndQty.stock }}
             </div>
             <hr class="card-divider">
             <form action="/cart/update" method="POST">

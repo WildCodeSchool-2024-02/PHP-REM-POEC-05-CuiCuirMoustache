@@ -16,7 +16,7 @@ class StockController extends AbstractController
         return $this->twig->render('admin/Stock/index.html.twig', ['stock' => $stock]);
     }
 
-    public function update(int $id)
+    public function update(int $id): string
     {
         $stockManager = new StockManager();
         $stock = $stockManager->selectOneById($id);

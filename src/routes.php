@@ -24,6 +24,8 @@ return [
     'product/show' => ['ProductController', 'show', ['id']],
     'admin/stock' => ['admin\\StockController', 'index'],
     'admin/stock/update' => ['admin\\StockController', 'update', ['id', 'quantity']],
+    'admin/user' => ['admin\\UserController', 'index'],
+    'admin/user/delete' => ['admin\\UserController', 'delete', ['id']],
     'admin/categorie' => ['admin\\CategorieController', 'index',],
     'admin/categorie/edit' => ['admin\\CategorieController', 'edit', ['id']],
     'admin/categorie/show' => ['admin\\CategorieController', 'show', ['id']],

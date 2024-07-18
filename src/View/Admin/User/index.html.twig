@@ -6,20 +6,18 @@
 
 {% block content %}
 
-<h1>Le stock</h1>
+<h1>Les utilisateurs</h1>
 <div>
     <div>
-        {% for stoc in stock %}
+        {% for us in user %}
         <ul>
             <li>
-                <p>Nom du produit : {{ stoc.name }} - quantité : {{ stoc.quantity }} - date de création : {{
-                    stoc.created_at | date("d/m/Y g:i:sA") }} - dernière modification : {{ stoc.updated_at | date("d/m/Y
-                    g:i:sA") }}</p>
+                <p>Nom de l'utilisateur : {{ us.username }} - role: {{ us.role }} - date de création : {{
+                    us.created_at | date("d/m/Y g:i:sA") }}</p>
             </li>
-            <form action="/admin/stock/update" method="POST">
-                <input type="hidden" name="id" value="{{ stoc.id }}">
-                <input type="number" class="modify" name="quantity" value="{{ stoc.quantity }}">
-                <button>Quantité</button>
+            <form action="/admin/user/delete" method="POST">
+                <input type="hidden" name="id" value="{{ us.id }}">
+                <button>Supprimer</button>
             </form>
         </ul>
 

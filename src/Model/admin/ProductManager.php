@@ -9,6 +9,13 @@ class ProductManager extends AbstractManager
 {
     public const TABLE = 'product';
 
+    // Select All + stock
+    public function selectAllAndStock(): array
+    {
+        $query = "SELECT product.*, quantity FROM product INNER JOIN stock ON product_id=product.id;";
+        return $this->pdo->query($query)->fetchAll();
+    }
+
     /**
      * Insert new product in database
      */

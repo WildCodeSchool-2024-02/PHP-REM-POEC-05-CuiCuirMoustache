@@ -25,6 +25,15 @@ class StockManager extends AbstractManager
         return $statement->fetch();
     }
 
+    public function getQuantityById(int $id): array|false
+    {
+        $statement = $this->pdo->prepare("SELECT quantity FROM " . static::TABLE . " WHERE product_id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch();
+    }
+
     public function updateStock(array $stock): bool
     {
         $statement = $this->pdo->prepare("UPDATE " . self::TABLE . " SET `quantity` = :quantity WHERE id=:id");
@@ -44,8 +53,13 @@ class StockManager extends AbstractManager
         return $statement->execute();
     }
 
-    public function add()
+    public function add(int $id, int $qty)
     {
-        // TODO
+    // récupère lastInsertId du produit
+        $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE . "
+         (quantity, product_id, supplier_id) VALUES (:quantity, :id, 1)");
+        $statement->bindValue('quantity', $qty, PDO::PARAM_INT);
+        $statement->bindValue('id', $id, PDO::PARAM_INT);
+        return $statement->execute();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller\admin;
 use App\Controller\AbstractController;
 use App\Model\admin\ProductManager;
 use App\Model\admin\CategorieManager;
+use App\Model\admin\StockManager;
 
 class ProductController extends AbstractController
 {
@@ -14,7 +15,7 @@ class ProductController extends AbstractController
     public function index(): string
     {
         $categorieManager = new ProductManager();
-        $items = $categorieManager->selectAll();
+        $items = $categorieManager->selectAllAndStock();
         return $this->twig->render('Admin/Product/index.html.twig', ['items' => $items]);
     }
 
@@ -69,8 +70,9 @@ class ProductController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item = array_map('trim', $_POST);
             $errors = getErrorForm($item);
+            $errors2 = getErrorFormQuantity($item);
 
-            if (!empty($errors)) {
+            if (!empty($errors) && !empty($errors2)) {
                 return $this->twig->render('admin/Product/add.html.twig', [
                     'errors' => $errors,
                     'item' => $item,
@@ -79,8 +81,14 @@ class ProductController extends AbstractController
             }
 
             $productManager = new ProductManager();
-            $productManager->insert($item);
 
+            // récupérer l'id (et la qty ?)
+            $id = $productManager->insert($item);
+            $qty = (int)$item['quantity'];
+
+            // ajouter au stock ce nouveau produit
+            $stockManager = new StockManager();
+            $stockManager->add($id, $qty);
             return $this->twig->render('admin/Product/add.html.twig', [
                 'success' => true,
                 'categories' => $categories
@@ -107,7 +115,6 @@ class ProductController extends AbstractController
 }
 function getErrorForm(array $item): array
 {
-    $categoryManager = new CategorieManager();
     $errors = [];
 
     if (empty($item['name']) || strlen($item['name']) > 255) {
@@ -116,12 +123,20 @@ function getErrorForm(array $item): array
     if (empty($item['description'])) {
         $errors['description'] = 'Une description est obligatoire.';
     }
-    if (empty($item['price']) || !filter_var($item['price'], FILTER_VALIDATE_FLOAT)) {
+    if (empty($item['price']) || !filter_var($item['price'], FILTER_VALIDATE_FLOAT) || $item['price'] < 0) {
         $errors['price'] = 'Le prix doit être un nombre valide.';
+    }
+    return $errors;
+}
+function getErrorFormQuantity(array $item): array
+{
+    $categoryManager = new CategorieManager();
+    $errors = [];
+    if (empty($item['quantity']) || !filter_var($item['quantity'], FILTER_VALIDATE_INT) || $item['quantity'] <= 0) {
+        $errors['quantity'] = 'La quantité doit être supérieure ou égale à 0.';
     }
     if (empty($item['category_id']) || !$categoryManager->selectOneById((int)$item['category_id'])) {
         $errors['category_id'] = 'Category ID doit correspondre à une catégorie existante.';
     }
-
     return $errors;
 }
