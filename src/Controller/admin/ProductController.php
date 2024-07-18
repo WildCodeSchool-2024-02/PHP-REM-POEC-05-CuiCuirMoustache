@@ -36,17 +36,22 @@ class ProductController extends AbstractController
     {
         $productManager = new ProductManager();
         $categoryManager = new CategorieManager();
+        $stockManager = new StockManager();
         $categories = $categoryManager->selectAll();
         $item = $productManager->selectOneById($id);
+        $stock = $stockManager->getStockById($id);
         $errors = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
             $item = array_map('trim', $_POST);
+            $stock = array_map('trim', $_POST);
             $errors = getErrorForm($item);
+            $errors2 = getErrorFormQuantity($item);
 
             // if validation is ok, update and redirection
-            if (empty($errors)) {
+            if (empty($errors) && empty($errors2)) {
                 $productManager->update($item);
+                $stockManager->updateStock($stock);
                 header('Location: /admin/product/show?id=' . $id);
                 return null;
             }
@@ -55,7 +60,8 @@ class ProductController extends AbstractController
         return $this->twig->render('Admin/Product/edit.html.twig', [
             'item' => $item,
             'errors' => $errors,
-            'categories' => $categories
+            'categories' => $categories,
+            'stock' => $stock
         ]);
     }
 
