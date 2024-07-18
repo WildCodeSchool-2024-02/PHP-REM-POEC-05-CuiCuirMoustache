@@ -46,11 +46,4 @@ class CategorieManager extends AbstractManager
 
         return $statement->execute();
     }
-
-    public function selectAllFromStock(): array
-    {
-        $query = "SELECT stock.id, product_id, quantity, stock.created_at, stock.updated_at, 
-        `name` FROM stock LEFT JOIN product AS p ON p.id=stock.product_id;";
-        return $this->pdo->query($query)->fetchAll();
-    }
 }

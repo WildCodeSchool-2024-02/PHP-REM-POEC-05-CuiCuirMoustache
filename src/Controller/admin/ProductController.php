@@ -14,8 +14,8 @@ class ProductController extends AbstractController
      */
     public function index(): string
     {
-        $categorieManager = new ProductManager();
-        $items = $categorieManager->selectAllAndStock();
+        $productManager = new ProductManager();
+        $items = $productManager->selectAllStockAndCategory();
         return $this->twig->render('Admin/Product/index.html.twig', ['items' => $items]);
     }
 
@@ -24,8 +24,8 @@ class ProductController extends AbstractController
      */
     public function show(int $id): string
     {
-        $categorieManager = new ProductManager();
-        $item = $categorieManager->selectOneById($id);
+        $productManager = new ProductManager();
+        $item = $productManager->selectOneById($id);
         return $this->twig->render('Admin/Product/show.html.twig', ['item' => $item]);
     }
 
@@ -46,10 +46,10 @@ class ProductController extends AbstractController
             $item = array_map('trim', $_POST);
             $stock = array_map('trim', $_POST);
             $errors = getErrorForm($item);
-            $errors2 = getErrorFormQuantity($item);
+            $errorsTwo = getErrorFormQuantity($item);
 
             // if validation is ok, update and redirection
-            if (empty($errors) && empty($errors2)) {
+            if (empty($errors) && empty($errorsTwo)) {
                 $productManager->update($item);
                 $stockManager->updateStock($stock);
                 header('Location: /admin/product/show?id=' . $id);
@@ -76,9 +76,9 @@ class ProductController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item = array_map('trim', $_POST);
             $errors = getErrorForm($item);
-            $errors2 = getErrorFormQuantity($item);
+            $errorsTwo = getErrorFormQuantity($item);
 
-            if (!empty($errors) && !empty($errors2)) {
+            if (!empty($errors) && !empty($errorsTwo)) {
                 return $this->twig->render('admin/Product/add.html.twig', [
                     'errors' => $errors,
                     'item' => $item,

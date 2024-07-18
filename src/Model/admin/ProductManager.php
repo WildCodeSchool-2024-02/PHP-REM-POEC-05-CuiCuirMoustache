@@ -16,6 +16,14 @@ class ProductManager extends AbstractManager
         return $this->pdo->query($query)->fetchAll();
     }
 
+    // Select All + category
+    public function selectAllStockAndCategory(): array
+    {
+        $query = "SELECT product.*, stock.*, category.name AS category_name 
+        FROM product INNER JOIN category ON category_id=category.id INNER JOIN stock ON product_id=product.id;";
+        return $this->pdo->query($query)->fetchAll();
+    }
+
     /**
      * Insert new product in database
      */
