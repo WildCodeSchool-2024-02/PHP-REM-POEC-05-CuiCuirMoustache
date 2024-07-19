@@ -30,41 +30,34 @@ class AuthController extends AbstractController
         // Vérifiez si le formulaire a été soumis avec la méthode POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Récupérez les données du formulaire d'inscription
+
             $username = $_POST['username'] ?? '';
-            $first_name = $_POST['first_name'] ?? '';
-            $last_name = $_POST['last_name'] ?? '';
+            $firstName = $_POST['first_name'] ?? '';
+            $lastName = $_POST['last_name'] ?? '';
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
             $role = $_POST['role'] ?? '';
             $phone = $_POST['phone'] ?? '';
+            $userData = [
+                'userName' => $username,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'email' => $email,
+                'password' => $password,
+                'role' => $role,
+                'phone' => $phone,
+            ];
 
             // Validation des champs du formulaire
-            if (empty($first_name)) {
-                $errors[] = 'Le prénom est requis';
-            }
-            if (empty($last_name)) {
-                $errors[] = 'Le nom est requis';
-            }
-            if (empty($email)) {
-                $errors[] = 'L\'email est requis';
-            }
-            if (empty($password)) {
-                $errors[] = 'Le mot de passe est requis';
-            }
-            if (empty($role)) {
-                $errors[] = 'Le rôle est requis';
-            }
-            if (empty($phone)) {
-                $errors[] = 'Le téléphone est requis';
-            }
+            $errors = $this->validationForm($userData);
 
             // Si le formulaire est valide
             if (empty($errors)) {
                 // Enregistrez l'utilisateur dans la base de données
                 $success = $this->authModel->register(
                     $username,
-                    $first_name,
-                    $last_name,
+                    $firstName,
+                    $lastName,
                     $email,
                     $password,
                     $role,
@@ -87,85 +80,27 @@ class AuthController extends AbstractController
             echo "Erreur de rendu de template : " . $e->getMessage();
         }
     }
-
-    private function handleLogin(): array
+    private function validationForm(array $userData): array
     {
         $errors = [];
-
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
-
-        if (empty($email)) {
-            $errors[] = 'L\'email est requis pour se connecter.';
-        }
-        if (empty($password)) {
-            $errors[] = 'Le mot de passe est requis pour se connecter.';
-        }
-        if (!$this->authModel->authenticate($email, $password)) {
-            $errors[] = 'Email ou mot de passe incorrect.';
-        }
-        return $errors;
-    }
-
-    private function handleRegistration(): array
-    {
-        $errors = [];
-        $userData = [
-            'first_name' => $_POST['first_name'] ?? '',
-            'last_name' => $_POST['last_name'] ?? '',
-            'email' => $_POST['email'] ?? '',
-            'password' => $_POST['password'] ?? '',
-            'role' => $_POST['role'] ?? '',
-            'phone' => $_POST['phone'] ?? ''
-        ];
-
-        $errors = $this->validateRegistration($userData);
-
-        if (empty($errors)) {
-            $success = $this->authModel->register(
-                $userData['username'],
-                $userData['first_name'],
-                $userData['last_name'],
-                $userData['email'],
-                $userData['password'],
-                $userData['role'],
-                $userData['phone']
-            );
-
-            if ($success) {
-                header('Location: /HomeController');
-                exit();
-            } else {
-                $errors[] = 'Erreur lors de l\'inscription. Veuillez réessayer.';
-            }
-        }
-
-        return $errors;
-    }
-
-    private function validateRegistration(array $data): array
-    {
-        $errors = [];
-
-        if (empty($data['first_name'])) {
+        if (empty($userData['firstName'])) {
             $errors[] = 'Le prénom est requis';
         }
-        if (empty($data['last_name'])) {
+        if (empty($userData['lastName'])) {
             $errors[] = 'Le nom est requis';
         }
-        if (empty($data['email'])) {
+        if (empty($userData['email'])) {
             $errors[] = 'L\'email est requis';
         }
-        if (empty($data['password'])) {
+        if (empty($userData['password'])) {
             $errors[] = 'Le mot de passe est requis';
         }
-        if (empty($data['role'])) {
+        if (empty($userData['role'])) {
             $errors[] = 'Le rôle est requis';
         }
-        if (empty($data['phone'])) {
+        if (empty($userData['phone'])) {
             $errors[] = 'Le téléphone est requis';
         }
-
         return $errors;
     }
 }

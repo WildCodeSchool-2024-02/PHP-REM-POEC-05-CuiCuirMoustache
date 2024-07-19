@@ -10,8 +10,8 @@ class AuthModel extends AbstractManager
 
     public function register(
         string $username,
-        string $first_name,
-        string $last_name,
+        string $firstName,
+        string $lastName,
         string $email,
         string $password,
         string $role,
@@ -23,8 +23,8 @@ class AuthModel extends AbstractManager
 
         return $stmt->execute([
             'username' => $username,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT),
             'role' => $role,
