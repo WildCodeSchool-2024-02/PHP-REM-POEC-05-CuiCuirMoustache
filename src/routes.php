@@ -14,6 +14,8 @@ return [
     'items/show' => ['ItemController', 'show', ['id']],
     'items/add' => ['ItemController', 'add',],
     'items/delete' => ['ItemController', 'delete',],
+    'login' => ['AuthController', 'login'],
+    'signup' => ['AuthController', 'signup'],
     'cart' => ['CartController', 'index', ['status']],
     'cart/add' => ['CartController', 'add', ['id', 'qty']],
     'cart/update' => ['CartController', 'update', ['id', 'qty']],
