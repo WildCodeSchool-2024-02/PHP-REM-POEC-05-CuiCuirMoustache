@@ -41,10 +41,12 @@ class ProductController extends AbstractController
         $item = $productManager->selectOneById($id);
         $stock = $stockManager->getStockById($id);
         $errors = [];
+        $errorsTwo = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
             $item = array_map('trim', $_POST);
             $stock = array_map('trim', $_POST);
+            $item['id'] = (int)$item['id'];
             $errors = getErrorForm($item);
             $errorsTwo = getErrorFormQuantity($item);
 
@@ -60,6 +62,7 @@ class ProductController extends AbstractController
         return $this->twig->render('Admin/Product/edit.html.twig', [
             'item' => $item,
             'errors' => $errors,
+            'errorsTwo' => $errorsTwo,
             'categories' => $categories,
             'stock' => $stock
         ]);
@@ -78,9 +81,10 @@ class ProductController extends AbstractController
             $errors = getErrorForm($item);
             $errorsTwo = getErrorFormQuantity($item);
 
-            if (!empty($errors) && !empty($errorsTwo)) {
+            if (!empty($errors) || !empty($errorsTwo)) {
                 return $this->twig->render('admin/Product/add.html.twig', [
                     'errors' => $errors,
+                    'errorsTwo' => $errorsTwo,
                     'item' => $item,
                     'categories' => $categories
                 ]);
@@ -137,12 +141,12 @@ function getErrorForm(array $item): array
 function getErrorFormQuantity(array $item): array
 {
     $categoryManager = new CategorieManager();
-    $errors = [];
+    $errorsTwo = [];
     if (empty($item['quantity']) || !filter_var($item['quantity'], FILTER_VALIDATE_INT) || $item['quantity'] <= 0) {
-        $errors['quantity'] = 'La quantité doit être supérieure ou égale à 0.';
+        $errorsTwo['quantity'] = 'La quantité doit être supérieure ou égale à 0.';
     }
     if (empty($item['category_id']) || !$categoryManager->selectOneById((int)$item['category_id'])) {
-        $errors['category_id'] = 'Category ID doit correspondre à une catégorie existante.';
+        $errorsTwo['category_id'] = 'Category ID doit correspondre à une catégorie existante.';
     }
-    return $errors;
+    return $errorsTwo;
 }

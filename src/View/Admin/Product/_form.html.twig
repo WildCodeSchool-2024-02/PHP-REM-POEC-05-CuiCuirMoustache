@@ -45,20 +45,20 @@
 								</div>
 								
 							{% endif %}
-							{% if errors.quantity is defined %}
+							{% if errorsTwo.quantity is defined %}
 						
 							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								<strong>Attention !</strong> {{ errors.quantity }}
+								<strong>Attention !</strong> {{ errorsTwo.quantity }}
 								<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
 								<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
 								</button>
 							</div>
 							
 							{% endif %}
-							{% if errors.category_id is defined %}
+							{% if errorsTwo.category_id is defined %}
 						
 								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-									<strong>Attention !</strong> {{ errors.category_id }}
+									<strong>Attention !</strong> {{ errorsTwo.category_id }}
 									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
 									</button>
