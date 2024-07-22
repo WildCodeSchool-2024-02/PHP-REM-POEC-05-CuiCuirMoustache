@@ -1,0 +1,22 @@
+{% extends 'layout_admin.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/product/product.css">
+{% endblock %}
+
+{% block content %}
+
+<h1>Les commandes</h1>
+{# {{ dump(order)}} #}
+{% for ord in order %}
+<ul>
+    <li>
+        <a href="/admin/orderitem/show?id={{ ord.id }}" method="get">
+            <p>Nom du client : {{ ord.username }} - prix total de la commande : {{ ord.total_amount }} - date de
+                création : {{ ord.created_at | date("d/m/Y g:i:sA") }}</p>
+        </a>
+    </li>
+</ul>
+{% endfor %}
+
+{% endblock %}

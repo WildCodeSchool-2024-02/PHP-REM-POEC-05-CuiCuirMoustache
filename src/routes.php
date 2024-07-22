@@ -38,4 +38,6 @@ return [
     'admin/product/show' => ['admin\\ProductController', 'show', ['id']],
     'admin/product/add' => ['admin\\ProductController', 'add',],
     'admin/product/delete' => ['admin\\ProductController', 'delete',['id']],
+    'admin/orderitem' => ['admin\\OrderitemController', 'index',],
+    'admin/orderitem/show' => ['admin\\OrderitemController', 'show', ['id']],
 ];

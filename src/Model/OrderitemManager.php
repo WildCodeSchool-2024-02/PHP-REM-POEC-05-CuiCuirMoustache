@@ -19,4 +19,13 @@ class OrderitemManager extends AbstractManager
 
         return $statement->execute();
     }
+
+    public function selectAllOrderedInfo(): array
+    {
+        $query = "SELECT ordered.id, user_id, total_amount, username, ordered.created_at
+        FROM ordered
+        INNER JOIN user ON user.id=user_id
+        ORDER BY created_at;";
+        return $this->pdo->query($query)->fetchAll();
+    }
 }
