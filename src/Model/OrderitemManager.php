@@ -34,7 +34,8 @@ class OrderitemManager extends AbstractManager
 
     public function getAllOrderedInfoById(int $id): array|false
     {
-        $statement = $this->pdo->prepare("SELECT username, ordered.created_at, `name`, product.price, quantity, ordered.id
+        $statement = $this->pdo->prepare("SELECT username, ordered.created_at, `name`, product.price, 
+        quantity, ordered.id
         FROM ordered
         INNER JOIN user ON user.id=user_id
         INNER JOIN orderitem ON ordered.id=ordered_id
