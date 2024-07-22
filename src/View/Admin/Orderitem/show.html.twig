@@ -3,7 +3,7 @@
 {% block content %}
     <h1>La commande de M/Mme {{ order.0.username }}</h1>
     {% for ord in order %}
-            <p>{{ ord.name }} en {{ ord.quantity }} exemplaires, à {{ ord.price|intToCurrency }} unité</p>
+            <p>{{ ord.name }} - {{ ord.quantity }} exemplaires - {{ ord.price|intToCurrency }} unité</p>
     {% endfor %}
     <a href="/admin/orderitem">Back</a>
 {% endblock %}
