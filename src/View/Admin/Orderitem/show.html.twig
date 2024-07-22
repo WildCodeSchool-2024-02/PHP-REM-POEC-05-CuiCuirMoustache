@@ -1,8 +1,9 @@
 {% extends 'layout_admin.html.twig' %}
 
 {% block content %}
-    <h1>La commande</h1>
-    {{ dump(order) }}
-    {# <p>{{ item.id }}. {{ item.name }}</p> #}
+    <h1>La commande de M/Mme {{ order.0.username }}</h1>
+    {% for ord in order %}
+            <p>{{ ord.name }} en {{ ord.quantity }} exemplaires, à {{ ord.price|intToCurrency }} unité</p>
+    {% endfor %}
     <a href="/admin/orderitem">Back</a>
 {% endblock %}

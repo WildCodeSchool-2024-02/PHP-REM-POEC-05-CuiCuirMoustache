@@ -8,7 +8,7 @@
 
 <h1>Les commandes</h1>
 {# {{ dump(order)}} #}
-{% for ord in order %}
+{% for ord in orders %}
 <ul>
     <li>
         <a href="/admin/orderitem/show?id={{ ord.id }}" method="get">

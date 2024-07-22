@@ -13,13 +13,13 @@ class OrderitemController extends AbstractController
         $orderitemManager = new OrderitemManager();
         $orders = $orderitemManager->selectAllOrderedInfo();
 
-        return $this->twig->render('admin/Orderitem/index.html.twig', ['order' => $orders]);
+        return $this->twig->render('admin/Orderitem/index.html.twig', ['orders' => $orders]);
     }
 
     public function show(int $id): string
     {
         $orderitemManager = new OrderitemManager();
-        $order = $orderitemManager->selectOneById($id);
+        $order = $orderitemManager->getAllOrderedInfoById($id);
         return $this->twig->render('Admin/Orderitem/show.html.twig', ['order' => $order]);
     }
 }
