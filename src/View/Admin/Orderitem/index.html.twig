@@ -10,7 +10,7 @@
 {% for ord in orders %}
     <div class="main">
         <a href="/admin/orderitem/show?id={{ ord.id }}" class="ordera">
-            {{ ord.username }} - Prix total : {{ ord.total_amount }} - Date de
+            {{ ord.username }} - Prix total : {{ ord.total_amount|intToCurrency }} - Date de
                 commande : {{ ord.created_at | date("d/m/Y g:i:sA") }}
         </a>
     </div>

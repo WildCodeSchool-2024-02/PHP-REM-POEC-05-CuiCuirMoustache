@@ -1,11 +1,29 @@
 {% extends 'layout_admin.html.twig' %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/ordered/ordered.css">
+{% endblock %}
+
 {% block content %}
+{% if order.0.total_amount == totalAmount %}
     <h1>La commande de M/Mme {{ order.0.username }} à {{ order.0.total_amount|intToCurrency }}</h1>
-    {% for ord in order %}
-    <p>{{ ord.name }} - {{ ord.quantity }} exemplaires - {{ ord.price|intToCurrency }} unité</p>
-    <a href="/admin/orderitem/edit?id={{ ord.ordered_id }}">Edit</a>
-    {% endfor %}
-    <br>
-    <a href="/admin/orderitem">Back</a>
+{% else %}
+    <h1>La commande de M/Mme {{ order.0.username }} est maintenant à {{ totalAmount|intToCurrency }}</h1>
+    <h2>(anciennement {{ order.0.total_amount|intToCurrency }})</h2>
+{% endif %}
+
+
+
+{% for ord in order %}
+<div class="main">
+    
+    <a href="/admin/orderitem/edit?id={{ ord.ordered_id }}" class="ordera">{{ ord.name }} - {{ ord.quantity }} exemplaires - {{ ord.price|intToCurrency }} unité</a>
+</div>
+{% endfor %}
+
+
+
+
+
+<a href="/admin/orderitem">Back</a>
 {% endblock %}

@@ -21,7 +21,14 @@ class OrderitemController extends AbstractController
     {
         $orderitemManager = new OrderitemManager();
         $order = $orderitemManager->getAllOrderedInfoById($id);
-        return $this->twig->render('Admin/Orderitem/show.html.twig', ['order' => $order]);
+        $totalAmount = 0;
+        foreach ($order as $ord) {
+            $totalAmount += $ord['price'] * $ord['quantity'];
+        }
+        return $this->twig->render('Admin/Orderitem/show.html.twig', [
+            'order' => $order,
+            'totalAmount' => $totalAmount
+        ]);
     }
 
     public function edit($id): ?string
