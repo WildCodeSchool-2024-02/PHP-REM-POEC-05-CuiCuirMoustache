@@ -23,7 +23,6 @@ class AuthController extends AbstractController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
         if (!isset($_SESSION['user'])) {
             header('Location: /login');
             exit();
@@ -66,7 +65,6 @@ class AuthController extends AbstractController
                     // Redirection en cas de succès
                     header('Location: /');
                     exit();
-
                 } else {
                     // Identifiants incorrects
                     $errors[] = 'Identifiants incorrects';
