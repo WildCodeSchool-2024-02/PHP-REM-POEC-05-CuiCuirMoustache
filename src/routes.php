@@ -31,4 +31,9 @@ return [
     'admin/product/show' => ['admin\\ProductController', 'show', ['id']],
     'admin/product/add' => ['admin\\ProductController', 'add',],
     'admin/product/delete' => ['admin\\ProductController', 'delete',['id']],
+    'admin/user' => ['admin\\UserController', 'index',],
+    'admin/user/edit' => ['admin\\UserController', 'edit', ['id']],
+    'admin/user/show' => ['admin\\UserController', 'show', ['id']],
+    'admin/user/add' => ['admin\\UserController', 'add',],
+    'admin/user/delete' => ['admin\\UserController', 'delete',['id']],
 ];
