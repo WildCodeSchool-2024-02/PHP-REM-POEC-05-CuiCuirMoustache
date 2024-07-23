@@ -1,5 +1,5 @@
 {% extends 'layout_admin.html.twig' %}
-<<<<<<< HEAD
+
 {% block stylesheet %}
 <style>
     .tiles {
@@ -108,34 +108,4 @@
 
 {% block content_side %}
 
-
-
-
 {% endblock %}
-=======
-
-{% block stylesheet %}
-<link rel="stylesheet" href="/assets/css/product/product.css">
-{% endblock %}
-
-{% block content %}
-
-<h1>Les utilisateurs</h1>
-<div>
-    <div>
-        {% for us in user %}
-        <ul>
-            <li>
-                <p>Nom de l'utilisateur : {{ us.username }} - role: {{ us.role }} - date de création : {{
-                    us.created_at | date("d/m/Y g:i:sA") }}</p>
-            </li>
-            <form action="/admin/user/delete" method="POST">
-                <input type="hidden" name="id" value="{{ us.id }}">
-                <button>Supprimer</button>
-            </form>
-        </ul>
-
-        {% endfor %}
-
-{% endblock %}
->>>>>>> dev
