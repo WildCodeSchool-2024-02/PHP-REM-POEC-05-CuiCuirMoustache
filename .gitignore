@@ -3,5 +3,6 @@
 .phpcs-cache
 *.cache
 db.php
+key.php
 .idea
 .vscode
