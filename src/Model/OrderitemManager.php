@@ -34,7 +34,7 @@ class OrderitemManager extends AbstractManager
 
     public function getAllOrderedInfoById(int $id): array|false
     {
-        $statement = $this->pdo->prepare("SELECT username, ordered.created_at, `name`, product.price, 
+        $statement = $this->pdo->prepare("SELECT total_amount, username, ordered.created_at, `name`, product.price, 
         quantity, ordered.id
         FROM ordered
         INNER JOIN user ON user.id=user_id
@@ -46,5 +46,17 @@ class OrderitemManager extends AbstractManager
         $statement->execute();
 
         return $statement->fetchAll();
+    }
+
+    public function insert(array $product)
+    {
+        $statement = $this->pdo->prepare("UPDATE "  . self::TABLE . " SET quantity = :quantity, price = :price
+        WHERE ordered_id = :ordered_id AND product_id = :product_id;");
+        $statement->bindValue('quantity', $product['quantity'], PDO::PARAM_INT);
+        $statement->bindValue('price', $product['price'], PDO::PARAM_INT);
+        $statement->bindValue('ordered_id', $product['ordered_id'], PDO::PARAM_INT);
+        $statement->bindValue('product_id', $product['product_id'], PDO::PARAM_INT);
+
+        return $statement->execute();
     }
 }

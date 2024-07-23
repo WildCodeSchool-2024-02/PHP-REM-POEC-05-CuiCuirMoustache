@@ -40,4 +40,5 @@ return [
     'admin/product/delete' => ['admin\\ProductController', 'delete',['id']],
     'admin/orderitem' => ['admin\\OrderitemController', 'index',],
     'admin/orderitem/show' => ['admin\\OrderitemController', 'show', ['id']],
+    'admin/orderitem/edit' => ['admin\\OrderitemController', 'edit', ['id']],
 ];

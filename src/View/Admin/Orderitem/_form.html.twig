@@ -1,0 +1,107 @@
+<div class="container mt-5">
+	<div class="row ">
+		<div class="col-md-12">
+			<div class="card w-100">
+				<div class="card-header">
+					<h2 class="card-title text-center">Modification de commande</h2>
+
+							{% if success is defined %}
+						
+								<div class="alert alert-success alert-dismissible fade show" role="alert">
+									<strong>Bravo !</strong> Le formulaire est valide, votre Produit est ajouter.
+									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+									</button>
+								</div>
+								
+							{% endif %}
+							{% if errors.name is defined %}
+						
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<strong>Attention !</strong> {{ errors.name }}
+								<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+								</button>
+							</div>
+							
+						{% endif %}
+						{% if errors.description is defined %}
+						
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+									<strong>Attention !</strong> {{ errors.description }}
+									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+									</button>
+								</div>
+								
+							{% endif %}
+							{% if errors.price is defined %}
+						
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+									<strong>Attention !</strong> {{ errors.price }}
+									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+									</button>
+								</div>
+								
+							{% endif %}
+							{% if errorsTwo.quantity is defined %}
+						
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<strong>Attention !</strong> {{ errorsTwo.quantity }}
+								<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+								</button>
+							</div>
+							
+							{% endif %}
+							{% if errorsTwo.category_id is defined %}
+						
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+									<strong>Attention !</strong> {{ errorsTwo.category_id }}
+									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+									</button>
+								</div>
+								
+							{% endif %}
+
+					
+				</div>
+				<div class="card-body">
+					<form method="post">
+						<div class="form-group">
+							<label for="name">Nom :</label>
+							<input type="text" class="form-control" id="name" name="name" value="{{item.name}}">
+						</div>
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea class="form-control" id="description" name="description" rows="4">{{item.description}}</textarea>
+						</div>
+						<div class="form-group">
+							<label for="price">Prix:</label>
+							<input type="text" class="form-control" id="price" name="price" value="{{item.price}}">
+						</div>
+						<div class="form-group">
+							<label for="quantity">Quantité:</label>
+							<input type="text" class="form-control" id="quantity" name="quantity" value="{{stock.quantity}}">
+						</div>
+						<div class="form-group">
+							<label for="category_id">Category ID:</label>
+							<select class="form-control" id="category_id" name="category_id">
+								<option value="">Selectionner une categorie</option>
+								{% for category in categories %}
+									<option value="{{ category.id }}" {% if category.id == item.category_id %}selected{% endif %}>
+										{{ category.name }}
+									</option>
+								{% endfor %}
+							</select>
+						</div>
+						<input type="hidden" id="id" name="id" value="{{item.id}}">
+						<button type="submit" class="btn btn-primary btn-block mt-3">Envoyer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

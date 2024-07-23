@@ -1,9 +1,11 @@
 {% extends 'layout_admin.html.twig' %}
 
 {% block content %}
-    <h1>La commande de M/Mme {{ order.0.username }}</h1>
+    <h1>La commande de M/Mme {{ order.0.username }} à {{ order.0.total_amount|intToCurrency }}</h1>
     {% for ord in order %}
-            <p>{{ ord.name }} - {{ ord.quantity }} exemplaires - {{ ord.price|intToCurrency }} unité</p>
+    <p>{{ ord.name }} - {{ ord.quantity }} exemplaires - {{ ord.price|intToCurrency }} unité</p>
     {% endfor %}
+    <a href="/admin/orderitem/edit?id={{ order.0.id }}">Edit</a>
+    <br>
     <a href="/admin/orderitem">Back</a>
 {% endblock %}
