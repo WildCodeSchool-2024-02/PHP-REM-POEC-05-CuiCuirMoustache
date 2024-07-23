@@ -48,15 +48,15 @@ class OrderitemManager extends AbstractManager
         return $statement->fetchAll();
     }
 
-    public function insert(array $product): int
-    {
-        $statement = $this->pdo->prepare("UPDATE "  . self::TABLE . " SET quantity = :quantity, price = :price
-        WHERE ordered_id = :ordered_id AND product_id = :product_id;");
-        $statement->bindValue('quantity', $product['quantity'], PDO::PARAM_INT);
-        $statement->bindValue('price', $product['price'], PDO::PARAM_INT);
-        $statement->bindValue('ordered_id', $product['ordered_id'], PDO::PARAM_INT);
-        $statement->bindValue('product_id', $product['product_id'], PDO::PARAM_INT);
+    // public function insert(array $product)
+    // {
+    //     $statement = $this->pdo->prepare("UPDATE "  . self::TABLE . " SET quantity = :quantity, price = :price
+    //     WHERE ordered_id = :ordered_id AND product_id = :product_id;");
+    //     $statement->bindValue('quantity', $product['quantity'], PDO::PARAM_INT);
+    //     $statement->bindValue('price', $product['price'], PDO::PARAM_INT);
+    //     $statement->bindValue('ordered_id', $product['ordered_id'], PDO::PARAM_INT);
+    //     $statement->bindValue('product_id', $product['product_id'], PDO::PARAM_INT);
 
-        return $statement->execute();
-    }
+    //     return $statement->execute();
+    // }
 }
