@@ -24,59 +24,43 @@ class OrderitemController extends AbstractController
         return $this->twig->render('Admin/Orderitem/show.html.twig', ['order' => $order]);
     }
 
-    // public function edit(int $id): ?string
-    // {
-    //     // -- $productManager = new ProductManager();
-    //     // -- $categoryManager = new CategorieManager();
-    //     // -- $stockManager = new StockManager();
-    //     $orderitemManager = new OrderitemManager();
-    //     // -- $categories = $categoryManager->selectAll();
-    //     // -- $item = $productManager->selectOneById($id);
-    //     // -- $stock = $stockManager->getStockById($id);
-    //     $orders = $orderitemManager->getAllOrderedInfoById($id);
-    //     $errors = [];
-    //     $errorsTwo = [];
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         // -- clean $_POST data
-    //         // -- $item = array_map('trim', $_POST);
-    //         // -- $stock = array_map('trim', $_POST);
-    //         $orders = array_map('trim', $_POST);
-    //         var_dump($orders);
-    //         die();
-    //         // -- $item['id'] = (int)$item['id'];
-    //         // -- $errors = getErrorForm($item);
-    //         // -- $errorsTwo = getErrorFormQuantity($item);
+    public function edit($id): ?string
+    {
+        $orderitemManager = new OrderitemManager();
+        $order = $orderitemManager->selectOneById((int)$id);
+        $errors = [];
 
-    //         // if validation is ok, update and redirection
-    //         if (empty($errors) && empty($errorsTwo)) {
-    //             // -- $productManager->update($item);
-    //             // -- $stockManager->updateStock($stock);
-    //             header('Location: /admin/product/show?id=' . $id);
-    //             return null;
-    //         }
-    //     }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // clean $_POST data
+            $order = array_map('trim', $_POST);
+            $order['price'] = (int)$order['price'];
+            $order['quantity'] = (int)$order['quantity'];
+            $errors = getErrorForm($order);
 
-    //     return $this->twig->render('Admin/Product/edit.html.twig', [
-    //         // -- 'item' => $item,
-    //         'errors' => $errors,
-    //         'errorsTwo' => $errorsTwo,
-    //         // -- 'categories' => $categories,
-    //         // -- 'stock' => $stock
-    //     ]);
-    // }
+            // if validation is ok
+            if (empty($errors)) {
+                $orderitemManager->update($order);
+                header('Location: /admin/orderitem');
+            }
+        }
+
+        return $this->twig->render('Admin/Orderitem/edit.html.twig', [
+            'order' => $order,
+            'errors' => $errors,
+        ]);
+    }
 }
-function getErrorForm(array $item): array
+function getErrorForm(array $order): array
 {
     $errors = [];
 
-    if (empty($item['name']) || strlen($item['name']) > 255) {
-        $errors['name'] = 'Un nom est nécessaire et il ne doit pas dépasser 255 caractères.';
-    }
-    if (empty($item['description'])) {
-        $errors['description'] = 'Une description est obligatoire.';
-    }
-    if (empty($item['price']) || !filter_var($item['price'], FILTER_VALIDATE_FLOAT) || $item['price'] < 0) {
+    if (empty($order['price']) || $order['price'] < 0) {
         $errors['price'] = 'Le prix doit être un nombre valide.';
     }
+
+    if (empty($order['quantity']) || $order['quantity'] < 0) {
+        $errors['quantity'] = 'La quantité doit être supérieure à 0.';
+    }
+
     return $errors;
 }
