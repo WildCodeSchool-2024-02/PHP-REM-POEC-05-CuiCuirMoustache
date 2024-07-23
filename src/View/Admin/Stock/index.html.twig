@@ -11,9 +11,9 @@
 <div class="main">
     <ul>
         <li>
-            {{ stoc.name }} - Quantité : {{ stoc.quantity }} - Crée le {{
-                stoc.created_at | date("d/m/Y g:i:sA") }} - Modifié le {{ stoc.updated_at | date("d/m/Y
-                g:i:sA") }}
+            <b>{{ stoc.name }}</b> - Quantité : <b>{{ stoc.quantity }}</b> - Crée le <b>{{
+                stoc.created_at | date("d/m/Y g:i:sA") }}</b> - Modifié le <b>{{ stoc.updated_at | date("d/m/Y
+                g:i:sA") }}</b>
         </li>
         <form action="/admin/stock/update" method="POST" class="form-class">
             <input type="hidden" name="id" value="{{ stoc.id }}">
