@@ -1,16 +1,33 @@
-.main {
+.ordera {
     border: solid var(--quinary-color);
     border-radius: 5px;
-    margin: 40px;
-}
-
-.ordera {
+    margin: 30px;
     text-decoration: none;
-    display: block;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.main:hover {
+.ordera:hover {
     color: var(--tertiary-color);
     border: solid var(--tertiary-color);
+}
+
+.bottom {
+    justify-content: center;
+}
+
+.fly {
+    padding-left: 20px;
+    padding-right: 20px;
+    border: solid var(--quinary-color);
+    border-top: transparent;
+    border-radius: 5px;
+    justify-content: center;
+}
+
+.ordera:hover > .fly {
+    border: solid var(--tertiary-color);
+    border-top: transparent;
 }
