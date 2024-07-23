@@ -15,7 +15,6 @@ class AuthModel extends AbstractManager
         string $lastName,
         string $email,
         string $password,
-        //string $role,
         string $phone
     ): bool {
         $query = "INSERT INTO " . self::TABLE . " (username, first_name, last_name, email, password, phone) 
@@ -32,15 +31,18 @@ class AuthModel extends AbstractManager
         ]);
     }
 
-    public function authenticate(string $email, string $password): bool
+    public function authenticate(string $email, string $password)
     {
-        $query = "SELECT password FROM " . self::TABLE . " WHERE email = :email";
+        $query = "SELECT * FROM " . self::TABLE . " WHERE email = :email";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user && password_verify($password, $user['password'])) {
+            return $user;
+        }
 
-        return $user && password_verify($password, $user['password']);
+        return false;
     }
 
     public function emailExists(string $email): bool
@@ -67,10 +69,10 @@ class AuthModel extends AbstractManager
     public function resetPassword(string $token, string $newPassword): bool
     {
         // Vérifiez que le token existe et n'a pas expiré
-        $query = "SELECT email FROM " . self::RESET_TOKENS_TABLE . " WHERE token = :token AND TIMESTAMPDIFF(HOUR, created_at, NOW()) < 24";
+        $query = "SELECT email FROM " . self::RESET_TOKENS_TABLE .
+        " WHERE token = :token AND TIMESTAMPDIFF(HOUR, created_at, NOW()) < 24";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['token' => $token]);
-        
         $email = $stmt->fetchColumn();
 
         if ($email) {

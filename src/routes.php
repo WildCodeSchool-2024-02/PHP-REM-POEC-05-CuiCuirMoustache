@@ -19,6 +19,8 @@ return [
     'authentification' => ['AuthController', 'authentification'],
     'forgot_password' => ['AuthController', 'forgotPassword'],
     'reset_password' => ['AuthController', 'resetPassword', ['token']],
+    'account' => ['AuthController', 'account'],
+    'logout' => ['AuthController', 'authLogout'],
     'cart' => ['CartController', 'index', ['status']],
     'cart/add' => ['CartController', 'add', ['id', 'qty']],
     'cart/update' => ['CartController', 'update', ['id', 'qty']],

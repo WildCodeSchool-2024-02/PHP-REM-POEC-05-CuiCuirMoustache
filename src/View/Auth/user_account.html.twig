@@ -1,0 +1,20 @@
+{% extends 'layout_login.html.twig' %}
+
+{% block title %}Mon Compte{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/#account.css">
+{% endblock %}
+
+{% block content %}
+<div class="form">
+    <h2>Mon Compte CuirCuirMoustache</h2>
+    <p>Nom d'utilisateur : {{ user.username }}</p>
+    <p>Email : {{ user.email }}</p>
+    <p>Prénom : {{ user.firstname }}</p>
+    <p>Nom : {{ user.lastname }}</p>
+    <p>Téléphone : {{ user.phone }}</p>
+    <p><a href="/edit_account">Modifier les informations</a></p>
+</div>
+{% endblock %}

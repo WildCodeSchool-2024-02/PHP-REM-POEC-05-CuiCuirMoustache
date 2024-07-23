@@ -15,7 +15,27 @@ class AuthController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->authModel = new AuthModel(); 
+        $this->authModel = new AuthModel();
+    }
+
+    public function account()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        try {
+            echo $this->twig->render('Auth/user_account.html.twig', [
+                'user' => $_SESSION['user']
+            ]);
+        } catch (LoaderError | RuntimeError | SyntaxError $e) {
+            echo "Erreur de rendu de template : " . $e->getMessage();
+        }
     }
 
     public function authentification()
@@ -32,10 +52,21 @@ class AuthController extends AbstractController
             } else {
                 $user = $this->authModel->authenticate($data['email'], $data['password']);
 
-                if ($user) {
+                if ($user !== false) {
+                    // Stocker les informations de l'utilisateur dans la session
+                    $_SESSION['user'] = [
+                        'id' => $user['id'],
+                        'username' => $user['username'],
+                        'firstname' => $user['first_name'],
+                        'lastname' => $user['last_name'],
+                        'email' => $user['email'],
+                        'phone' => $user['phone'],
+                    ];
+
                     // Redirection en cas de succès
                     header('Location: /');
                     exit();
+
                 } else {
                     // Identifiants incorrects
                     $errors[] = 'Identifiants incorrects';
@@ -45,7 +76,10 @@ class AuthController extends AbstractController
 
         // Rendre la vue avec les erreurs et les données du formulaire
         try {
-            echo $this->twig->render('Auth/login.html.twig', ['errors' => $errors, 'data' => $data]);
+            echo $this->twig->render(
+                'Auth/login.html.twig',
+                ['errors' => $errors, 'data' => $data]
+            );
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
             echo "Erreur de rendu de template : " . $e->getMessage();
         }
@@ -61,12 +95,11 @@ class AuthController extends AbstractController
 
             if (empty($email)) {
                 $errors[] = 'L\'email est requis';
-            } else if (!$this->authModel->emailExists($email)) {
+            } elseif (!$this->authModel->emailExists($email)) {
                 $errors[] = 'Aucun utilisateur trouvé avec cet email';
             } else {
-                $token = bin2hex(random_bytes(32)); // Génération d'un token sécurisé
+                $token = bin2hex(random_bytes(32));
                 if ($this->authModel->storeResetToken($email, $token)) {
-                    // Envoyer l'email de réinitialisation (implémentation non montrée ici)
                     $success = true;
                 } else {
                     $errors[] = 'Erreur lors de la génération du token';
@@ -75,7 +108,10 @@ class AuthController extends AbstractController
         }
 
         try {
-            echo $this->twig->render('Auth/forgot_password.html.twig', ['errors' => $errors, 'success' => $success]);
+            echo $this->twig->render(
+                'Auth/forgot_password.html.twig',
+                ['errors' => $errors, 'success' => $success]
+            );
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
             echo "Erreur de rendu de template : " . $e->getMessage();
         }
@@ -92,7 +128,7 @@ class AuthController extends AbstractController
 
             if (empty($newPassword)) {
                 $errors[] = 'Le nouveau mot de passe est requis';
-            } else if (!$this->authModel->resetPassword($token, $newPassword)) {
+            } elseif (!$this->authModel->resetPassword($token, $newPassword)) {
                 $errors[] = 'Erreur lors de la réinitialisation du mot de passe';
             } else {
                 $success = true;
@@ -100,12 +136,15 @@ class AuthController extends AbstractController
         }
 
         try {
-            echo $this->twig->render('Auth/reset_password.html.twig', ['errors' => $errors, 'success' => $success, 'token' => $token]);
+            echo $this->twig->render(
+                'Auth/reset_password.html.twig',
+                ['errors' => $errors, 'success' => $success, 'token' => $token]
+            );
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
             echo "Erreur de rendu de template : " . $e->getMessage();
         }
     }
-    
+
     public function signup()
     {
         // Initialisez un tableau d'erreurs pour les validations de formulaire
@@ -114,7 +153,6 @@ class AuthController extends AbstractController
         // Vérifiez si le formulaire a été soumis avec la méthode POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Récupérez les données du formulaire d'inscription
-
             $username = $_POST['username'] ?? '';
             $firstName = $_POST['first_name'] ?? '';
             $lastName = $_POST['last_name'] ?? '';
@@ -156,11 +194,30 @@ class AuthController extends AbstractController
 
         try {
             // Affichez le formulaire d'inscription avec les erreurs
-            echo $this->twig->render('Auth/signup.html.twig', ['errors' => $errors]);
+            echo $this->twig->render(
+                'Auth/signup.html.twig',
+                ['errors' => $errors]
+            );
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
             echo "Erreur de rendu de template : " . $e->getMessage();
         }
     }
+
+    public function authLogout()
+    {
+        // Vérifier si une session est déjà active
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Détruire la session
+        session_destroy();
+
+        // Rediriger l'utilisateur vers la page de connexion
+        header('Location: /login');
+        exit();
+    }
+
     private function validationForm(array $userData): array
     {
         $errors = [];
