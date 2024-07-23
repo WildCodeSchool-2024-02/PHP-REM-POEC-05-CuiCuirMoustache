@@ -48,7 +48,7 @@ class OrderitemManager extends AbstractManager
         return $statement->fetchAll();
     }
 
-    public function insert(array $product)
+    public function insert(array $product): int
     {
         $statement = $this->pdo->prepare("UPDATE "  . self::TABLE . " SET quantity = :quantity, price = :price
         WHERE ordered_id = :ordered_id AND product_id = :product_id;");
