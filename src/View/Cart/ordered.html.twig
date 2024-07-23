@@ -19,7 +19,7 @@
                 <p>{{ productAndQty.product.description }}</p>
             </li>
             <li>
-                <p>{{productAndQty.qty}} - {{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}</p>
+                <p>{{productAndQty.qty}}x  {{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}</p>
             </li>
         </ul>
         {% endfor %}

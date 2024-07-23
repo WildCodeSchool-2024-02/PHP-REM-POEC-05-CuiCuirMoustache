@@ -76,7 +76,7 @@ class CategorieController extends AbstractController
                 $errors['name'] = 'Un nom est necessaire et il doit pas depasser 255 caracteres ';
             }
             if (empty($item['description'])) {
-                $errors['description'] = 'une Description est obligatoire.';
+                $errors['description'] = 'une description est obligatoire.';
             }
             if (!empty($item['parent_id']) && !filter_var($item['parent_id'], FILTER_VALIDATE_INT)) {
                 $errors['parent_id'] = 'Parent ID doit etre un nombre entier.';

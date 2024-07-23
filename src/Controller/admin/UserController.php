@@ -4,7 +4,6 @@ namespace App\Controller\admin;
 
 use App\Controller\AbstractController;
 use App\Model\admin\UserManager;
-use App\Model\admin\CategorieManager;
 
 class UserController extends AbstractController
 {

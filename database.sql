@@ -130,7 +130,8 @@ CREATE TABLE IF NOT EXISTS Stock (
     supplier_id INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES Product(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+        ON DELETE CASCADE,
     FOREIGN KEY (supplier_id) REFERENCES Supplier(id)
 ) ENGINE=InnoDB;
 
@@ -187,3 +188,229 @@ CREATE TABLE IF NOT EXISTS Discount (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
+INSERT INTO
+    User (
+        username,
+        password,
+        email,
+        role,
+        first_name,
+        last_name,
+        phone
+    )
+VALUES (
+        'john_doe',
+        'password123',
+        'john.doe@example.com',
+        'user',
+        'John',
+        'Doe',
+        '+1234567890'
+    ),
+    (
+        'jane_smith',
+        'pass456',
+        'jane.smith@example.com',
+        'user',
+        'Jane',
+        'Smith',
+        '+9876543210'
+    ),
+    (
+        'admin',
+        'admin123',
+        'admin@example.com',
+        'admin',
+        'Admin',
+        'User',
+        '+1112223333'
+    );
+
+INSERT INTO
+    Address (
+        user_id,
+        address_line1,
+        city,
+        state,
+        postal_code,
+        country
+    )
+VALUES (
+        1,
+        '123 Main St',
+        'New York',
+        'NY',
+        '10001',
+        'USA'
+    ),
+    (
+        2,
+        '456 Oak Ave',
+        'Los Angeles',
+        'CA',
+        '90001',
+        'USA'
+    ),
+    (
+        3,
+        '789 Elm Rd',
+        'Chicago',
+        'IL',
+        '60001',
+        'USA'
+    );
+
+INSERT INTO
+    Category (name, description, parent_id)
+VALUES (
+        'Electronics',
+        'Electronics products',
+        NULL
+    ),
+    (
+        'Clothing',
+        'Apparel and fashion',
+        NULL
+    ),
+    (
+        'Phones',
+        'Mobile phones and accessories',
+        1
+    ),
+    (
+        'Laptops',
+        'Laptop computers',
+        1
+    );
+
+INSERT INTO
+    Supplier (
+        name,
+        contact_name,
+        contact_email,
+        contact_phone,
+        address
+    )
+VALUES (
+        'Tech Supplier Inc.',
+        'John Tech',
+        'info@techsupplier.com',
+        '+1234567890',
+        '789 Tech Rd'
+    ),
+    (
+        'Fashion World',
+        'Jane Fashion',
+        'info@fashionworld.com',
+        '+9876543210',
+        '456 Fashion Ave'
+    );
+
+INSERT INTO
+    Product (
+        name,
+        description,
+        price,
+        category_id
+    )
+VALUES (
+        'Smartphone X',
+        'High-end smartphone',
+        999.99,
+        3
+    ),
+    (
+        'Laptop Pro',
+        'Powerful laptop',
+        1499.99,
+        4
+    ),
+    (
+        'T-shirt',
+        'Cotton T-shirt',
+        29.99,
+        2
+    );
+
+INSERT INTO
+    Stock (
+        product_id,
+        quantity,
+        supplier_id
+    )
+VALUES (1, 100, 1),
+    (2, 50, 1),
+    (3, 200, 2);
+
+INSERT INTO
+    Ordered (user_id, total_amount, status)
+VALUES (1, 999.99, 'Pending'),
+    (2, 1499.99, 'Completed'),
+    (3, 29.99, 'Pending');
+
+INSERT INTO
+    OrderItem (
+        ordered_id,
+        product_id,
+        quantity,
+        price
+    )
+VALUES (1, 1, 1, 999.99),
+    (2, 2, 1, 1499.99),
+    (3, 3, 1, 29.99);
+
+INSERT INTO
+    Review (
+        product_id,
+        user_id,
+        rating,
+        comment
+    )
+VALUES (1, 1, 5, 'Great phone!'),
+    (2, 2, 4, 'Excellent laptop'),
+    (3, 3, 3, 'Nice T-shirt');
+
+INSERT INTO
+    Payment (
+        order_id,
+        payment_method,
+        amount,
+        status
+    )
+VALUES (
+        1,
+        'Credit Card',
+        999.99,
+        'Paid'
+    ),
+    (2, 'PayPal', 1499.99, 'Paid'),
+    (
+        3,
+        'Debit Card',
+        29.99,
+        'Paid'
+    );
+
+INSERT INTO
+    Discount (
+        code,
+        description,
+        percentage,
+        valid_from,
+        valid_to
+    )
+VALUES (
+        'SUMMER20',
+        'Summer discount',
+        20.00,
+        '2024-06-01 00:00:00',
+        '2024-08-31 23:59:59'
+    ),
+    (
+        'FALLSALE',
+        'Fall sale discount',
+        15.00,
+        '2024-09-01 00:00:00',
+        '2024-11-30 23:59:59'
+    );
