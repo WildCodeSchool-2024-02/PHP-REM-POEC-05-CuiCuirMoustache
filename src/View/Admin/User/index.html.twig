@@ -1,26 +1,111 @@
 {% extends 'layout_admin.html.twig' %}
 
 {% block stylesheet %}
-<link rel="stylesheet" href="/assets/css/product/product.css">
+<style>
+    .tiles {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        -moz-column-gap: 1rem;
+        column-gap: 1rem;
+        row-gap: 1rem;
+        margin-top: 1.25rem;
+    }
+</style>
 {% endblock %}
-
 {% block content %}
 
-<h1>Les utilisateurs</h1>
-<div>
-    <div>
-        {% for us in user %}
-        <ul>
-            <li>
-                <p>Nom de l'utilisateur : {{ us.username }} - role: {{ us.role }} - date de création : {{
-                    us.created_at | date("d/m/Y g:i:sA") }}</p>
-            </li>
-            <form action="/admin/user/delete" method="POST">
-                <input type="hidden" name="id" value="{{ us.id }}">
-                <button>Supprimer</button>
-            </form>
-        </ul>
+     <section class="service-section">
+                    <h2>Section Utilisateur</h2>
+                    <div class="service-section-header">
+                        
+                    </div>
+                    <div class="mobile-only">
+                        <button class="flat-button">
+                            Toggle search
+                        </button>
+                    </div>
+                    <div class="tiles">
+                        <article class="tile">
+                            <div class="tile-header">
+                                <h3>
+                                    <span>Nombre d'Utilisateur</span>
+                                    <span>{{ items|length  }} Utilisateur</span>
+                                </h3>
+                            </div>
+                            <a href="/admin/user/add">
+                                <span>Ajouter Utilisateur</span>
+                                <span class="icon-button">
+                                    <i class="bi bi-plus-circle-dotted"></i>
+                                </span>
+                            </a>
+                        </article>
+                        <article class="tile">
+                            <div class="tile-header">
+                                <h3>
+                                    <span>Utilisateur Admin</span>
+                                    <span>{{ items|length  }}</span>
+                                </h3>
+                            </div>
+                            
+                            
+                        </article>
 
-        {% endfor %}
+                    </div>
+                    <div class="service-section-footer">
+                        <p><i class="bi bi-exclamation-square"></i> Attention aux Droits  </p>
+                    </div>
+                </section>
+                <section class="transfer-section">
+                    <div class="transfer-section-header">
+                        <h2>Liste des Produits</h2>
+                        <div class="filter-options">
+                            <p>Attention a toutes Modification des Droits.</p>
+                            <button class="icon-button">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="icon-button">
+                                <i class="bi bi-plus-circle-dotted"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered text-light rounded">
+                        <thead>
+                          <tr class="">
+                            <th scope="col">ID</th>
+                            <th scope="col">Pseudo</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">role</th>
+                            <th scope="col">Modifié</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for item in items %}
+                            <tr>
+                                <th scope="row">{{ item.id }}</th>
+                                <td>{{ item.username }}</td>
+                                <td>{{ item.first_name }} {{ item.last_name }}</td>
+                                <td>{{ item.role }}</td>
+                                <td>{{ item.updated_at }}</td>
+                                <td class="table_action">
+                                    <a href="/admin/user/show?id={{ item.id }}"><i class="bi bi-eye"></i></a>
+                                    <a href="/admin/user/delete?id={{ item.id }}"><i class="bi bi-x-square"></i></a>
+                                    <a href="/admin/user/edit?id={{ item.id }}"><i class="bi bi-pencil-square"></i></a>
+                                </td>
+                              </tr>
+                            {% else %}
+                                <tr>
+                                    <th scope="row">Rien a afficher</th>
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                      </table>
+                </section> 
+{% endblock %}
+
+
+{% block content_side %}
 
 {% endblock %}

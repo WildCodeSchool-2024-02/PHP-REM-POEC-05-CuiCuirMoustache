@@ -26,8 +26,6 @@ return [
     'product/show' => ['ProductController', 'show', ['id']],
     'admin/stock' => ['admin\\StockController', 'index'],
     'admin/stock/update' => ['admin\\StockController', 'update', ['id', 'quantity']],
-    'admin/user' => ['admin\\UserController', 'index'],
-    'admin/user/delete' => ['admin\\UserController', 'delete', ['id']],
     'admin/categorie' => ['admin\\CategorieController', 'index',],
     'admin/categorie/edit' => ['admin\\CategorieController', 'edit', ['id']],
     'admin/categorie/show' => ['admin\\CategorieController', 'show', ['id']],
@@ -38,4 +36,9 @@ return [
     'admin/product/show' => ['admin\\ProductController', 'show', ['id']],
     'admin/product/add' => ['admin\\ProductController', 'add',],
     'admin/product/delete' => ['admin\\ProductController', 'delete',['id']],
+    'admin/user' => ['admin\\UserController', 'index',],
+    'admin/user/edit' => ['admin\\UserController', 'edit', ['id']],
+    'admin/user/show' => ['admin\\UserController', 'show', ['id']],
+    'admin/user/add' => ['admin\\UserController', 'add',],
+    'admin/user/delete' => ['admin\\UserController', 'delete',['id']],
 ];
