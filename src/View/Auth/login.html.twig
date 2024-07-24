@@ -11,7 +11,7 @@
     
     <div class="tab-content">
         <div id="authentification">   
-            <h1>Content de vous revoir</h1>
+            <h2>Content de vous revoir</h2>
 
             {% if errors is defined and errors|length > 0 %}
                 <div class="errors">
@@ -23,7 +23,7 @@
                 </div>
             {% endif %}
             
-            <form action="/authentification" method="post">
+            <form action="/login" method="post">
                 <div class="field-wrap">
                     <label for="email_login">
                         Email<span class="req">*</span>

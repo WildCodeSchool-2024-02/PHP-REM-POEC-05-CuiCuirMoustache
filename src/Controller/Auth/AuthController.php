@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Auth;
 
+use App\Controller\AbstractController;
 use App\Model\AuthModel;
-use PharIo\Manifest\Email;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -16,25 +16,6 @@ class AuthController extends AbstractController
     {
         parent::__construct();
         $this->authModel = new AuthModel();
-    }
-
-    public function account()
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (!isset($_SESSION['user'])) {
-            header('Location: /login');
-            exit();
-        }
-
-        try {
-            echo $this->twig->render('Auth/user_account.html.twig', [
-                'user' => $_SESSION['user']
-            ]);
-        } catch (LoaderError | RuntimeError | SyntaxError $e) {
-            echo "Erreur de rendu de template : " . $e->getMessage();
-        }
     }
 
     public function authentification()
@@ -72,11 +53,64 @@ class AuthController extends AbstractController
             }
         }
 
+        // Ajouter l'état de connexion
+        $isLoggedIn = isset($_SESSION['user']);
+
         // Rendre la vue avec les erreurs et les données du formulaire
         try {
             echo $this->twig->render(
                 'Auth/login.html.twig',
-                ['errors' => $errors, 'data' => $data]
+                ['errors' => $errors, 'data' => $data, 'isLoggedIn' => $isLoggedIn]
+            );
+        } catch (LoaderError | RuntimeError | SyntaxError $e) {
+            echo "Erreur de rendu de template : " . $e->getMessage();
+        }
+    }
+
+    public function signup()
+    {
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'] ?? '';
+            $firstName = $_POST['first_name'] ?? '';
+            $lastName = $_POST['last_name'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $phone = $_POST['phone'] ?? '';
+            $userData = [
+                'userName' => $username,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'email' => $email,
+                'password' => $password,
+                'phone' => $phone,
+            ];
+
+            $errors = $this->validationForm($userData);
+
+            if (empty($errors)) {
+                $success = $this->authModel->register(
+                    $username,
+                    $firstName,
+                    $lastName,
+                    $email,
+                    $password,
+                    $phone
+                );
+                if ($success) {
+                    header('Location: /');
+                    exit();
+                } else {
+                    $errors[] = 'Erreur lors de l\'inscription. Veuillez réessayer.';
+                }
+            }
+        }
+
+        try {
+            echo $this->twig->render(
+                'Auth/signup.html.twig',
+                ['errors' => $errors]
             );
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
             echo "Erreur de rendu de template : " . $e->getMessage();
@@ -143,59 +177,17 @@ class AuthController extends AbstractController
         }
     }
 
-    public function signup()
+    public function renderViewWithLoginStatus($template, $params = [])
     {
-        // Initialisez un tableau d'erreurs pour les validations de formulaire
-        $errors = [];
-
-        // Vérifiez si le formulaire a été soumis avec la méthode POST
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérez les données du formulaire d'inscription
-            $username = $_POST['username'] ?? '';
-            $firstName = $_POST['first_name'] ?? '';
-            $lastName = $_POST['last_name'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
-            $phone = $_POST['phone'] ?? '';
-            $userData = [
-                'userName' => $username,
-                'firstName' => $firstName,
-                'lastName' => $lastName,
-                'email' => $email,
-                'password' => $password,
-                'phone' => $phone,
-            ];
-
-            // Validation des champs du formulaire
-            $errors = $this->validationForm($userData);
-
-            // Si le formulaire est valide
-            if (empty($errors)) {
-                // Enregistrez l'utilisateur dans la base de données
-                $success = $this->authModel->register(
-                    $username,
-                    $firstName,
-                    $lastName,
-                    $email,
-                    $password,
-                    $phone
-                );
-                if ($success) {
-                    // Redirigez l'utilisateur après une inscription réussie
-                    header('Location: /');
-                    exit();
-                } else {
-                    $errors[] = 'Erreur lors de l\'inscription. Veuillez réessayer.';
-                }
-            }
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
 
+        $isLoggedIn = isset($_SESSION['user']);
+        $params['isLoggedIn'] = $isLoggedIn;
+
         try {
-            // Affichez le formulaire d'inscription avec les erreurs
-            echo $this->twig->render(
-                'Auth/signup.html.twig',
-                ['errors' => $errors]
-            );
+            echo $this->twig->render($template, $params);
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
             echo "Erreur de rendu de template : " . $e->getMessage();
         }
@@ -203,15 +195,15 @@ class AuthController extends AbstractController
 
     public function authLogout()
     {
-        // Vérifier si une session est déjà active
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
         // Détruire la session
+        session_unset();
         session_destroy();
 
-        // Rediriger l'utilisateur vers la page de connexion
+        // Redirection vers la page de login
         header('Location: /login');
         exit();
     }

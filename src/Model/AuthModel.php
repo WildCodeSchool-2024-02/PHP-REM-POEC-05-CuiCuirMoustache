@@ -45,6 +45,27 @@ class AuthModel extends AbstractManager
         return false;
     }
 
+    public function updateUser(int $userId, array $data): bool
+    {
+        $query = "UPDATE " . self::TABLE . " SET 
+              username = :username, 
+              email = :email, 
+              first_name = :firstname, 
+              last_name = :lastname, 
+              phone = :phone 
+              WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+
+            return $stmt->execute([
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'phone' => $data['phone'],
+                'id' => $userId
+            ]);
+    }
+
     public function emailExists(string $email): bool
     {
         $query = "SELECT 1 FROM " . self::TABLE . " WHERE email = :email";
