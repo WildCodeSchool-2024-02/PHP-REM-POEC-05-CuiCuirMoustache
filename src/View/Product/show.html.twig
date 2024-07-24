@@ -1,13 +1,29 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/product/product.css">
+{% endblock %}
+
 {% block content %}
-    <h1>Produit :</h1>
-    <p>{{ product.name }}</p>
-    <p>{{ product.description }}</p>
-    <form method="POST" action="/cart/add">
-        <input type="hidden" name="id" value="{{ product.id }}">
-        <input type="number" name="qty" value="1">
-        <button>Ajouter au panier</button>
-    </form>
-    <a href="/product">Retour</a>
+<div class="parent-div">
+    <div class="div1">
+        <h1>Produit :</h1>
+        <p class="description">{{ product.description }}</p>
+    </div>
+    <div class="div2">
+        <h2>{{ product.name }}</h2>
+        <h3>{{ product.price|intToCurrency }}</h3>
+        <form method="POST" action="/cart/add" class="form-css noselect">
+            <input type="hidden" name="id" value="{{ product.id }}">
+            <input type="number" name="qty" value="1" class="inp-numb noselect">
+            <button class="add">Ajouter au panier</button>
+        </form>
+        <div class="conditions">
+            <p>99% des articles en stock</p>
+            <p>Expédition 24/48h (jours ouvrés)</p>
+            <p>Paiement sécurisé et 3x sans frais</p>
+        </div>
+    </div>
+</div>
+<a href="/product">Retour</a>
 {% endblock %}
