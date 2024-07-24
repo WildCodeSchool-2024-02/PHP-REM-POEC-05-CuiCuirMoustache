@@ -1,0 +1,4 @@
+<?php
+$encryption_key = "YourEncryptionKey"; 
+define('APP_KEY_CRYP', 'LéKIpGimmpCéLéPluBo');
+?>
