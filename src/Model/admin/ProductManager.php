@@ -32,13 +32,17 @@ class ProductManager extends AbstractManager
         $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE . " (
         `name`,
          `description`,
+         `descriptionDetail`,
           `price`,
-           `category_id`)
-         VALUES (:name, :description, :price, :category_id)");
+           `category_id`,
+           `image`)
+         VALUES (:name, :description, :descriptionDetail, :price, :category_id, :image)");
         $statement->bindValue('name', $product['name'], PDO::PARAM_STR);
         $statement->bindValue('description', $product['description'], PDO::PARAM_STR);
+        $statement->bindValue('descriptionDetail', $product['descriptionDetail'], PDO::PARAM_STR);
         $statement->bindValue('price', $product['price'], PDO::PARAM_STR);
         $statement->bindValue('category_id', $product['category_id'], PDO::PARAM_INT);
+        $statement->bindValue('image', $product['image'], PDO::PARAM_STR);
 
         $statement->execute();
         return (int)$this->pdo->lastInsertId();
@@ -51,14 +55,18 @@ class ProductManager extends AbstractManager
     {
         $statement = $this->pdo->prepare("UPDATE " . self::TABLE . " SET `name` = :name,
          `description` = :description,
+         `descriptionDetail` = :descriptionDetail,
           `price` = :price,
-           `category_id` = :category_id
+           `category_id` = :category_id,
+             `image` = :image
          WHERE id = :id");
         $statement->bindValue('id', $product['id'], PDO::PARAM_INT);
         $statement->bindValue('name', $product['name'], PDO::PARAM_STR);
         $statement->bindValue('description', $product['description'], PDO::PARAM_STR);
+        $statement->bindValue('descriptionDetail', $product['descriptionDetail'], PDO::PARAM_STR);
         $statement->bindValue('price', $product['price'], PDO::PARAM_STR);
         $statement->bindValue('category_id', $product['category_id'], PDO::PARAM_INT);
+        $statement->bindValue('image', $product['image'], PDO::PARAM_STR);
 
         return $statement->execute();
     }

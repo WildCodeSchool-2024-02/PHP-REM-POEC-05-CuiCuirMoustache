@@ -6,3 +6,4 @@ db.php
 key.php
 .idea
 .vscode
+/uploads/*

@@ -46,10 +46,21 @@
 								</div>
 								
 							{% endif %}
+
+							{% if errors.image is defined %}
+						
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+									<strong>Attention !</strong> {{ errors.image }}
+									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+									</button>
+								</div>
+								
+							{% endif %}
 					
 				</div>
 				<div class="card-body">
-					<form  method="post">
+					<form  method="post" enctype='multipart/form-data'>
 						<div class="form-group">
 							<label for="name">Name:</label>
 							<input type="text" class="form-control" id="name" name="name" value="{{item.name}}" >
@@ -59,9 +70,22 @@
 							<textarea class="form-control" id="description" name="description" rows="4"  >{{item.description}}</textarea>
 						</div>
 						<div class="form-group">
-							<label for="parent_id">Parent Category:</label>
-							<input type="number" class="form-control" id="parent_id" name="parent_id" value="{{item.parent_id}}">
+							<label for="parent_id">Categorie Parent:</label>
+							<select class="form-control" id="parent_id" name="parent_id">
+								<option value="">Selectionner une categorie parent</option>
+								{% for category in categories %}
+									<option value="{{ category.id }}" {% if category.id == item.category_id %}selected{% endif %}>
+										{{ category.name }}
+									</option>
+								{% endfor %}
+							</select>
 						</div>
+
+						<div class="form-group">
+                            <label for="image">Image:</label>
+                            <input type="file" class="form-control" id="image" name="image">
+                        </div>
+
 						<input type="hidden" id="id" name="id" value="{{item.id}}">
 						<button type="submit" class="btn btn-primary btn-block">Submit</button>
 					</form>
