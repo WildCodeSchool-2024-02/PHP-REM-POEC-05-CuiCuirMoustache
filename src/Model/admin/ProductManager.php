@@ -24,6 +24,17 @@ class ProductManager extends AbstractManager
         return $this->pdo->query($query)->fetchAll();
     }
 
+    public function selectThreeLatest(): array
+    {
+        $query = "SELECT product.*, stock.*, category.name AS category_name 
+                    FROM product 
+                    INNER JOIN category ON product.category_id = category.id 
+                    INNER JOIN stock ON stock.product_id = product.id 
+                    ORDER BY product.created_at DESC 
+                    LIMIT 3;";
+        return $this->pdo->query($query)->fetchAll();
+    }
+
     /**
      * Insert new product in database
      */

@@ -32,42 +32,23 @@
 <!-- For scrolling -->
 <section class="col-12 bg-white d-none d-md-flex justify-content-center  " style="height: 100px; ">
 
+    {% for categorie in categories %}
+
     <div class="pt-4 text-center" style="width: 150px;">
         <a href="#" class="text-black text-decoration-none">
-            <i class="bi bi-crop "></i><br>
-            <span class="">Categorie XX</span>
+            {% if categorie.image is defined %}
+                <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
+            {% else %}
+                <img src="/assets/images/test.png" width="32px">
+            {% endif %}
+                    <br>
+            <span class="">{{categorie.name}}</span>
         </a>
     </div>
-    <div class="pt-4 text-center" style="width: 150px;">
-        <a href="#" class="text-black text-decoration-none">
-            <i class="bi bi-crop "></i><br>
-            <span class="">Categorie XX</span>
-        </a>
-    </div>
-    <div class="pt-4 text-center" style="width: 150px;">
-        <a href="#" class="text-black text-decoration-none">
-            <i class="bi bi-crop "></i><br>
-            <span class="">Categorie XX</span>
-        </a>
-    </div>
-    <div class="pt-4 text-center" style="width: 150px;">
-        <a href="#" class="text-black text-decoration-none">
-            <i class="bi bi-crop "></i><br>
-            <span class="">Categorie XX</span>
-        </a>
-    </div>
-    <div class="pt-4 text-center" style="width: 150px;">
-        <a href="#" class="text-black text-decoration-none">
-            <i class="bi bi-crop "></i><br>
-            <span class="">Categorie XX</span>
-        </a>
-    </div>
-    <div class="pt-4 text-center" style="width: 150px;">
-        <a href="#" class="text-black text-decoration-none">
-            <i class="bi bi-crop "></i><br>
-            <span class="">Categorie XX</span>
-        </a>
-    </div>
+
+    {% endfor %}
+
+    
 
 </section>
 <div class='content'>
@@ -75,149 +56,36 @@
 <h1 class="mb-4 title-section">Nos produits</h1>
 <section class="w-100 rounded bg-white d-flex justify-content-center flex-wrap mb-4 pb-4">
 
+    {% for product in products %}
+ 
     <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
+        
+            <div class="card bg-transparent p-3 ">
+                <div class="about-product text-center mt-2">
+                    <a href="/product/show?id={{product.id}}">
+                    {% if product.image is defined %}
+                    <img src="/assets/images/uploads/{{product.image}}" width="100%">
+                    {% else %}
+                    <img src="/assets/images/test.png" width="100%">
+                    {% endif %}
+                    </a>
+                    <div>
+                        <h4>{{product.name}}</h4>
+                        <h6 class="mt-0 text-black-50">{{product.category_name}}</h6>
+                    </div>
                 </div>
+                <div class="stats mt-2">
+                    <span>{{product.description}}</span>
+                
+                </div>
+                <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>{{product.price}}€</span><span><a href="/product/show?id={{product.id}}"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
             </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
+        
     </div>
 
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
+    {% endfor %}
 
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-        <div class="card bg-transparent p-3 ">
-            <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                <div>
-                    <h4>Ceinture en cuir</h4>
-                    <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                </div>
-            </div>
-            <div class="stats mt-2">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-               
-            </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-        </div>
-    </div>
+    
 </section>
 
 
@@ -237,54 +105,34 @@
 
 
                 
+                {% for product in latestProducts %}
+ 
                 <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-                    <div class="card bg-transparent p-3 ">
-                        <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                            <div>
-                                <h4>Ceinture en cuir</h4>
-                                <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
+                    
+                        <div class="card bg-transparent p-3 ">
+                            <div class="about-product text-center mt-2">
+                                <a href="/product/show?id={{product.id}}">
+                                {% if product.image is defined %}
+                                <img src="/assets/images/uploads/{{product.image}}" width="100%">
+                                {% else %}
+                                <img src="/assets/images/test.png" width="100%">
+                                {% endif %}
+                                </a>
+                                <div>
+                                    <h4>{{product.name}}</h4>
+                                    <h6 class="mt-0 text-black-50">{{product.category_name}}</h6>
+                                </div>
                             </div>
-                        </div>
-                        <div class="stats mt-2">
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-                           
-                        </div>
-                        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-                    <div class="card bg-transparent p-3 ">
-                        <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                            <div>
-                                <h4>Ceinture en cuir</h4>
-                                <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
+                            <div class="stats mt-2">
+                                <span>{{product.description}}</span>
+                            
                             </div>
+                            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>{{product.price}}€</span><span><a href="/product/show?id={{product.id}}"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
                         </div>
-                        <div class="stats mt-2">
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-                           
-                        </div>
-                        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-                    </div>
+                    
                 </div>
-
-
-                <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
-                    <div class="card bg-transparent p-3 ">
-                        <div class="about-product text-center mt-2"><img src="/assets/images/test.png" width="100%">
-                            <div>
-                                <h4>Ceinture en cuir</h4>
-                                <h6 class="mt-0 text-black-50">Cuir de vache teint noir</h6>
-                            </div>
-                        </div>
-                        <div class="stats mt-2">
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, accusamus!</span>
-                           
-                        </div>
-                        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>35.99€</span><span><a href="#"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-                    </div>
-                </div>
+            
+                {% endfor %}
 
 
 
