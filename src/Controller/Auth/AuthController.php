@@ -53,18 +53,10 @@ class AuthController extends AbstractController
             }
         }
 
-        // Ajouter l'état de connexion
-        $isLoggedIn = isset($_SESSION['user']);
-
-        // Rendre la vue avec les erreurs et les données du formulaire
-        try {
-            echo $this->twig->render(
-                'Auth/login.html.twig',
-                ['errors' => $errors, 'data' => $data, 'isLoggedIn' => $isLoggedIn]
-            );
-        } catch (LoaderError | RuntimeError | SyntaxError $e) {
-            echo "Erreur de rendu de template : " . $e->getMessage();
-        }
+        return $this->twig->render(
+            'Auth/login.html.twig',
+            ['errors' => $errors, 'data' => $data]
+        );
     }
 
     public function signup()
