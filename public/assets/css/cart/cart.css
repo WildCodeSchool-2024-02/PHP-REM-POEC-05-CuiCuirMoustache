@@ -80,6 +80,10 @@ li {
     align-items: baseline;
 }
 
+.red {
+    color: red;
+}
+
 .card {
     --font-color: #323232;
     --font-color-sub: #666;

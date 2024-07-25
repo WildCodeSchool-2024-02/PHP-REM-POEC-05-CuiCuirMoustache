@@ -1,0 +1,13 @@
+li {
+    list-style: none;
+}
+
+button {
+    color: var(--sixnary-color);
+    background-color: var(--quaternary-color);
+    border: none;
+    border-radius: 10px;
+    min-width: 20%;
+    min-height: 40px;
+    margin-left: 40%;
+}

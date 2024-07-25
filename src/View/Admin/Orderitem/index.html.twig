@@ -1,0 +1,18 @@
+{% extends 'layout_admin.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/ordered/ordered.css">
+{% endblock %}
+
+{% block content %}
+
+<h1>Les commandes</h1>
+{% for ord in orders %}
+        <a href="/admin/orderitem/show?id={{ ord.id }}" class="ordera">
+            <p class="fly">{{ ord.username }}</p>
+            <p class="bottom">Prix total : <b>{{ ord.total_amount|intToCurrency }}</b> - Date de
+                commande : <b>{{ ord.created_at | date("d/m/Y g:i:sA") }}</b></p>
+        </a>
+{% endfor %}
+
+{% endblock %}
