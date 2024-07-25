@@ -33,19 +33,19 @@
 <section class="col-12 bg-white d-none d-md-flex justify-content-center  " style="height: 100px; ">
 
     {% for categorie in categories %}
-
-    <div class="pt-4 text-center" style="width: 150px;">
-        <a href="#" class="text-black text-decoration-none">
-            {% if categorie.image is defined %}
-                <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
-            {% else %}
-                <img src="/assets/images/test.png" width="32px">
-            {% endif %}
-                    <br>
-            <span class="">{{categorie.name}}</span>
-        </a>
-    </div>
-
+        {% if categorie.parent_id is null %}
+            <div class="pt-4 text-center" style="width: 150px;">
+                <a href="#" class="text-black text-decoration-none">
+                    {% if categorie.image is defined %}
+                        <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
+                    {% else %}
+                        <img src="/assets/images/test.png" width="32px">
+                    {% endif %}
+                            <br>
+                    <span class="">{{categorie.name}}</span>
+                </a>
+            </div>
+        {% endif %}
     {% endfor %}
 
     
