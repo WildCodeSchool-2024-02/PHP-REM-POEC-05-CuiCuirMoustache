@@ -28,7 +28,7 @@ class OrderitemManager extends AbstractManager
         INNER JOIN product AS p ON product_id=p.id
         INNER JOIN `user` AS u ON user_id=u.id
         GROUP BY ordered_id
-        ORDER BY ordered_id;";
+        ORDER BY o.updated_at DESC;";
         return $this->pdo->query($query)->fetchAll();
     }
 

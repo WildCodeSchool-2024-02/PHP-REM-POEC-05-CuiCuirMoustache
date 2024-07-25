@@ -39,7 +39,7 @@ class CartController extends AbstractController
         ]);
     }
 
-    public function add(int $id, int $qty)
+    public function add(int $id, $qty)
     {
         // Si session a un problème avec le string, vérif ici avec var_dump
         //ajoute au panier
@@ -51,6 +51,11 @@ class CartController extends AbstractController
                 $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
             }
 
+            if (!empty($qty) && gettype($qty) !== 'integer') {
+                $qty = 1;
+            }
+
+
             // les données sont ok
             if (empty($errors)) {
                 $cartService->addProduct($id, $qty);
@@ -61,18 +66,21 @@ class CartController extends AbstractController
         }
     }
 
-    public function update(int $id, int $qty): void
+    public function update(int $id, $qty): void
     {
         $cartService = new CartService();
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $errors = [];
 
-            //laisser int $qty en paramètre, ou définir des restrictions ici ?
-            $qty = intval($qty);
             // verifier les entrées
             if ($qty <= 0) {
                 $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
             }
+
+            if (!empty($qty) && gettype($qty) !== 'integer') {
+                $qty = 1;
+            }
+
 
             // les données sont ok
             if (empty($errors)) {
