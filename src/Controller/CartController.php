@@ -121,19 +121,20 @@ class CartController extends AbstractController
 
         $orderedManager = new OrderedManager();
 
-        // createOrder(1, ...) est le user que j'ai crée directement dans la bdd,
-        // il faudra le remplacer par une variable
-        $orderedId = $orderedManager->createOrder(1, $totalAmount, "order");
 
         // moins de commandes effectuer (mais moins DRY)
         $orderitemManager = new OrderitemManager();
         $stockManager = new StockManager();
+        $orderedId = 0;
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
-            $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
             $stock = $stockManager->getStockById($id);
             if ($stock['quantity'] >= $qty) {
+                // createOrder(1, ...) est le user que j'ai crée directement dans la bdd,
+                // il faudra le remplacer par une variable
+                $orderedId = $orderedManager->createOrder(1, $totalAmount, "order");
                 $stockManager->updateStockFromCart($product['id'], $qty);
+                $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
             } else {
                 header('Location: /cart?status=unavailableQuantity');
                 exit();
