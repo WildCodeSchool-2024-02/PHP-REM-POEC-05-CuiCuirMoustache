@@ -29,7 +29,7 @@ h1 {
 }
 
 .checkout {
-    border: solid var(--main-color);
+    border: solid var(--secondary-color);
     height: 25vh;
     width: 30%;
     border-radius: 15px;
@@ -99,8 +99,8 @@ li {
     width: 250px;
     height: 350px;
     background: var(--bg-color);
-    border: 2px solid var(--main-color);
-    box-shadow: 4px 4px var(--main-color);
+    border: 2px solid var(--secondary-color);
+    box-shadow: 4px 4px var(--secondary-color);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -188,7 +188,7 @@ li {
   .card-subtitle {
     font-size: 14px;
     font-weight: 400;
-    min-height: 80px;
+    min-height: 70px;
     color: var(--font-color-sub);
   }
   
@@ -250,9 +250,21 @@ li {
   .card-btn:active {
     transform: translateY(3px);
   }
+
+  .inp-numb {
+    width: 25%;
+    border-radius: 5px;
+    border: solid 2px var(--tertiary-color);
+    text-align: center;
+}
+
+.inp-numb:hover {
+    background-color: var(--tertiary-color);
+    color: white;
+}
   
-  @media (max-width: 390px) {
-    .card-btn {
+@media (max-width: 390px) {
+  .card-btn {
       padding: 0;
-    }
   }
+}

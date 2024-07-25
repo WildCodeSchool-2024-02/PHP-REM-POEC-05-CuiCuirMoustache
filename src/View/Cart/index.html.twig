@@ -29,7 +29,7 @@
             <hr class="card-divider">
             <form action="/cart/update" method="POST">
                 <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
-                <input type="number" class="modify" name="qty" value="{{ productAndQty.qty }}">
+                <input type="number" class="modify inp-numb" name="qty" value="{{ productAndQty.qty }}">
                 <button class="c-button cart-button">Modifier</button>
             </form>
             <div class="card-footer">
