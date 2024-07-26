@@ -17,10 +17,15 @@ li {
 }
 
 .product-image {
-    text-align: left;
     background-color: white;
     padding: 5%;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.prod-img {
+    width: 500px;
 }
 
 .div2 { 
