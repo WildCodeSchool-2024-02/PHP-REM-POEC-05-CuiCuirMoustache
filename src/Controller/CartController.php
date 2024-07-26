@@ -46,15 +46,12 @@ class CartController extends AbstractController
         $cartService = new CartService();
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $errors = [];
+
             // verifier les entrées
+            $qty = intval($qty);
             if ($qty <= 0) {
                 $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
             }
-
-            if (!empty($qty) && gettype($qty) !== 'integer') {
-                $qty = 1;
-            }
-
 
             // les données sont ok
             if (empty($errors)) {
@@ -130,7 +127,6 @@ class CartController extends AbstractController
         // moins de commandes effectuer (mais moins DRY)
         $orderitemManager = new OrderitemManager();
         $stockManager = new StockManager();
-        // $orderedId = 0;
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
             $stock = $stockManager->getStockById($id);
