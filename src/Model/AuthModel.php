@@ -2,10 +2,12 @@
 
 namespace App\Model;
 
+use PDO;
+
 class AuthModel extends AbstractManager
 {
-    public const TABLE = 'User';
-    public const RESET_TOKENS_TABLE = 'PasswordResetTokens';
+    public const TABLE = 'user';
+    public const RESET_TOKENS_TABLE = 'passwordResetTokens';
 
     public function register(
         string $username,
@@ -31,22 +33,19 @@ class AuthModel extends AbstractManager
         ]);
     }
 
-    public function authenticate(string $email, string $password)
+    public function authenticate(string $email, string $password): ?array
     {
         $query = "SELECT * FROM " . self::TABLE . " WHERE email = :email";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
-        $user = $stmt->fetch();
 
-        if ($user) {
-            $encryptionKey = 'votre_clé_de_chiffrement';
-            $decodedPassword = $this->decodePassword($user['password'], $encryptionKey);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($decodedPassword === hash('sha256', $password, true)) {
-                return $user;
-            }
+        if ($user && password_verify($password, $user['password'])) {
+            return $user; // Return user data if authentication is successful
         }
-        return false;
+
+        return null; // Return null if authentication fails
     }
 
     public function updateUser(int $userId, array $data): bool
@@ -117,16 +116,5 @@ class AuthModel extends AbstractManager
         }
 
         return false;
-    }
-
-    private function decodePassword($encodedPassword, $encryptionKey)
-    {
-        $decoded = base64_decode($encodedPassword);
-        $ivLength = openssl_cipher_iv_length('aes-256-cbc');
-        $ivSubstr = substr($decoded, 0, $ivLength);
-        $encryptedPassword = substr($decoded, $ivLength);
-        $decrypted = openssl_decrypt($encryptedPassword, 'aes-256-cbc', $encryptionKey, 0, $ivSubstr);
-
-        return $decrypted;
     }
 }
