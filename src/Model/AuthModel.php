@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use PDO;
-
 class AuthModel extends AbstractManager
 {
     public const TABLE = 'User';
@@ -17,8 +15,9 @@ class AuthModel extends AbstractManager
         string $password,
         string $phone
     ): bool {
-        $query = "INSERT INTO " . self::TABLE . " (username, first_name, last_name, email, password, phone, role) 
-                  VALUES (:username, :first_name, :last_name, :email, :password, :phone, :role)";
+        $query = "INSERT INTO " . self::TABLE . " 
+            (username, first_name, last_name, email, password, phone, role) 
+            VALUES (:username, :first_name, :last_name, :email, :password, :phone, :role)";
         $stmt = $this->pdo->prepare($query);
 
         return $stmt->execute([
@@ -39,10 +38,14 @@ class AuthModel extends AbstractManager
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
-            return $user;
-        }
+        if ($user) {
+            $encryptionKey = 'votre_clé_de_chiffrement';
+            $decodedPassword = $this->decodePassword($user['password'], $encryptionKey);
 
+            if ($decodedPassword === hash('sha256', $password, true)) {
+                return $user;
+            }
+        }
         return false;
     }
 
@@ -114,5 +117,16 @@ class AuthModel extends AbstractManager
         }
 
         return false;
+    }
+
+    private function decodePassword($encodedPassword, $encryptionKey)
+    {
+        $decoded = base64_decode($encodedPassword);
+        $ivLength = openssl_cipher_iv_length('aes-256-cbc');
+        $ivSubstr = substr($decoded, 0, $ivLength);
+        $encryptedPassword = substr($decoded, $ivLength);
+        $decrypted = openssl_decrypt($encryptedPassword, 'aes-256-cbc', $encryptionKey, 0, $ivSubstr);
+
+        return $decrypted;
     }
 }

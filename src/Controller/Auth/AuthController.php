@@ -26,6 +26,7 @@ class AuthController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data['email'] = $_POST['email'] ?? '';
             $data['password'] = $_POST['password'] ?? '';
+            var_dump($data);
 
             if (empty($data['email']) || empty($data['password'])) {
                 $errors[] = 'Le mot de passe ou le mail n\'est pas correct';
@@ -33,7 +34,6 @@ class AuthController extends AbstractController
                 $user = $this->authModel->authenticate($data['email'], $data['password']);
 
                 if ($user !== false) {
-                    // Stocker les informations de l'utilisateur dans la session
                     $_SESSION['user'] = [
                         'id' => $user['id'],
                         'username' => $user['username'],
@@ -42,7 +42,6 @@ class AuthController extends AbstractController
                         'email' => $user['email'],
                         'phone' => $user['phone'],
                     ];
-
                     // Redirection en cas de succès
                     header('Location: /');
                     exit();
@@ -52,7 +51,7 @@ class AuthController extends AbstractController
                 }
             }
         }
-
+        // Retournez le rendu du template avec les erreurs et les données
         return $this->twig->render(
             'Auth/login.html.twig',
             ['errors' => $errors, 'data' => $data]
@@ -82,12 +81,16 @@ class AuthController extends AbstractController
             $errors = $this->validationForm($userData);
 
             if (empty($errors)) {
+                // Utilisez une clé sécurisée
+                $encryptionKey = 'votre_clé_de_chiffrement';
+                $encodedPassword = $this->encodePassword($password, $encryptionKey);
+
                 $success = $this->authModel->register(
                     $username,
                     $firstName,
                     $lastName,
                     $email,
-                    $password,
+                    $encodedPassword,
                     $phone
                 );
                 if ($success) {
@@ -98,15 +101,7 @@ class AuthController extends AbstractController
                 }
             }
         }
-
-        try {
-            echo $this->twig->render(
-                'Auth/signup.html.twig',
-                ['errors' => $errors]
-            );
-        } catch (LoaderError | RuntimeError | SyntaxError $e) {
-            echo "Erreur de rendu de template : " . $e->getMessage();
-        }
+        return $this->twig->render('Auth/signup.html.twig', ['errors' => $errors]);
     }
 
     public function forgotPassword()
@@ -190,7 +185,6 @@ class AuthController extends AbstractController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
         // Détruire la session
         session_unset();
         session_destroy();
@@ -215,9 +209,20 @@ class AuthController extends AbstractController
         if (empty($userData['password'])) {
             $errors[] = 'Le mot de passe est requis';
         }
-        if (empty($userData['phone'])) {
-            $errors[] = 'Le téléphone est requis';
+        if (empty($userData['phone']) || !preg_match('/^[0-9]{10}$/', $userData['phone'])) {
+            $errors[] = 'Le numéro de téléphone est requis et doit être valide.';
         }
         return $errors;
+    }
+
+    private function encodePassword($password, $encryptionKey)
+    {
+        //$md5 = md5($password);
+        $sha256 = hash('sha256', $password, true);
+        $ivOpenssl = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+        $encrypted = openssl_encrypt($sha256, 'aes-256-cbc', $encryptionKey, 0, $ivOpenssl);
+        $encryptedIv = base64_encode($ivOpenssl . $encrypted);
+
+        return $encryptedIv;
     }
 }
