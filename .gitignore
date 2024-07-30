@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /vendor/
 /temp/*
 .phpcs-cache
@@ -6,3 +7,14 @@ db.php
 key.php
 .idea
 .vscode
+=======
+/vendor/
+/temp/*
+.phpcs-cache
+*.cache
+db.php
+key.php
+.idea
+.vscode
+/uploads/*
+>>>>>>> 3f507d697d1f70036ac9294321e2d2865d6d89db
