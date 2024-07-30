@@ -1,0 +1,49 @@
+<div class="container mt-5">
+	<div class="row ">
+		<div class="col-md-12">
+			<div class="card w-100">
+				<div class="card-header">
+					<h2 class="card-title text-center">Modification de commande</h2>
+							{% if errors.price is defined %}
+						
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+									<strong>Attention !</strong> {{ errors.price }}
+									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+									</button>
+								</div>
+								
+							{% endif %}
+							{% if errors.quantity is defined %}
+						
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<strong>Attention !</strong> {{ errors.quantity }}
+								<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+								</button>
+							</div>
+							
+							{% endif %}
+					
+				</div>
+				<div class="card-body">
+					<form method="post">
+						<div class="form-group">
+							<label for="quantity">Quantité:</label>
+							<input type="text" class="form-control" id="quantity" name="quantity" value="{{ order.quantity }}">
+						</div>
+						<h4>N'oubliez pas de modifier le stock associé</h4>
+						<div class="form-group">
+							<label for="price">Prix:</label>
+							<input type="text" class="form-control" id="price" name="price" value="{{ order.price }}">
+						</div>
+							</select>
+						</div>
+						<input type="hidden" id="id" name="id" value="{{ order.id }}">
+						<button type="submit" class="btn btn-primary btn-block mt-3">Envoyer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -24,12 +24,13 @@ h1 {
     border-radius: 15px;
     width: 60%;
     display: flex;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 20px;
 }
 
 .checkout {
-    border: solid var(--main-color);
+    border: solid var(--secondary-color);
     height: 25vh;
     width: 30%;
     border-radius: 15px;
@@ -48,14 +49,20 @@ h1 {
     align-items: center;
 }
 
-button {
+.c-button {
     color: var(--sixnary-color);
-    background-color: var(--quaternary-color);
+    background-color: var(--tertiary-color);
     border: none;
     border-radius: 5px;
     min-width: 60%;
     min-height: 40px;
     cursor: pointer;
+}
+
+.c-button:hover {
+  background-color: white;
+  color: var(--tertiary-color);
+  border: solid 2px var(--tertiary-color);
 }
 
 .cart-button {
@@ -80,6 +87,10 @@ li {
     align-items: baseline;
 }
 
+.red {
+    color: red;
+}
+
 .card {
     --font-color: #323232;
     --font-color-sub: #666;
@@ -87,10 +98,10 @@ li {
     --main-color: #3A1F24;
     --main-focus: #2d8cf0;
     width: 250px;
-    height: 350px;
+    height: 360px;
     background: var(--bg-color);
-    border: 2px solid var(--main-color);
-    box-shadow: 4px 4px var(--main-color);
+    border: 2px solid var(--secondary-color);
+    box-shadow: 4px 4px var(--secondary-color);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -178,7 +189,7 @@ li {
   .card-subtitle {
     font-size: 14px;
     font-weight: 400;
-    min-height: 90px;
+    min-height: 70px;
     color: var(--font-color-sub);
   }
   
@@ -210,11 +221,11 @@ li {
   .card-btn {
     height: 35px;
     background: var(--bg-color);
-    border: 2px solid var(--main-color);
+    border: 2px solid var(--tertiary-color);
     border-radius: 5px;
     padding: 0 15px;
     transition: all 0.3s;
-    color: black;
+    color: var(--tertiary-color);
   }
   
   .card-btn svg {
@@ -229,7 +240,8 @@ li {
   }
   
   .card-btn:hover {
-    border: 2px solid var(--main-focus);
+    color: white;
+    background-color: var(--tertiary-color);
   }
   
   .card-btn:hover svg {
@@ -239,9 +251,21 @@ li {
   .card-btn:active {
     transform: translateY(3px);
   }
+
+  .inp-numb {
+    width: 25%;
+    border-radius: 5px;
+    border: solid 2px var(--tertiary-color);
+    text-align: center;
+}
+
+.inp-numb:hover {
+    background-color: var(--tertiary-color);
+    color: white;
+}
   
-  @media (max-width: 390px) {
-    .card-btn {
+@media (max-width: 390px) {
+  .card-btn {
       padding: 0;
-    }
   }
+}
