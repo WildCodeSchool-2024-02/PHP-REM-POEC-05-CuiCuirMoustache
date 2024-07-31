@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\CartService;
+use App\Service\Logger;
 use App\Model\admin\StockManager;
 use App\Model\OrderedManager;
 use App\Model\OrderitemManager;
@@ -123,7 +124,6 @@ class CartController extends AbstractController
         $orderedManager = new OrderedManager();
         $orderedId = $orderedManager->createOrder(1, $totalAmount, "order");
 
-
         // moins de commandes effectuer (mais moins DRY)
         $orderitemManager = new OrderitemManager();
         $stockManager = new StockManager();
@@ -135,6 +135,7 @@ class CartController extends AbstractController
                 // il faudra le remplacer par une variable
                 $stockManager->updateStockFromCart($product['id'], $qty);
                 $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
+                $this->logger->logPurchase(1, $product['name'], $qty, $product['price']);
             } else {
                 header('Location: /cart?status=unavailableQuantity');
                 exit();
