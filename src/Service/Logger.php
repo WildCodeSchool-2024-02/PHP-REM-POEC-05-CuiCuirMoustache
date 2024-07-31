@@ -33,7 +33,7 @@ class Logger
 
     public function logPurchase($userId, $item, $qty, $amount)
     {
-        $message = "Uutilisateur ID $userId a acheté $item * $qty pour $amount €.";
+        $message = "Utilisateur ID $userId a acheté $item * $qty pour $amount €.";
         $this->log($message);
     }
 }
