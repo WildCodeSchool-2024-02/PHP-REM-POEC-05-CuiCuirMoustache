@@ -25,7 +25,7 @@ li {
 }
 
 .prod-img {
-    width: 500px;
+    width: clamp(300px, 60%, 500px);
 }
 
 .div2 { 
