@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Logger;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
@@ -14,10 +15,14 @@ abstract class AbstractController
 {
     protected Environment $twig;
 
+    protected Logger $logger;
+
+    protected const LOG_DIR = __DIR__ . "/../../log/logfile.txt";
 
     public function __construct()
     {
         $loader = new FilesystemLoader(APP_VIEW_PATH);
+        $this->logger = new Logger(self::LOG_DIR);
         $this->twig = new Environment(
             $loader,
             [
