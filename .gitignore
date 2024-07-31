@@ -4,6 +4,7 @@
 *.cache
 db.php
 key.php
+logfile.txt
 .idea
 .vscode
 /uploads/*
