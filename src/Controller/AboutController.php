@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-class InfosController extends AbstractController
+class AboutController extends AbstractController
 {
     /**
      * Display home admin page
