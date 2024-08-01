@@ -183,7 +183,6 @@ class AuthController extends AbstractController
             session_start();
         }
         // Détruire la session
-        session_unset();
         session_destroy();
 
         // Redirection vers la page de login
