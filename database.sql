@@ -65,7 +65,7 @@ ALTER TABLE `item`
 
 /* CREATION TABLE  */
 
-CREATE TABLE IF NOT EXISTS User (
+CREATE TABLE IF NOT EXISTS user (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS User (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Address (
+CREATE TABLE IF NOT EXISTS address (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     address_line1 VARCHAR(255),
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS Address (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Category (
+CREATE TABLE IF NOT EXISTS category (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS Category (
     FOREIGN KEY (parent_id) REFERENCES Category(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Supplier (
+CREATE TABLE IF NOT EXISTS supplier (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     contact_name VARCHAR(255),
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS Supplier (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Product (
+CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(80),
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS Product (
     FOREIGN KEY (category_id) REFERENCES Category(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Stock (
+CREATE TABLE IF NOT EXISTS stock (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS Stock (
     FOREIGN KEY (supplier_id) REFERENCES Supplier(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Ordered (
+CREATE TABLE IF NOT EXISTS ordered (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS Ordered (
     FOREIGN KEY (user_id) REFERENCES User(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS OrderItem (
+CREATE TABLE IF NOT EXISTS orderItem (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ordered_id INT NOT NULL,
     product_id INT NOT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS OrderItem (
     FOREIGN KEY (product_id) REFERENCES Product(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Review (
+CREATE TABLE IF NOT EXISTS review (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS Review (
     FOREIGN KEY (user_id) REFERENCES User(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Payment (
+CREATE TABLE IF NOT EXISTS payment (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     payment_method VARCHAR(50) NOT NULL,
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS Payment (
     FOREIGN KEY (order_id) REFERENCES Ordered(id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS Discount (
+CREATE TABLE IF NOT EXISTS discount (
     id INT AUTO_INCREMENT PRIMARY KEY,
     code VARCHAR(50) NOT NULL,
     description TEXT,
@@ -189,9 +189,9 @@ CREATE TABLE IF NOT EXISTS Discount (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-ALTER TABLE Product ADD image VARCHAR(255) DEFAULT NULL;
-ALTER TABLE Product ADD descriptionDetail LONGTEXT DEFAULT NULL;
-ALTER TABLE Category ADD image VARCHAR(255) DEFAULT NULL;
+ALTER TABLE product ADD image VARCHAR(255) DEFAULT NULL;
+ALTER TABLE product ADD descriptionDetail LONGTEXT DEFAULT NULL;
+ALTER TABLE category ADD image VARCHAR(255) DEFAULT NULL;
 
 INSERT INTO
     User (
@@ -232,7 +232,7 @@ VALUES (
     );
 
 INSERT INTO
-    Address (
+    address (
         user_id,
         address_line1,
         city,
@@ -265,7 +265,7 @@ VALUES (
         'USA'
     );
 
-INSERT INTO Category (name, description, parent_id, image) VALUES
+INSERT INTO category (name, description, parent_id, image) VALUES
 ('Outils de Travail du Cuir', 'Outils nécessaires pour couper, poinçonner, coudre et travailler le cuir', NULL, 'test.png'),
 ('Cuirs et Peaux', 'Différents types de cuir et peaux utilisés pour la fabrication', NULL, 'test.png'),
 ('Fournitures de Couture', 'Fournitures nécessaires pour la couture du cuir, telles que des fils, aiguilles, etc.', NULL, 'test.png'),
@@ -273,7 +273,7 @@ INSERT INTO Category (name, description, parent_id, image) VALUES
 ('Produits Finis', 'Articles en cuir prêts à l\'emploi, comme des ceintures, sacs, portefeuilles, etc.', NULL, 'test.png');
 
 INSERT INTO
-    Supplier (
+    supplier (
         name,
         contact_name,
         contact_email,
@@ -297,7 +297,7 @@ VALUES (
 
 -- Outils de Travail du Cuir
 --
-INSERT INTO Product (name, description, descriptionDetail, price, image, category_id) VALUES
+INSERT INTO product (name, description, descriptionDetail, price, image, category_id) VALUES
 ('Couteau Rotatif', 'Outil pour couper le cuir avec précision', 'Le couteau rotatif est un outil indispensable pour tout artisan du cuir. Conçu pour des coupes précises et nettes, ce couteau est doté d\'une lame circulaire qui permet de trancher facilement à travers le cuir, même les matériaux les plus épais. Sa poignée ergonomique offre une prise en main confortable, réduisant la fatigue lors des travaux prolongés. Que vous travailliez sur de grands projets comme des sacs ou des vestes, ou sur des articles plus petits comme des portefeuilles et des ceintures, ce couteau rotatif vous aidera à réaliser des coupes parfaites à chaque fois. En acier inoxydable de haute qualité, la lame est durable et reste affûtée longtemps. Facile à utiliser et à entretenir, c\'est l\'outil idéal pour les amateurs comme pour les professionnels du cuir.', 20.00, 
     'test.png', (SELECT id FROM Category WHERE name = 'Outils de Travail du Cuir')),
 
@@ -311,7 +311,7 @@ INSERT INTO Product (name, description, descriptionDetail, price, image, categor
 
 -- cuirs et peaux
 --
-INSERT INTO Product (name, description, descriptionDetail, price, image, category_id) VALUES
+INSERT INTO product (name, description, descriptionDetail, price, image, category_id) VALUES
 ('Cuir de Vachette Pleine Fleur', 'Cuir de haute qualité', 'Le cuir de vachette pleine fleur est l\'un des matériaux les plus prisés dans le domaine de la maroquinerie. Reconnu pour sa durabilité, sa résistance et son aspect luxueux, ce type de cuir est idéal pour la fabrication de nombreux articles, tels que des sacs, ceintures, portefeuilles et chaussures. Ce cuir est fabriqué à partir de la couche supérieure de la peau de vache, ce qui lui confère une texture douce et naturelle. Contrairement à d\'autres types de cuir, le cuir pleine fleur conserve les imperfections naturelles de la peau, ajoutant un caractère unique à chaque pièce. Avec le temps, il développe une patine riche qui en rehausse encore la beauté. Le cuir de vachette pleine fleur est également apprécié pour sa capacité à respirer, ce qui le rend confortable à porter. Utilisé par les artisans du monde entier, il est le choix idéal pour ceux qui recherchent la qualité et l\'élégance.', 50.00, 
     'test.png', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
 
@@ -322,7 +322,7 @@ INSERT INTO Product (name, description, descriptionDetail, price, image, categor
 
 -- Fournitures de Couture
 --
-INSERT INTO Product (name, description, descriptionDetail, price, image, category_id) VALUES
+INSERT INTO product (name, description, descriptionDetail, price, image, category_id) VALUES
 ('Fil à Coudre pour Cuir', 'Fil spécial pour couture du cuir', 'Le fil à coudre pour cuir est spécialement conçu pour répondre aux exigences de la couture de matériaux épais et robustes. Fabriqué en polyester de haute qualité, ce fil offre une résistance exceptionnelle à la tension et à l\'abrasion, garantissant des coutures durables et sécurisées. Disponible dans une variété de couleurs, il permet de réaliser des finitions esthétiques sur tous vos projets en cuir. Que vous travailliez à la main ou à la machine, ce fil glisse facilement à travers le cuir sans se rompre ni s\'effilocher. Sa texture légèrement cirée facilite le passage à travers les trous de couture, tout en offrant une meilleure adhérence. Utilisé par les maroquiniers professionnels et les amateurs, le fil à coudre pour cuir est un élément essentiel pour créer des articles en cuir de haute qualité. Avec ce fil, vos créations bénéficieront non seulement d\'une solidité accrue, mais aussi d\'une apparence soignée et professionnelle.', 10.00, 
     'test.png', (SELECT id FROM Category WHERE name = 'Fournitures de Couture')),
 
@@ -332,7 +332,7 @@ INSERT INTO Product (name, description, descriptionDetail, price, image, categor
 
 -- Accessoires et Finitions
 --
-INSERT INTO Product (name, description, descriptionDetail, price, image, category_id) VALUES
+INSERT INTO product (name, description, descriptionDetail, price, image, category_id) VALUES
 ('Boucles de Ceinture', 'Boucles métalliques pour ceintures', 'Les boucles de ceinture sont des éléments essentiels pour la fabrication de ceintures en cuir. Fabriquées en métal de haute qualité, ces boucles offrent une durabilité et une résistance exceptionnelles. Disponibles dans une variété de styles et de finitions, elles permettent de personnaliser chaque ceinture selon les préférences individuelles. Que vous recherchiez un look classique, moderne ou vintage, il existe une boucle de ceinture qui correspond à votre vision. Leur conception robuste assure un maintien sûr et sécurisé, tandis que leur esthétique soignée ajoute une touche de sophistication à vos créations. Faciles à attacher, ces boucles sont compatibles avec une large gamme de largeurs de ceintures. Que vous soyez un artisan professionnel ou un amateur passionné, les boucles de ceinture en métal vous aideront à réaliser des produits de qualité supérieure qui raviront vos clients ou feront de parfaits cadeaux.', 7.00, 
     'test.png', (SELECT id FROM Category WHERE name = 'Accessoires et Finitions')),
 
@@ -341,7 +341,7 @@ INSERT INTO Product (name, description, descriptionDetail, price, image, categor
 
 
 INSERT INTO
-    Stock (product_id, quantity, supplier_id) VALUES (1, 100, 1),
+    stock (product_id, quantity, supplier_id) VALUES (1, 100, 1),
     (2, 50, 1),
     (3, 75, 1),
     (4, 23, 2),
@@ -352,13 +352,13 @@ INSERT INTO
     (9, 389, 2);
 
 INSERT INTO
-    Ordered (user_id, total_amount, status)
+    ordered (user_id, total_amount, status)
 VALUES (1, 999.99, 'Pending'),
     (2, 1499.99, 'Completed'),
     (3, 29.99, 'Pending');
 
 INSERT INTO
-    OrderItem (
+    orderItem (
         ordered_id,
         product_id,
         quantity,
@@ -369,7 +369,7 @@ VALUES (1, 1, 1, 999.99),
     (3, 3, 1, 29.99);
 
 INSERT INTO
-    Review (
+    review (
         product_id,
         user_id,
         rating,
@@ -380,7 +380,7 @@ VALUES (1, 1, 5, 'Great phone!'),
     (3, 3, 3, 'Nice T-shirt');
 
 INSERT INTO
-    Payment (
+    payment (
         order_id,
         payment_method,
         amount,
@@ -401,7 +401,7 @@ VALUES (
     );
 
 INSERT INTO
-    Discount (
+    discount (
         code,
         description,
         percentage,
