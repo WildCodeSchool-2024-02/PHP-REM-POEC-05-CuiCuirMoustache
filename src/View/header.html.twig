@@ -16,14 +16,7 @@
                         <ul class="navbar-nav ms-auto py-4 py-md-0 navbar-dark">
 
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4 active">
-                                <a class="nav-link" href="http://localhost:8000/">Home</a>
-                            </li>
-                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                                <a class="nav-link" href="/about">Qui sommes-nous</a>
-                            </li>
-                            <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                                <a class="nav-link" href="/items">items</a>
-                            </li>
+                                <a class="nav-link" href="http://localhost:8000/">Accueil</a>
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/categories" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
                                 <div class="dropdown-menu">
@@ -34,7 +27,7 @@
                                 </div>
                             </li>
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                                <a class="nav-link" href="/cart"><i class="bi bi-basket2"></i> panier</a>
+                                <a class="nav-link" href="/cart"><i class="bi bi-basket2"></i> Panier</a>
                             </li>
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="compte" role="button" aria-haspopup="true" aria-expanded="false">
@@ -42,14 +35,12 @@
                                 </a>
                                 <div class="dropdown-menu">
                                     {% if not isLoggedIn %}
-                                        <!-- Liens visibles lorsque l'utilisateur n'est pas connecté -->
-                                        <a class="dropdown-item" href="/login">Login</a>
-                                        <a class="dropdown-item" href="/admin">Administration</a>
+                                    <a class="dropdown-item" href="/login">Connexion</a>
+                                    <a class="dropdown-item" href="/admin">Administration</a>
                                     {% else %}
-                                        <!-- Liens visibles lorsque l'utilisateur est connecté -->
-                                        <a class="dropdown-item" href="/account">Mon compte</a>
-                                        <a class="dropdown-item" href="/admin">Administration</a>
-                                        <a class="dropdown-item" href="/logout">Se Déconnecter</a>
+                                    <a class="dropdown-item" href="/account">Mon compte</a>
+                                    <a class="dropdown-item" href="/admin">Administration</a>
+                                    <a class="dropdown-item" href="/logout">Se Déconnecter</a>
                                     {% endif %}
                                 </div>
                             </li>

@@ -50,4 +50,5 @@ return [
     'admin/user/add' => ['admin\\UserController', 'add',],
     'admin/user/delete' => ['admin\\UserController', 'delete', ['id']],
     'admin/log' => ['admin\\LogController', 'index',],
+    'about' => ['AboutController', 'index',],
 ];

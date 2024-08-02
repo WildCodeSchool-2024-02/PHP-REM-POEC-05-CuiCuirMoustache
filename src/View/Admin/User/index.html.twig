@@ -59,7 +59,7 @@
                     <div class="transfer-section-header">
                         <h2>Liste des Produits</h2>
                         <div class="filter-options">
-                            <input class="form-control" id="searchUser" type="text" placeholder="Barre de Recherche">
+                            <p>Attention a toutes Modification des Droits.</p>
                             <button class="icon-button">
                                 <i class="bi bi-eye"></i>
                             </button>
@@ -71,7 +71,6 @@
                     <table class="table table-bordered text-light rounded">
                         <thead>
                           <tr class="">
-                            <th scope="col">ID</th>
                             <th scope="col">Pseudo</th>
                             <th scope="col">Nom</th>
                             <th scope="col">role</th>
@@ -79,11 +78,10 @@
                             <th scope="col">Action</th>
                           </tr>
                         </thead>
-                        <tbody id="myTable">
+                        <tbody>
 
                             {% for item in items %}
                             <tr>
-                                <th scope="row">{{ item.id }}</th>
                                 <td>{{ item.username }}</td>
                                 <td>{{ item.first_name }} {{ item.last_name }}</td>
                                 <td>{{ item.role }}</td>
@@ -103,16 +101,6 @@
                         </tbody>
                       </table>
                 </section> 
-                <script>
-$(document).ready(function(){
-  $("#searchUser").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
 {% endblock %}
 
 
