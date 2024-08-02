@@ -59,7 +59,7 @@
                     <div class="transfer-section-header">
                         <h2>Liste des Produits</h2>
                         <div class="filter-options">
-                            <p>Attention a toutes Modification des Droits.</p>
+                            <input class="form-control" id="searchUser" type="text" placeholder="Barre de Recherche">
                             <button class="icon-button">
                                 <i class="bi bi-eye"></i>
                             </button>
@@ -79,7 +79,7 @@
                             <th scope="col">Action</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="myTable">
 
                             {% for item in items %}
                             <tr>
@@ -103,6 +103,16 @@
                         </tbody>
                       </table>
                 </section> 
+                <script>
+$(document).ready(function(){
+  $("#searchUser").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 {% endblock %}
 
 
