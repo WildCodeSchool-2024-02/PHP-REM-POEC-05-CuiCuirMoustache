@@ -21,6 +21,12 @@ abstract class AbstractController
 
     public function __construct()
     {
+        // Démarrer la session
+        $this->startSession();
+
+        // Vérifier si l'utilisateur est connecté
+        $isLoggedIn = isset($_SESSION['user']);
+
         $loader = new FilesystemLoader(APP_VIEW_PATH);
         $this->logger = new Logger(self::LOG_DIR);
         $this->twig = new Environment(
@@ -32,8 +38,18 @@ abstract class AbstractController
         );
         $this->twig->addExtension(new DebugExtension());
 
+        // Ajouter isLoggedIn comme variable globale à Twig
+        $this->twig->addGlobal('isLoggedIn', $isLoggedIn);
+
         //Ajout d'une fonction fitre a twig
         $filter = new TwigFilter('intToCurrency', 'App\\Helper\\Currency::intToCurrency');
         $this->twig->addFilter($filter);
+    }
+
+    private function startSession()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 }
