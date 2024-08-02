@@ -45,20 +45,20 @@
 								</div>
 								
 							{% endif %}
-							{% if errorsTwo.quantity is defined %}
+							{% if errors.quantity is defined %}
 						
 							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								<strong>Attention !</strong> {{ errorsTwo.quantity }}
+								<strong>Attention !</strong> {{ errors.quantity }}
 								<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
 								<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
 								</button>
 							</div>
 							
 							{% endif %}
-							{% if errorsTwo.category_id is defined %}
+							{% if errors.category_id is defined %}
 						
 								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-									<strong>Attention !</strong> {{ errorsTwo.category_id }}
+									<strong>Attention !</strong> {{ errors.category_id }}
 									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
 									</button>
@@ -87,7 +87,7 @@
 						</div>
 						<div class="form-group">
 							<label for="description">Description courte:</label>
-							<textarea class="form-control" id="description" name="description" rows="4" placeholder="Description courte">{{item.description}}</textarea>
+							<textarea class="form-control" id="description" name="description" rows="4" placeholder="Description courte" maxlength="79">{{item.description}}</textarea>
 						</div>
 
 						<div class="form-group">

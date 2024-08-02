@@ -118,6 +118,7 @@ class ProductController extends AbstractController
             // ajouter au stock ce nouveau produit
             $stockManager = new StockManager();
             $stockManager->add($id, $qty);
+            $this->logger->productCreation($item['name']);
             return $this->twig->render('admin/Product/add.html.twig', [
                 'success' => true,
                 'categories' => $categories
@@ -191,7 +192,7 @@ function validateProductprice($price): array
 
 function validateProductimage($image): array
 {
-    if (!empty($image) && !preg_match('/\.(jpg|jpeg|png|gif)$/i', $image)) {
+    if (empty($image) || !preg_match('/\.(jpg|jpeg|png|gif)$/i', $image)) {
         return ['image' => "Le format de l\'image doit être jpg, jpeg, png ou gif."];
     }
 

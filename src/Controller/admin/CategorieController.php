@@ -157,7 +157,7 @@ function validateCategorydescription($description): array
 
 function validateCategoryimage($image): array
 {
-    if (!empty($image) && !preg_match('/\.(jpg|jpeg|png|gif)$/i', $image)) {
+    if (empty($image) || !preg_match('/\.(jpg|jpeg|png|gif)$/i', $image)) {
         return ['image' => "Le format de l\'image doit être jpg, jpeg, png ou gif."];
     }
 

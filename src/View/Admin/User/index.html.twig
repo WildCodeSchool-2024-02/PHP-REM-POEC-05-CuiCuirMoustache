@@ -71,7 +71,6 @@
                     <table class="table table-bordered text-light rounded">
                         <thead>
                           <tr class="">
-                            <th scope="col">ID</th>
                             <th scope="col">Pseudo</th>
                             <th scope="col">Nom</th>
                             <th scope="col">role</th>
@@ -83,7 +82,6 @@
 
                             {% for item in items %}
                             <tr>
-                                <th scope="row">{{ item.id }}</th>
                                 <td>{{ item.username }}</td>
                                 <td>{{ item.first_name }} {{ item.last_name }}</td>
                                 <td>{{ item.role }}</td>

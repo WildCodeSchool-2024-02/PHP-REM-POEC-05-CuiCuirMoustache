@@ -27,13 +27,31 @@ class Logger
 
     public function logConnection($userId)
     {
-        $message = "User ID $userId connected.";
+        $message = "Utilisateur $userId connecté.";
+        $this->log($message);
+    }
+
+    public function logDisconnection($userId)
+    {
+        $message = "Utilisateur $userId déconnecté.";
+        $this->log($message);
+    }
+
+    public function logCreation($userId)
+    {
+        $message = "Création du compte utilisateur $userId.";
         $this->log($message);
     }
 
     public function logPurchase($userId, $item, $qty, $amount)
     {
         $message = "Utilisateur ID $userId a acheté $item * $qty pour $amount €.";
+        $this->log($message);
+    }
+
+    public function productCreation($product)
+    {
+        $message = "Création du produit $product.";
         $this->log($message);
     }
 }
