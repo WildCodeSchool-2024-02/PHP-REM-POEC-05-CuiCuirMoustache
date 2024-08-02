@@ -5,7 +5,7 @@ namespace App\Controller;
 class AboutController extends AbstractController
 {
     /**
-     * Display home admin page
+     * Display about us
      */
     public function index(): string
     {
