@@ -74,7 +74,6 @@
                     <table class="table table-bordered text-light rounded">
                         <thead>
                           <tr class="">
-                            {# <th scope="col">ID</th> #}
                             <th scope="col">Nom</th>
                             <th scope="col">Description</th>
                             <th scope="col">Prix</th>
@@ -87,7 +86,6 @@
                         <tbody>
                             {% for item in items %}
                             <tr>
-                                {# <th scope="row">{{ item.id }}</th> #}
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.description[:10] }}...</td>
                                 <td>{{ item.price|intToCurrency }}</td>
