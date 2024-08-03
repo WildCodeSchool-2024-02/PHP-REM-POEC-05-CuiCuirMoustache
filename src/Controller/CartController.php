@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\CartService;
-use App\Service\Logger;
+use App\Service\LoggerProduct;
 use App\Model\admin\StockManager;
 use App\Model\OrderedManager;
 use App\Model\OrderitemManager;

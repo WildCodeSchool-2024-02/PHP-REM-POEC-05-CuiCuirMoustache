@@ -36,4 +36,23 @@ class LoggerConnection extends Logger
         $message = "Mot de passe oublié pour l'utilisateur $userId.";
         $this->log($message);
     }
+
+    public function adminCreation($user, $userId)
+    {
+        $message = "Création de l'utilisateur $user, par $userId.";
+        $this->log($message);
+    }
+
+    public function adminModify($user, $userId)
+    {
+        $message = "Modification de l'utilisateur' $user, par $userId.";
+        $this->log($message);
+    }
+
+    public function adminDelete($user, $userId)
+    {
+        // pas encore fonctionnel
+        $message = "Suppression de l'utilisateur' $user par $userId.";
+        $this->log($message);
+    }
 }

@@ -13,28 +13,28 @@ class LoggerProduct extends Logger
         $this->log($message);
     }
 
-    public function productCreation($product)
+    public function productCreation($product, $userId)
     {
-        $message = "Création du produit $product.";
+        $message = "Création du produit $product par $userId.";
         $this->log($message);
     }
 
-    public function productDelete($product)
+    public function productDelete($product, $userId)
     {
         // pas encore fonctionnel
-        $message = "Suppression du produit $product.";
+        $message = "Suppression du produit $product par $userId.";
         $this->log($message);
     }
 
-    public function productModify($product)
+    public function productModify($product, $userId)
     {
-        $message = "Modification du produit $product.";
+        $message = "Modification du produit $product par $userId.";
         $this->log($message);
     }
 
-    public function productStockModify($product)
+    public function productStockModify($product, $userId)
     {
-        $message = "Modification du stock du produit $product.";
+        $message = "Modification du stock du produit $product par $userId.";
         $this->log($message);
     }
 }
