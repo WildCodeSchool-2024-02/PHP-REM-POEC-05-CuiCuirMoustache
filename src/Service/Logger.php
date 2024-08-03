@@ -45,13 +45,25 @@ class Logger
 
     public function logPurchase($userId, $item, $qty, $amount)
     {
-        $message = "Utilisateur ID $userId a acheté $item * $qty pour $amount €.";
+        $message = "Utilisateur $userId a acheté $item * $qty pour $amount €.";
         $this->log($message);
     }
 
     public function productCreation($product)
     {
         $message = "Création du produit $product.";
+        $this->log($message);
+    }
+
+    public function productDelete($product)
+    {
+        $message = "Suppression du produit $product.";
+        $this->log($message);
+    }
+
+    public function productModify($product)
+    {
+        $message = "Modification du produit $product.";
         $this->log($message);
     }
 }

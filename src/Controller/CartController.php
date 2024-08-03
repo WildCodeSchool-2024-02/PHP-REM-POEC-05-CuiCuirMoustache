@@ -122,7 +122,11 @@ class CartController extends AbstractController
         }
 
         $orderedManager = new OrderedManager();
-        $orderedId = $orderedManager->createOrder(1, $totalAmount, "order");
+        if (empty($_SESSION['user']['id'])) {
+            header('Location: /login');
+            exit();
+        }
+        $orderedId = $orderedManager->createOrder($_SESSION['user']['id'], $totalAmount, "order");
 
         // moins de commandes effectuer (mais moins DRY)
         $orderitemManager = new OrderitemManager();
@@ -131,11 +135,9 @@ class CartController extends AbstractController
             $product = $productManager->selectOneById($id);
             $stock = $stockManager->getStockById($id);
             if ($stock['quantity'] >= $qty) {
-                // createOrder(1, ...) est le user que j'ai crée directement dans la bdd,
-                // il faudra le remplacer par une variable
                 $stockManager->updateStockFromCart($product['id'], $qty);
                 $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
-                $this->logger->logPurchase(1, $product['name'], $qty, $product['price']);
+                $this->logger->logPurchase($_SESSION['user']['username'], $product['name'], $qty, $product['price']);
             } else {
                 header('Location: /cart?status=unavailableQuantity');
                 exit();
