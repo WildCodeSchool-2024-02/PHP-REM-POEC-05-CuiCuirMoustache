@@ -134,10 +134,11 @@ class CartController extends AbstractController
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
             $stock = $stockManager->getStockById($id);
+            $username = $_SESSION['user']['username'];
             if ($stock['quantity'] >= $qty) {
                 $stockManager->updateStockFromCart($product['id'], $qty);
                 $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
-                $this->logger->logPurchase($_SESSION['user']['username'], $product['name'], $qty, $product['price']);
+                $this->loggerProduct->logPurchase($username, $product['name'], $qty, $product['price']);
             } else {
                 header('Location: /cart?status=unavailableQuantity');
                 exit();

@@ -45,7 +45,7 @@ class AuthController extends AbstractController
                     ];
 
                     // Redirection en cas de succès
-                    $this->logger->logConnection($user['username']);
+                    $this->loggerConnection->logConnection($user['username']);
                     header('Location: /');
                     exit();
                 } else {
@@ -93,7 +93,7 @@ class AuthController extends AbstractController
                     $phone
                 );
                 if ($success) {
-                    $this->logger->logCreation($userData['userName']);
+                    $this->loggerConnection->logCreation($userData['userName']);
                     header('Location: /');
                     exit();
                 } else {
@@ -127,6 +127,7 @@ class AuthController extends AbstractController
             } else {
                 $token = bin2hex(random_bytes(32));
                 if ($this->authModel->storeResetToken($email, $token)) {
+                    $this->loggerConnection->logForgotPassword($email);
                     $success = true;
                 } else {
                     $errors[] = 'Erreur lors de la génération du token';
@@ -195,7 +196,7 @@ class AuthController extends AbstractController
         }
 
         // Détruire la session
-        $this->logger->logDisconnection($_SESSION['user']['username']);
+        $this->loggerConnection->logDisconnection($_SESSION['user']['username']);
         session_destroy();
 
         // Redirection vers la page de login

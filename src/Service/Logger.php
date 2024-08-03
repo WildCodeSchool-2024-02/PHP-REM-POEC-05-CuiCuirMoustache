@@ -6,7 +6,7 @@ use PDO;
 
 class Logger
 {
-    private $logFile;
+    protected $logFile;
 
     public function __construct($fileName)
     {
@@ -23,47 +23,5 @@ class Logger
         $timeStamp = date("Y-m-d H:i:s");
         $formattedMessage = "[" . $timeStamp . "] " . $message . PHP_EOL;
         file_put_contents($this->logFile, $formattedMessage, FILE_APPEND);
-    }
-
-    public function logConnection($userId)
-    {
-        $message = "Utilisateur $userId connecté.";
-        $this->log($message);
-    }
-
-    public function logDisconnection($userId)
-    {
-        $message = "Utilisateur $userId déconnecté.";
-        $this->log($message);
-    }
-
-    public function logCreation($userId)
-    {
-        $message = "Création du compte utilisateur $userId.";
-        $this->log($message);
-    }
-
-    public function logPurchase($userId, $item, $qty, $amount)
-    {
-        $message = "Utilisateur $userId a acheté $item * $qty pour $amount €.";
-        $this->log($message);
-    }
-
-    public function productCreation($product)
-    {
-        $message = "Création du produit $product.";
-        $this->log($message);
-    }
-
-    public function productDelete($product)
-    {
-        $message = "Suppression du produit $product.";
-        $this->log($message);
-    }
-
-    public function productModify($product)
-    {
-        $message = "Modification du produit $product.";
-        $this->log($message);
     }
 }

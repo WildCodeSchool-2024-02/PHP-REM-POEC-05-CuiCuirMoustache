@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\Logger;
+use App\Service\LoggerConnection;
+use App\Service\LoggerProduct;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
@@ -15,7 +16,9 @@ abstract class AbstractController
 {
     protected Environment $twig;
 
-    protected Logger $logger;
+    protected LoggerConnection $loggerConnection;
+
+    protected LoggerProduct $loggerProduct;
 
     protected const LOG_DIR = __DIR__ . "/../../log/logfile.txt";
 
@@ -28,7 +31,8 @@ abstract class AbstractController
         $isLoggedIn = isset($_SESSION['user']);
 
         $loader = new FilesystemLoader(APP_VIEW_PATH);
-        $this->logger = new Logger(self::LOG_DIR);
+        $this->loggerConnection = new LoggerConnection(self::LOG_DIR);
+        $this->loggerProduct = new LoggerProduct(self::LOG_DIR);
         $this->twig = new Environment(
             $loader,
             [

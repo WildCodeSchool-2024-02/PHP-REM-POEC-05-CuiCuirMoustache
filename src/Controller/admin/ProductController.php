@@ -66,7 +66,7 @@ class ProductController extends AbstractController
                 return null;
             }
         }
-
+        $this->loggerProduct->productModify($item['name']);
         return $this->twig->render('Admin/Product/edit.html.twig', [
             'item' => $item,
             'errors' => $errors,
@@ -118,7 +118,7 @@ class ProductController extends AbstractController
             // ajouter au stock ce nouveau produit
             $stockManager = new StockManager();
             $stockManager->add($id, $qty);
-            $this->logger->productCreation($item['name']);
+            $this->loggerProduct->productCreation($item['name']);
             return $this->twig->render('admin/Product/add.html.twig', [
                 'success' => true,
                 'categories' => $categories

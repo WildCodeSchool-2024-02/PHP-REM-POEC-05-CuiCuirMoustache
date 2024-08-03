@@ -97,6 +97,7 @@ class AccountController extends AbstractController
 
     private function updateUser(int $userId, array $data): bool
     {
+        $this->loggerConnection->logModification($_SESSION['user']['username']);
         return $this->authModel->updateUser($userId, $data);
     }
 
