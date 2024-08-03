@@ -45,7 +45,7 @@ class LoggerConnection extends Logger
 
     public function adminModify($user, $userId)
     {
-        $message = "Modification de l'utilisateur' $user, par $userId.";
+        $message = "Modification de l'utilisateur $user, par $userId.";
         $this->log($message);
     }
 

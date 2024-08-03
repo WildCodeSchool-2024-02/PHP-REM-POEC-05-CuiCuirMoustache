@@ -141,8 +141,7 @@ class ProductController extends AbstractController
             $id = trim($_GET['id']);
             $userId = $_SESSION['user']['username'];
             $categorieManager = new ProductManager();
-            $items = new ProductManager();
-            $item = $items->selectOneById((int)$id);
+            $item = $categorieManager->selectOneById((int)$id);
             $this->loggerProduct->productDelete($item['name'], $userId);
             $categorieManager->delete((int)$id);
             header('Location:/admin/product');

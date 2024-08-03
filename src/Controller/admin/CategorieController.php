@@ -127,8 +127,7 @@ class CategorieController extends AbstractController
             $id = trim($_GET['id']);
             $userId = $_SESSION['user']['username'];
             $categorieManager = new CategorieManager();
-            $categories = new CategorieManager();
-            $category = $categories->selectOneById((int)$id);
+            $category = $categorieManager->selectOneById((int)$id);
             $this->loggerCategory->categoryDelete($category['name'], $userId);
             $categorieManager->delete((int)$id);
             header('Location:/admin/categorie');
