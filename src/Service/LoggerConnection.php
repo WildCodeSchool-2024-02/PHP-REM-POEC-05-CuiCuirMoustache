@@ -51,8 +51,7 @@ class LoggerConnection extends Logger
 
     public function adminDelete($user, $userId)
     {
-        // pas encore fonctionnel
-        $message = "Suppression de l'utilisateur' $user par $userId.";
+        $message = "Suppression de l'utilisateur $user par $userId.";
         $this->log($message);
     }
 }

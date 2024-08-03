@@ -21,7 +21,6 @@ class LoggerProduct extends Logger
 
     public function productDelete($product, $userId)
     {
-        // pas encore fonctionnel
         $message = "Suppression du produit $product par $userId.";
         $this->log($message);
     }
@@ -35,6 +34,12 @@ class LoggerProduct extends Logger
     public function productStockModify($product, $userId)
     {
         $message = "Modification du stock du produit $product par $userId.";
+        $this->log($message);
+    }
+
+    public function orderModify($orderDate, $user, $userId)
+    {
+        $message = "Modification de la commande du $orderDate de $user par $userId.";
         $this->log($message);
     }
 }
