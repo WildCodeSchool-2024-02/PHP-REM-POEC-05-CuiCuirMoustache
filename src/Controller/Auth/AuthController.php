@@ -41,6 +41,7 @@ class AuthController extends AbstractController
                         'lastname' => $user['last_name'],
                         'email' => $user['email'],
                         'phone' => $user['phone'],
+                        'role' => $user['role'],
                     ];
 
                     // Redirection en cas de succès
