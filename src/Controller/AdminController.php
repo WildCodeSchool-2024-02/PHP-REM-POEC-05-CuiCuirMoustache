@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\admin\ProductManager;
+
 class AdminController extends AbstractController
 {
     /**
@@ -9,6 +11,9 @@ class AdminController extends AbstractController
      */
     public function index(): string
     {
-        return $this->twig->render('Admin/index.html.twig');
+        $productManager = new ProductManager();
+        $products = $productManager->selectAllStockAndCategory();
+
+        return $this->twig->render('Admin/index.html.twig', ['product' => $products]);
     }
 }

@@ -34,6 +34,7 @@ class UserController extends AbstractController
     {
         $userManager = new UserManager();
         $item = $userManager->selectOneById($id);
+        $userId = $_SESSION['user']['username'];
         $errors = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
@@ -47,7 +48,7 @@ class UserController extends AbstractController
                 return null;
             }
         }
-
+        $this->loggerConnection->adminModify($item['username'], $userId);
         return $this->twig->render('Admin/User/edit.html.twig', [
             'user' => $item,
             'errors' => $errors
@@ -63,6 +64,7 @@ class UserController extends AbstractController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item = array_map('trim', $_POST);
+            $userId = $_SESSION['user']['username'];
             $errors = getErrorForm($item);
 
             if (!empty($errors)) {
@@ -74,7 +76,7 @@ class UserController extends AbstractController
 
             $userManager = new UserManager();
             $userManager->insert($item);
-
+            $this->loggerConnection->adminCreation($item['username'], $userId);
             return $this->twig->render('admin/User/add.html.twig', [
                 'success' => true
             ]);
@@ -90,7 +92,10 @@ class UserController extends AbstractController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = trim($_GET['id']);
+            $userId = $_SESSION['user']['username'];
             $userManager = new UserManager();
+            $user = $userManager->selectOneById((int)$id);
+            $this->loggerProduct->productDelete($user['username'], $userId);
             $userManager->delete((int)$id);
             header('Location:/admin/user');
         }
