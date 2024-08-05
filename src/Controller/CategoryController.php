@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Model\ProductManager;
-use App\Model\CategoryManager;
+use App\Model\admin\CategorieManager;
 
 class CategoryController extends AbstractController
 {
@@ -14,7 +14,7 @@ class CategoryController extends AbstractController
         if (is_null(filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE))) {
             $errors[] = "Veuillez selectionner une catégorie valide";
         }
-        $categoryManager = new CategoryManager();
+        $categoryManager = new CategorieManager();
         $category = $categoryManager->selectOneById($id);
         if (empty($category)) {
             $errors[] = "Cette catégorie n'existe pas";
@@ -28,7 +28,7 @@ class CategoryController extends AbstractController
         return $this->twig->render('Category/index.html.twig', [
             'errors' => $errors,
             'categoryName' => $categoryName,
-            'products' => $products
+            'products' => $products,
         ]);
     }
 }
