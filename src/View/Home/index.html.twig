@@ -58,7 +58,7 @@
 
     
         
-        <div class=" px-4 mt-4 mb-4">
+        <div class=" px-4 mt-4 mb-4 col-12">
             <div class="row">
                 <div class="d-none d-md-block col-md-2">
                     <input class="form-control mb-3" id="searchUser" type="text" placeholder="Barre de Recherche">
@@ -128,11 +128,11 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label>Min</label>
-                                            <input class="form-control" placeholder="0€" type="number">
+                                            <input class="form-control" name="min-price" placeholder="0€" type="number">
                                 </div>
                                             <div class="form-group text-right col-md-6">
                                                 <label>Max</label>
-                                                <input class="form-control" placeholder="1,0000€" type="number">
+                                                <input class="form-control" name="max-price" placeholder="1,0000€" type="number">
                                 </div>
                                             </div>
                                             
@@ -149,19 +149,19 @@
                                     <div class="filter-content collapse show" id="collapse_4">
                                         <div class="card-body">
                                             <label class="checkbox-btn">
-                             <input type="checkbox">
+                             <input type="checkbox"  name="size-filter" value="S">
                              <span class="btn btn-light"> S </span>
                              </label>
                                             <label class="checkbox-btn">
-                             <input type="checkbox">
+                             <input type="checkbox" name="size-filter" value="M">
                              <span class="btn btn-light"> M </span>
                              </label>
                                             <label class="checkbox-btn">
-                             <input type="checkbox">
+                             <input type="checkbox" name="size-filter" value="L">
                              <span class="btn btn-light"> L </span>
                              </label>
                                             <label class="checkbox-btn">
-                             <input type="checkbox">
+                             <input type="checkbox" name="size-filter" value="XL">
                              <span class="btn btn-light"> XL </span>
                              </label>
                                         </div>
@@ -180,22 +180,22 @@
                                 <div class="card-body">
 
                                             <label class="custom-control custom-radio col-12 d-flex">
-                                <input type="radio" name="myfilter_radio" checked="" class="custom-control-input">
+                                <input type="radio" name="myfilter_radio" checked="" class="custom-control-input" value="default">
                                 <div class="custom-control-label mx-2">Defaut</div>
                             </label>
                             <hr>
                                             <label class="custom-control custom-radio col-12 d-flex">
-                                <input type="radio" name="myfilter_radio" class="custom-control-input">
+                                <input type="radio" name="myfilter_radio" class="custom-control-input" value="recent">
                                 <div class="custom-control-label mx-2">Plus recent </div>
                             </label>
                             <hr>
                                             <label class="custom-control custom-radio col-12 d-flex">
-                                <input type="radio" name="myfilter_radio" class="custom-control-input">
+                                <input type="radio" name="myfilter_radio" class="custom-control-input" value="stock">
                                 <div class="custom-control-label mx-2">Stock</div>
                             </label>
                             <hr>
                                             <label class="custom-control custom-radio col-12 d-flex">
-                                <input type="radio" name="myfilter_radio" class="custom-control-input">
+                                <input type="radio" name="myfilter_radio" class="custom-control-input" value="old">
                                 <div class="custom-control-label mx-2">Plus vieux </div>
                             </label>
                                         </div>
@@ -208,8 +208,8 @@
                         <div class="col-12 col-md-10 d-flex justify-content-center flex-wrap mb-4 pb-4 elements-filtering">
 
                             {% for product in products %}
-                         
-                            <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
+                            
+                            <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;" data-stock="{{product.quantity}}" data-date="{{product.updated_at}}">
                                 
                                     <div class="card bg-transparent p-3 ">
                                         <div class="about-product text-center mt-2">
@@ -305,15 +305,8 @@
 
 </div>
 
-<script>
-    $( document ).ready(function() {
+{% endblock %}
 
-        // var $grid = $('.elements-filtering').isotope({
-
-        // });
-
-
-});
-</script>
-
+{% block javascript %}
+<script type="text/javaScript" src="/assets/js/filter.js"></script>
 {% endblock %}
