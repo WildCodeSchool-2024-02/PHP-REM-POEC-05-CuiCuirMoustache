@@ -76,7 +76,7 @@
                                     <ul class="list-group" style="font-size: 0.8em;">
                                         {% for categorie in categories %}
                                             {% if categorie.parent_id is null %}
-                                            <li class="list-group-item"><a href="#">
+                                            <li class="list-group-item"><a href="category?id={{categorie.id}}">
                                                 {% if categorie.image is defined %}
                                                     <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
                                                 {% else %}
@@ -102,7 +102,7 @@
                                     <ul class="list-group" style="font-size: 0.8em;">
                                         {% for categorie in categories %}
                                             {% if categorie.parent_id is not null %}
-                                            <li class="list-group-item"><a href="#">
+                                            <li class="list-group-item"><a href="category?id={{categorie.id}}">
                                                 {% if categorie.image is defined %}
                                                     <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
                                                 {% else %}
