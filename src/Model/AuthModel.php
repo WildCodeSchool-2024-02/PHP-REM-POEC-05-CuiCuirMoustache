@@ -17,9 +17,8 @@ class AuthModel extends AbstractManager
         string $password,
         string $phone
     ): bool {
-        $query = "INSERT INTO " . self::TABLE . " 
-            (username, first_name, last_name, email, password, phone, role) 
-            VALUES (:username, :first_name, :last_name, :email, :password, :phone, :role)";
+        $query = "INSERT INTO " . self::TABLE . " (username, first_name, last_name, email, password, phone, role) 
+                  VALUES (:username, :first_name, :last_name, :email, :password, :phone, :role)";
         $stmt = $this->pdo->prepare($query);
 
         return $stmt->execute([
@@ -29,7 +28,7 @@ class AuthModel extends AbstractManager
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT),
             'phone' => $phone,
-            'role' => 'user'
+            'role' => 'user',
         ]);
     }
 

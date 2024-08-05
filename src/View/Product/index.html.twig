@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'layout.html.twig' %}
 
 {% block stylesheet %}
@@ -24,4 +25,34 @@
         </ul>
         {% endfor %}
         
+=======
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="/assets/css/product/products.css">
+{% endblock %}
+
+{% block content %}
+
+<h1>Nos articles!</h1>
+<div>
+    <div>
+        {% for prod in product %}
+        <ul>
+            <li>
+                <p>{{ prod.name }} - {{ prod.price|intToCurrency }}</p>
+            </li>
+            <li>
+                <p>{{ prod.description }}</p>
+            </li>
+            <form action="/product/show" method="GET">
+                <input type="hidden" name="id" value="{{ prod.id }}">
+                <button>Voir</button>
+            </form>
+        </ul>
+        {% endfor %}
+    </div>
+</div>
+        
+>>>>>>> 26d6c5caeb4c2ac41d70afda10ad72dcf602e2c9
 {% endblock %}

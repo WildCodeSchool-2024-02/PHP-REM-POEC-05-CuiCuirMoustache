@@ -192,4 +192,9 @@ li {
     .description {
         display: none;
     }
+
+    .prod-img {
+        width: 200px;
+    }
+    
 }
