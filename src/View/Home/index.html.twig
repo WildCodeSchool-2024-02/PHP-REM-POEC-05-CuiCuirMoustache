@@ -35,7 +35,7 @@
     {% for categorie in categories %}
         {% if categorie.parent_id is null %}
             <div class="pt-4 text-center" style="width: 150px;">
-                <a href="#" class="text-black text-decoration-none">
+                <a href="category?id={{categorie.id}}" class="text-black text-decoration-none">
                     {% if categorie.image is defined %}
                         <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
                     {% else %}
