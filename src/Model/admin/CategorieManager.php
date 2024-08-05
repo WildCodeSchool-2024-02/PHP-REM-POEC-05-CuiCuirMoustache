@@ -55,4 +55,37 @@ class CategorieManager extends AbstractManager
 
         return $statement->execute();
     }
+
+    public function getCategories(): array
+    {
+        $categories = $this->selectAllParentCategories();
+
+        $categoriesArray = [];
+        foreach ($categories as $category) {
+            $subCategories = $this->getSubCategories($category['id']);
+            $categoryInfo = [
+                'id' => $category['id'],
+                'name' => $category['name'],
+                'image' => $category['image'],
+                'subcategories' => $subCategories
+            ];
+            $categoriesArray[] = $categoryInfo;
+        }
+        return  $categoriesArray;
+    }
+
+    private function selectAllParentCategories(): array
+    {
+        $query = "SELECT * FROM category WHERE parent_id is null";
+        $stm = $this->pdo->query($query);
+        return $stm->fetchAll();
+    }
+
+    private function getSubCategories(int $category): array
+    {
+        $query = "SELECT id, name, image FROM category WHERE parent_id = $category";
+        $stm = $this->pdo->query($query);
+        $result = $stm->fetchAll();
+        return $result;
+    }
 }

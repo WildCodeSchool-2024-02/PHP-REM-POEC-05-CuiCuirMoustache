@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\LoggerConnection;
 use App\Service\LoggerProduct;
 use App\Service\LoggerCategory;
+use App\Trait\CategoriesGetter;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
@@ -15,8 +16,9 @@ use Twig\TwigFilter;
  */
 abstract class AbstractController
 {
-    protected Environment $twig;
+    use CategoriesGetter;
 
+    protected Environment $twig;
     protected LoggerConnection $loggerConnection;
     protected LoggerCategory $loggerCategory;
     protected LoggerProduct $loggerProduct;
@@ -48,6 +50,7 @@ abstract class AbstractController
 
         // Ajouter isLoggedIn comme variable globale à Twig
         $this->twig->addGlobal('isLoggedIn', $isLoggedIn);
+        $this->twig->addGlobal('categoriesMenu', $this->getCategories());
 
         //Ajout d'une fonction fitre a twig
         $filter = new TwigFilter('intToCurrency', 'App\\Helper\\Currency::intToCurrency');
