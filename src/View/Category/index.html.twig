@@ -173,7 +173,7 @@
 									
 										<div class="card bg-transparent p-3 ">
 											<div class="about-product text-center mt-2">
-												<a href="/product/show?id={{product.id}}">
+												<a href="/product/show?id={{product.productid}}">
 												{% if product.image is defined %}
 												<img src="/assets/images/uploads/{{product.image}}" width="100%">
 												{% else %}
@@ -182,7 +182,7 @@
 												</a>
 												<div>
 													<h4>{{product.name}}</h4>
-													<h6 class="mt-0 text-black-50">{{product.category_name}}</h6>
+													<h6 class="mt-0 text-black-50">{{product.categoryName}}</h6>
 												</div>
 											</div>
 											<div class="stats mt-2">
