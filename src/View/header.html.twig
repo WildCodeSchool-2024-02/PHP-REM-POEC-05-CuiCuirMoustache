@@ -1,5 +1,4 @@
 {% block header %}
-
 <div class="navigation-wrap bg-brun start-header start-style">
     <div class="container">
         <div class="row">
@@ -21,9 +20,13 @@
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/categories" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="/product">Tous les produits</a>
-                                    <a class="dropdown-item" href="/categories?id=1">Categorie 2</a>
-                                    <a class="dropdown-item" href="/categories?id=1">Categorie 3</a>
-                                    <a class="dropdown-item" href="/categories?id=1">Categorie 4</a>
+                                {% for category in categoriesMenu %}
+                                     <a class="dropdown-item" href="/category?id={{ category.id }}"> {{ category.name }}</a>
+                                     {% for subCategory in category.subcategories %}
+                                        <a  href="/category?id={{ subCategory.id }}"> {{ subCategory.name }}</a>
+                                     {% endfor %}
+                                {% endfor %}
+                                
                                 </div>
                             </li>
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
