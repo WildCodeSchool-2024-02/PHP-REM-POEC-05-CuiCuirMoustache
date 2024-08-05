@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<h1>{{ categoryName }}</h1>
+	{% for error in errors %}
+		<p>{{ error }}</p>
+	{% endfor %}
+
+	{% for product in products %}
+		<div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;" data-stock="{{product.quantity}}" data-date="{{product.updated_at}}">
+			<div class="card bg-transparent p-3 ">
+				<div class="about-product text-center mt-2">
+					<a href="/product/show?id={{product.id}}">
+						{% if product.image is defined %}
+							<img src="/assets/images/uploads/{{product.image}}" width="100%">
+						{% else %}
+							<img src="/assets/images/test.png" width="100%">
+						{% endif %}
+					</a>
+					<div>
+						<h4>{{product.productName}}</h4>
+						<h6 class="mt-0 text-black-50">{{product.categoryName}}</h6>
+					</div>
+				</div>
+				<div class="stats mt-2">
+					<span>{{product.description}}</span>
+
+				</div>
+				<div class="d-flex justify-content-between total font-weight-bold mt-4">
+					<span>{{product.price}}€</span>
+					<span>
+						<a href="/product/show?id={{product.id}}">
+							<i class="bi bi-cart-plus text-dark"></i>
+						</a>
+					</span>
+				</div>
+			</div>
+
+		</div>
+
+	{% else %}
+		<p>Il n'y a aucun produit dans la catégorie sélectionnée.</p>
+	{% endfor %}
+{% endblock %}

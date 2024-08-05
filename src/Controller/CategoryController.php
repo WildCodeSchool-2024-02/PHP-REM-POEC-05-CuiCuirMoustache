@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Controller;
+
+use App\Model\ProductManager;
+use App\Model\CategoryManager;
+
+class CategoryController extends AbstractController
+{
+    public function index(int $id): string
+    {
+        $errors = [];
+        // @phpstan-ignore-next-line
+        if (is_null(filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE))) {
+            $errors[] = "Veuillez selectionner une catégorie valide";
+        }
+        $categoryManager = new CategoryManager();
+        $category = $categoryManager->selectOneById($id);
+        if (empty($category)) {
+            $errors[] = "Cette catégorie n'existe pas";
+            $products = [];
+            $categoryName = 'Non trouvée';
+        } else {
+            $categoryName = $category['name'];
+            $productsManager = new ProductManager();
+            $products = $productsManager->getProductByCategory($id);
+        }
+        return $this->twig->render('Category/index.html.twig', [
+            'errors' => $errors,
+            'categoryName' => $categoryName,
+            'products' => $products
+        ]);
+    }
+}
