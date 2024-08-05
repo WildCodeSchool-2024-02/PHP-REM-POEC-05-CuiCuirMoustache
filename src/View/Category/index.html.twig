@@ -5,6 +5,7 @@
 	{% for error in errors %}
 		<p>{{ error }}</p>
 	{% endfor %}
+	<p>{{ description}} </p>
 
 	{% for product in products %}
 		<div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;" data-stock="{{product.quantity}}" data-date="{{product.updated_at}}">

@@ -20,8 +20,10 @@ class CategoryController extends AbstractController
             $errors[] = "Cette catégorie n'existe pas";
             $products = [];
             $categoryName = 'Non trouvée';
+            $description =  '';
         } else {
             $categoryName = $category['name'];
+            $description = $category['description'];
             $productsManager = new ProductManager();
             $products = $productsManager->getProductByCategory($id);
         }
@@ -29,6 +31,7 @@ class CategoryController extends AbstractController
             'errors' => $errors,
             'categoryName' => $categoryName,
             'products' => $products,
+            'description' => $description,
         ]);
     }
 }
