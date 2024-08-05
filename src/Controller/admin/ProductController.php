@@ -34,6 +34,7 @@ class ProductController extends AbstractController
      */
     public function edit(int $id): ?string
     {
+        $userId = $_SESSION['user']['username'];
         $productManager = new ProductManager();
         $categoryManager = new CategorieManager();
         $stockManager = new StockManager();
@@ -66,7 +67,7 @@ class ProductController extends AbstractController
                 return null;
             }
         }
-
+        $this->loggerProduct->productModify($item['name'], $userId);
         return $this->twig->render('Admin/Product/edit.html.twig', [
             'item' => $item,
             'errors' => $errors,
@@ -82,6 +83,7 @@ class ProductController extends AbstractController
     {
         $categoryManager = new CategorieManager();
         $categories = $categoryManager->selectAll();
+        $userId = $_SESSION['user']['username'];
         $errors = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -118,7 +120,7 @@ class ProductController extends AbstractController
             // ajouter au stock ce nouveau produit
             $stockManager = new StockManager();
             $stockManager->add($id, $qty);
-            $this->logger->productCreation($item['name']);
+            $this->loggerProduct->productCreation($item['name'], $userId);
             return $this->twig->render('admin/Product/add.html.twig', [
                 'success' => true,
                 'categories' => $categories
@@ -137,7 +139,10 @@ class ProductController extends AbstractController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = trim($_GET['id']);
+            $userId = $_SESSION['user']['username'];
             $categorieManager = new ProductManager();
+            $item = $categorieManager->selectOneById((int)$id);
+            $this->loggerProduct->productDelete($item['name'], $userId);
             $categorieManager->delete((int)$id);
             header('Location:/admin/product');
         }

@@ -32,6 +32,19 @@ class OrderitemManager extends AbstractManager
         return $this->pdo->query($query)->fetchAll();
     }
 
+    public function logInfo(int $id): array
+    {
+        $statement = $this->pdo->prepare("SELECT u.username, o.created_at, orderitem.id 
+        FROM " . static::TABLE . "
+        INNER JOIN ordered AS o ON ordered_id=o.id 
+        INNER JOIN `user` AS u ON user_id=u.id 
+        HAVING orderitem.id = :id; ");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public function getAllOrderedInfoById(int $id): array|false
     {
         $statement = $this->pdo->prepare("SELECT orderitem.id as ordered_id, 
