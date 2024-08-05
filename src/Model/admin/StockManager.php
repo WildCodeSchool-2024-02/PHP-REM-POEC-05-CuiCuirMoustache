@@ -16,6 +16,16 @@ class StockManager extends AbstractManager
         return $this->pdo->query($query)->fetchAll();
     }
 
+    public function selectAllFromStockById(int $id): array
+    {
+        $statement = $this->pdo->prepare("SELECT stock.id, product_id, quantity, stock.created_at, stock.updated_at, 
+        `name` FROM stock LEFT JOIN product AS p ON p.id=stock.product_id WHERE product_id=:id;");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch();
+    }
+
     public function getStockById(int $id): array|false
     {
         $statement = $this->pdo->prepare("SELECT * FROM " . static::TABLE . " WHERE product_id=:id");

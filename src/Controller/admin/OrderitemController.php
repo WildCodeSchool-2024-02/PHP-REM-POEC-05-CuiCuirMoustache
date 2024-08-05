@@ -35,7 +35,9 @@ class OrderitemController extends AbstractController
     {
         $orderitemManager = new OrderitemManager();
         $order = $orderitemManager->selectOneById((int)$id);
+        $userId = $_SESSION['user']['username'];
         $errors = [];
+        $logInfo = $orderitemManager->logInfo((int)$id);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
@@ -44,9 +46,11 @@ class OrderitemController extends AbstractController
             $order['quantity'] = (int)$order['quantity'];
             $errors = getErrorForm($order);
 
+
             // if validation is ok
             if (empty($errors)) {
                 $orderitemManager->update($order);
+                $this->loggerProduct->orderModify($logInfo[0]['created_at'], $logInfo[0]['username'], $userId);
                 header('Location: /admin/orderitem');
             }
         }

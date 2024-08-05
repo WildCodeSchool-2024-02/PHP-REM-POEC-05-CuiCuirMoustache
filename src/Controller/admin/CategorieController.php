@@ -35,6 +35,7 @@ class CategorieController extends AbstractController
         $categorieManager = new CategorieManager();
         $item = $categorieManager->selectOneById($id);
         $categories = $categorieManager->selectAll();
+        $userId = $_SESSION['user']['username'];
         $errors = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -55,6 +56,7 @@ class CategorieController extends AbstractController
 
             if (empty($errors)) {
                 $categorieManager->update($item);
+                $this->loggerCategory->categoryModify($item['name'], $userId);
                 header('Location: /admin/categorie/show?id=' . $id);
             }
 
@@ -76,6 +78,7 @@ class CategorieController extends AbstractController
     {
         $categorieManager = new CategorieManager();
         $categories = $categorieManager->selectAll();
+        $userId = $_SESSION['user']['username'];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item = array_map('trim', $_POST);
@@ -103,6 +106,7 @@ class CategorieController extends AbstractController
             }
 
             $categorieManager->insert($item);
+            $this->loggerCategory->categoryCreation($item['name'], $userId);
             return $this->twig->render('admin/Categorie/add.html.twig', [
                 'success' => true,
                 'categories' => $categories
@@ -121,7 +125,10 @@ class CategorieController extends AbstractController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = trim($_GET['id']);
+            $userId = $_SESSION['user']['username'];
             $categorieManager = new CategorieManager();
+            $category = $categorieManager->selectOneById((int)$id);
+            $this->loggerCategory->categoryDelete($category['name'], $userId);
             $categorieManager->delete((int)$id);
             header('Location:/admin/categorie');
         }
