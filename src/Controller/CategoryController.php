@@ -14,6 +14,7 @@ class CategoryController extends AbstractController
         if (is_null(filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE))) {
             $errors[] = "Veuillez selectionner une catégorie valide";
         }
+        $categoriesMenu = [];
         $categoryManager = new CategorieManager();
         $category = $categoryManager->selectOneById($id);
         if (empty($category)) {
@@ -26,12 +27,14 @@ class CategoryController extends AbstractController
             $description = $category['description'];
             $productsManager = new ProductManager();
             $products = $productsManager->getProductByCategory($id);
+            $categoriesMenu = $categoryManager->selectAll();
         }
         return $this->twig->render('Category/index.html.twig', [
             'errors' => $errors,
             'categoryName' => $categoryName,
             'products' => $products,
             'description' => $description,
+            'categories' => $categoriesMenu
         ]);
     }
 }
