@@ -135,7 +135,7 @@ class CartController extends AbstractController
                 // il faudra le remplacer par une variable
                 $stockManager->updateStockFromCart($product['id'], $qty);
                 $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
-                $this->logger->logPurchase(1, $product['name'], $qty, $product['price']);
+                //$this->logger->logPurchase(1, $product['name'], $qty, $product['price']);
             } else {
                 header('Location: /cart?status=unavailableQuantity');
                 exit();

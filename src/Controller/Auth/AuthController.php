@@ -42,7 +42,7 @@ class AuthController extends AbstractController
                         'phone' => $user['phone'],
                     ];
                     // Redirection en cas de succès
-                    $this->logger->logConnection($user['username']);
+                    //$this->logger->logConnection($user['username']);
                     header('Location: /');
                     exit();
                 } else {
@@ -92,7 +92,7 @@ class AuthController extends AbstractController
                     $phone
                 );
                 if ($success) {
-                    $this->logger->logCreation($userData['userName']);
+                    //$this->logger->logCreation($userData['userName']);
                     header('Location: /');
                     exit();
                 } else {
@@ -185,7 +185,7 @@ class AuthController extends AbstractController
             session_start();
         }
         // Détruire la session
-        $this->logger->logDisconnection($_SESSION['user']['username']);
+        //$this->logger->logDisconnection($_SESSION['user']['username']);
         session_destroy();
 
         // Redirection vers la page de login

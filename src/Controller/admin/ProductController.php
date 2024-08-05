@@ -118,7 +118,7 @@ class ProductController extends AbstractController
             // ajouter au stock ce nouveau produit
             $stockManager = new StockManager();
             $stockManager->add($id, $qty);
-            $this->logger->productCreation($item['name']);
+            //$this->loggerProduct->productCreation($item['name'], $userId);
             return $this->twig->render('admin/Product/add.html.twig', [
                 'success' => true,
                 'categories' => $categories
