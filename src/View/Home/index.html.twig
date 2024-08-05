@@ -70,7 +70,7 @@
                                     <h6 class="title">Categories</h6>
                                 </a>
                             </header>
-                            <div class="filter-content collapse show" id="collapse_1">
+                            <div class="filter-content collapse " id="collapse_1">
                                 <div class="card-body">
                                     
                                     <ul class="list-group" style="font-size: 0.8em;">
@@ -96,7 +96,7 @@
                                     <h6 class="title">Sous Categories </h6>
                                 </a>
                             </header>
-                            <div class="filter-content collapse show" id="collapse_2">
+                            <div class="filter-content collapse " id="collapse_2">
                                 <div class="card-body">
 
                                     <ul class="list-group" style="font-size: 0.8em;">
@@ -205,7 +205,7 @@
                         </div>
 
 
-                        <div class="col-12 col-md-10 d-flex justify-content-center flex-wrap mb-4 pb-4">
+                        <div class="col-12 col-md-10 d-flex justify-content-center flex-wrap mb-4 pb-4 elements-filtering">
 
                             {% for product in products %}
                          
@@ -305,6 +305,15 @@
 
 </div>
 
+<script>
+    $( document ).ready(function() {
 
+        // var $grid = $('.elements-filtering').isotope({
+
+        // });
+
+
+});
+</script>
 
 {% endblock %}
