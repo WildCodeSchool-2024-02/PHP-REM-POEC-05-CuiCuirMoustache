@@ -51,5 +51,6 @@ return [
     'admin/user/delete' => ['admin\\UserController', 'delete', ['id']],
     'admin/log' => ['admin\\LogController', 'index',],
     'about' => ['AboutController', 'index',],
-    'category' => ['CategoryController', 'index',['id']],
+    'legal' => ['LegalController', 'index',],
+    'category' => ['CategoryController', 'index', ['id']],
 ];

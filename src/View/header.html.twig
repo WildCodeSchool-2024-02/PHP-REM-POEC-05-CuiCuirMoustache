@@ -10,14 +10,34 @@
                     <button class="navbar-toggler p-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+
+                    <div
+                        class="collapse navbar-collapse justify-content-end"
+                        id="navbarSupportedContent"
+                    >
                         <ul class="navbar-nav ms-auto py-4 py-md-0 navbar-dark">
+                            <li
+                                class="nav-item ps-4 ps-md-0 ms-0 ms-md-4 active"
+                            >
+                                <a
+                                    class="nav-link"
+                                    href="http://localhost:8000/"
+                                    >Accueil</a
+                                >
+                            </li>
 
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4 active">
                                 <a class="nav-link" href="/">Accueil</a>
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/categories" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    href="/categories"
+                                    role="button"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    >Categories</a
+                                >
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="/product">Tous les produits</a>
                                 {% for category in categoriesMenu %}
@@ -30,27 +50,45 @@
                                 </div>
                             </li>
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                                <a class="nav-link" href="/cart"><i class="bi bi-basket2"></i> Panier</a>
+                                <a class="nav-link" href="/cart"
+                                    ><i class="bi bi-basket2"></i> Panier</a
+                                >
                             </li>
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="compte" role="button" aria-haspopup="true" aria-expanded="false">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    href="compte"
+                                    role="button"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                >
                                     <i class="bi bi-person-fill"></i> Compte
                                 </a>
                                 <div class="dropdown-menu">
                                     {% if not isLoggedIn %}
-                                    <a class="dropdown-item" href="/login">Connexion</a>
-                                    <a class="dropdown-item" href="/admin">Administration</a>
+                                    <a class="dropdown-item" href="/login"
+                                        >Connexion</a
+                                    >
+                                    <a class="dropdown-item" href="/admin"
+                                        >Administration</a
+                                    >
                                     {% else %}
-                                    <a class="dropdown-item" href="/account">Mon compte</a>
-                                    <a class="dropdown-item" href="/admin">Administration</a>
-                                    <a class="dropdown-item" href="/logout">Se Déconnecter</a>
+                                    <a class="dropdown-item" href="/account"
+                                        >Mon compte</a
+                                    >
+                                    <a class="dropdown-item" href="/admin"
+                                        >Administration</a
+                                    >
+                                    <a class="dropdown-item" href="/logout"
+                                        >Se Déconnecter</a
+                                    >
                                     {% endif %}
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    
-                </nav>		
+                </nav>
             </div>
         </div>
     </div>
