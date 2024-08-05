@@ -66,18 +66,35 @@
 								
 							{% endif %}
 
+							{% if errors.image is defined %}
+						
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+									<strong>Attention !</strong> {{ errors.image }}
+									<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+									</button>
+								</div>
+								
+							{% endif %}
+
 					
 				</div>
 				<div class="card-body">
-					<form method="post">
+					<form method="post" enctype='multipart/form-data'>
 						<div class="form-group">
 							<label for="name">Nom :</label>
 							<input type="text" class="form-control" id="name" name="name" value="{{item.name}}">
 						</div>
 						<div class="form-group">
-							<label for="description">Description:</label>
-							<textarea class="form-control" id="description" name="description" rows="4">{{item.description}}</textarea>
+							<label for="description">Description courte:</label>
+							<textarea class="form-control" id="description" name="description" rows="4" placeholder="Description courte" maxlength="79">{{item.description}}</textarea>
 						</div>
+
+						<div class="form-group">
+							<label for="descriptionDetail">Description detaillé:</label>
+							<textarea class="form-control" id="descriptionDetail" name="descriptionDetail" rows="4" placeholder="Description Longue">{{item.descriptionDetail}}</textarea>
+						</div>
+
 						<div class="form-group">
 							<label for="price">Prix:</label>
 							<input type="text" class="form-control" id="price" name="price" value="{{item.price}}">
@@ -97,6 +114,12 @@
 								{% endfor %}
 							</select>
 						</div>
+
+						<div class="form-group">
+                            <label for="image">Image:</label>
+                            <input type="file" class="form-control" id="image" name="image">
+                        </div>
+
 						<input type="hidden" id="id" name="id" value="{{item.id}}">
 						<button type="submit" class="btn btn-primary btn-block mt-3">Envoyer</button>
 					</form>

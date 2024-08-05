@@ -19,4 +19,56 @@ class OrderitemManager extends AbstractManager
 
         return $statement->execute();
     }
+
+    public function selectAllOrderedInfo(): array
+    {
+        $query = "SELECT o.id, username, total_amount, o.created_at, ordered_id
+        FROM " . self::TABLE . " AS oi
+        INNER JOIN ordered AS o ON ordered_id=o.id
+        INNER JOIN product AS p ON product_id=p.id
+        INNER JOIN `user` AS u ON user_id=u.id
+        GROUP BY ordered_id
+        ORDER BY o.updated_at DESC;";
+        return $this->pdo->query($query)->fetchAll();
+    }
+
+    public function logInfo(int $id): array
+    {
+        $statement = $this->pdo->prepare("SELECT u.username, o.created_at, orderitem.id 
+        FROM " . static::TABLE . "
+        INNER JOIN ordered AS o ON ordered_id=o.id 
+        INNER JOIN `user` AS u ON user_id=u.id 
+        HAVING orderitem.id = :id; ");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    public function getAllOrderedInfoById(int $id): array|false
+    {
+        $statement = $this->pdo->prepare("SELECT orderitem.id as ordered_id, 
+        total_amount, username, ordered.created_at, `name`, orderitem.price, quantity, ordered.id
+        FROM ordered
+        INNER JOIN user ON user.id=user_id
+        INNER JOIN orderitem ON ordered.id=ordered_id
+        INNER JOIN product ON product.id=product_id
+        HAVING ordered.id = :id
+        ORDER BY ordered.created_at;");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    public function update(array $order): bool
+    {
+        $statement = $this->pdo->prepare("UPDATE "  . self::TABLE . " SET quantity = :quantity, price = :price
+        WHERE id=:id;");
+        $statement->bindValue('quantity', $order['quantity'], PDO::PARAM_INT);
+        $statement->bindValue('price', $order['price'], PDO::PARAM_INT);
+        $statement->bindValue('id', $order['id'], PDO::PARAM_INT);
+
+        return $statement->execute();
+    }
 }

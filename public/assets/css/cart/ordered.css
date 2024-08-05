@@ -2,6 +2,10 @@ h1 {
     text-align: center;
 }
 
+.super-div {
+    min-height: 80vh;
+  }
+
 .display {
     display: flex;
     justify-content: center;
@@ -19,13 +23,14 @@ h1 {
     height: 20vh;
     width: 30%;
     border-radius: 5px;
-    border: solid var(--main-color);
+    border: solid var(--tertiary-color);
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 15%;
+    background-color: white;
 }
 
 .list {
@@ -51,9 +56,10 @@ li {
 }
 
 .ul-bg {
-    border: solid var(--main-color);
+    border: solid var(--tertiary-color);
     padding-bottom: 10px;
     border-radius: 5px;
     width: 95%;
     margin-left: 2.5%;
+    background-color: white;
 }

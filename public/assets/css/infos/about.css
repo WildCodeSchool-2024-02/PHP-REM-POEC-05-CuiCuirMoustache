@@ -1,0 +1,75 @@
+.super-div {
+    margin-bottom: 10px;
+}
+
+.space {
+    margin: 2%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: clamp(15px, 2%, 30px);
+    grid-row-gap: 25px;
+}
+
+.text-align {
+    text-align: left;
+}
+
+.atext {
+    padding: 5%;
+}
+
+.img {
+    width: 80%;
+}
+
+.div1 {
+    grid-area: 1 / 1 / 2 / 2;
+    background-color: var(--sixnary-color);
+    border-radius: 5px;
+}
+
+.div2 {
+    grid-area: 1 / 2 / 2 / 3;
+    background-image: url("/assets/images/leather-fabric.webp");
+    border-radius: 5px;
+    background-size: cover;
+}
+
+.div3 {
+    grid-area: 2 / 1 / 3 / 2;
+    border-radius: 5px;
+    background-image: url("/assets/images/leather-tool.webp");
+    background-size: cover;
+}
+
+.div4 {
+    grid-area: 2 / 2 / 3 / 3;
+    background-color: var(--sixnary-color);
+    border-radius: 5px;
+}
+
+.div5 {
+    grid-area: 3 / 1 / 4 / 2;
+    background-color: var(--sixnary-color);
+    border-radius: 5px;
+}
+
+.div6 {
+    grid-area: 3 / 2 / 4 / 3;
+    border-radius: 5px;
+    background-image: url("/assets/images/people-meeting.webp");
+    border-radius: 5px;
+    background-size: cover;
+}
+
+@media (max-width: 810px) { 
+    .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

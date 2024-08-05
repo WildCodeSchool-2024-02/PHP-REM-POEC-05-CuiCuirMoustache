@@ -14,7 +14,7 @@
 {% block content %}
 
      <section class="service-section">
-                    <h2>Section Categories</h2>
+                    <h2>Section Produits</h2>
                     <div class="service-section-header">
                         
                     </div>
@@ -28,7 +28,7 @@
                             <div class="tile-header">
                                 <h3>
                                     <span>Nombre de Produit</span>
-                                    <span>{{ items|length  }} categories</span>
+                                    <span>{{ items|length  }} produits</span>
                                 </h3>
                             </div>
                             <a href="/admin/product/add">
@@ -74,34 +74,33 @@
                     <table class="table table-bordered text-light rounded">
                         <thead>
                           <tr class="">
-                            <th scope="col">ID</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Description</th>
                             <th scope="col">Prix</th>
                             <th scope="col">Categorie</th>
                             <th scope="col">Stock</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Action</th>
                           </tr>
                         </thead>
                         <tbody>
-
                             {% for item in items %}
                             <tr>
-                                <th scope="row">{{ item.id }}</th>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.description[:10] }}...</td>
                                 <td>{{ item.price|intToCurrency }}</td>
-                                <td>{{ item.category_id }}</td>
+                                <td>{{ item.category_name }}</td>
                                 <td>{{ item.quantity }}</td>
+                                <td>{{ item.image[:15] }}</td>
                                 <td class="table_action">
                                     <a href="/admin/product/show?id={{ item.id }}"><i class="bi bi-eye"></i></a>
                                     <a href="/admin/product/delete?id={{ item.id }}"><i class="bi bi-x-square"></i></a>
                                     <a href="/admin/product/edit?id={{ item.id }}"><i class="bi bi-pencil-square"></i></a>
                                 </td>
                               </tr>
-                            {% else %}
-                                <tr>
-                                    <th scope="row">Rien a afficher</th>
+                              {% else %}
+                              <tr>
+                                  <th scope="row">Rien a afficher</th>
                                 </tr>
                             {% endfor %}
 

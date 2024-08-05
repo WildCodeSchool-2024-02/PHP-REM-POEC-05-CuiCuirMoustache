@@ -1,0 +1,43 @@
+{% extends 'layout_login.html.twig' %}
+
+{% block title %}Modifier les informations{% endblock %}
+
+{% block content %}
+<div class="form">
+    <h3>Modifier les informations de mon compte</h3>
+    
+    {% if errors is defined and errors|length > 0 %}
+        <div class="errors">
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    
+    <form method="POST" action="/edit_account">
+        <div class="form-group">
+            <label for="username" class="visually-hidden">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" placeholder="Nom d'utilisateur" required>
+        </div>
+        <div class="form-group">
+            <label for="email" class="visually-hidden">Email</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="visually-hidden">Prénom</label>
+            <input type="text" id="firstname" name="firstname" value="{{ user.firstname }}" placeholder="Prénom" required>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="visually-hidden">Nom</label>
+            <input type="text" id="lastname" name="lastname" value="{{ user.lastname }}" placeholder="Nom" required>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="visually-hidden">Téléphone</label>
+            <input type="text" id="phone" name="phone" value="{{ user.phone }}" placeholder="Téléphone" required>
+        </div>
+        <button type="submit" class="button button-block">Mettre à jour</button>
+    </form>
+</div>
+{% endblock %}

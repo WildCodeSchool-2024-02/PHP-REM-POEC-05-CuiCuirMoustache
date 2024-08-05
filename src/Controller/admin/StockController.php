@@ -19,7 +19,9 @@ class StockController extends AbstractController
     public function update(int $id): string
     {
         $stockManager = new StockManager();
+        $item = $stockManager->selectAllFromStockById($id);
         $stock = $stockManager->selectOneById($id);
+        $userId = $_SESSION['user']['username'];
         $errors = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -41,6 +43,7 @@ class StockController extends AbstractController
             }
 
             // we are redirecting so we don't want any content rendered
+            $this->loggerProduct->productStockModify($item['name'], $userId);
             header('Location: /admin/stock');
         }
 

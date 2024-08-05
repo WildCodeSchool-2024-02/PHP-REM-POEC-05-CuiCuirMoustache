@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\CartService;
+use App\Service\LoggerProduct;
 use App\Model\admin\StockManager;
 use App\Model\OrderedManager;
 use App\Model\OrderitemManager;
@@ -39,14 +40,16 @@ class CartController extends AbstractController
         ]);
     }
 
-    public function add(int $id, int $qty)
+    public function add(int $id, $qty)
     {
         // Si session a un problème avec le string, vérif ici avec var_dump
         //ajoute au panier
         $cartService = new CartService();
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $errors = [];
+
             // verifier les entrées
+            $qty = intval($qty);
             if ($qty <= 0) {
                 $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
             }
@@ -61,15 +64,14 @@ class CartController extends AbstractController
         }
     }
 
-    public function update(int $id, int $qty): void
+    public function update(int $id, $qty): void
     {
         $cartService = new CartService();
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $errors = [];
 
-            //laisser int $qty en paramètre, ou définir des restrictions ici ?
-            $qty = intval($qty);
             // verifier les entrées
+            $qty = intval($qty);
             if ($qty <= 0) {
                 $errors['qty'] = 'Une quantité doit toujours être supérieure à 0.';
             }
@@ -120,20 +122,23 @@ class CartController extends AbstractController
         }
 
         $orderedManager = new OrderedManager();
-
-        // createOrder(1, ...) est le user que j'ai crée directement dans la bdd,
-        // il faudra le remplacer par une variable
-        $orderedId = $orderedManager->createOrder(1, $totalAmount, "order");
+        if (empty($_SESSION['user']['id'])) {
+            header('Location: /login');
+            exit();
+        }
+        $orderedId = $orderedManager->createOrder($_SESSION['user']['id'], $totalAmount, "order");
 
         // moins de commandes effectuer (mais moins DRY)
         $orderitemManager = new OrderitemManager();
         $stockManager = new StockManager();
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
-            $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
             $stock = $stockManager->getStockById($id);
+            $username = $_SESSION['user']['username'];
             if ($stock['quantity'] >= $qty) {
                 $stockManager->updateStockFromCart($product['id'], $qty);
+                $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
+                $this->loggerProduct->logPurchase($username, $product['name'], $qty, $product['price']);
             } else {
                 header('Location: /cart?status=unavailableQuantity');
                 exit();

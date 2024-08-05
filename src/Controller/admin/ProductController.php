@@ -14,8 +14,8 @@ class ProductController extends AbstractController
      */
     public function index(): string
     {
-        $categorieManager = new ProductManager();
-        $items = $categorieManager->selectAllAndStock();
+        $productManager = new ProductManager();
+        $items = $productManager->selectAllStockAndCategory();
         return $this->twig->render('Admin/Product/index.html.twig', ['items' => $items]);
     }
 
@@ -24,8 +24,8 @@ class ProductController extends AbstractController
      */
     public function show(int $id): string
     {
-        $categorieManager = new ProductManager();
-        $item = $categorieManager->selectOneById($id);
+        $productManager = new ProductManager();
+        $item = $productManager->selectOneById($id);
         return $this->twig->render('Admin/Product/show.html.twig', ['item' => $item]);
     }
 
@@ -34,6 +34,7 @@ class ProductController extends AbstractController
      */
     public function edit(int $id): ?string
     {
+        $userId = $_SESSION['user']['username'];
         $productManager = new ProductManager();
         $categoryManager = new CategorieManager();
         $stockManager = new StockManager();
@@ -41,22 +42,32 @@ class ProductController extends AbstractController
         $item = $productManager->selectOneById($id);
         $stock = $stockManager->getStockById($id);
         $errors = [];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // clean $_POST data
             $item = array_map('trim', $_POST);
             $stock = array_map('trim', $_POST);
-            $errors = getErrorForm($item);
-            $errors2 = getErrorFormQuantity($item);
 
-            // if validation is ok, update and redirection
-            if (empty($errors) && empty($errors2)) {
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $basedir = __DIR__ . '/../../../public';
+                $uploadDir = '/assets/images/uploads/';
+                $uploadFile = $basedir . $uploadDir . basename($_FILES['image']['name']);
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+                    $item['image'] = basename($_FILES['image']['name']);
+                } else {
+                    $errors['image'] = 'Erreur lors du téléchargement de l\'image.';
+                }
+            }
+
+            $errors = array_merge($errors, getErrorForm($item));
+
+            if (empty($errors)) {
                 $productManager->update($item);
                 $stockManager->updateStock($stock);
                 header('Location: /admin/product/show?id=' . $id);
                 return null;
             }
         }
-
+        $this->loggerProduct->productModify($item['name'], $userId);
         return $this->twig->render('Admin/Product/edit.html.twig', [
             'item' => $item,
             'errors' => $errors,
@@ -72,13 +83,27 @@ class ProductController extends AbstractController
     {
         $categoryManager = new CategorieManager();
         $categories = $categoryManager->selectAll();
+        $userId = $_SESSION['user']['username'];
+        $errors = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item = array_map('trim', $_POST);
-            $errors = getErrorForm($item);
-            $errors2 = getErrorFormQuantity($item);
 
-            if (!empty($errors) && !empty($errors2)) {
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $basedir = __DIR__ . '/../../../public';
+                $uploadDir = '/assets/images/uploads/';
+                $uploadFile = $basedir . $uploadDir . basename($_FILES['image']['name']);
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+                    $item['image'] = basename($_FILES['image']['name']);
+                } else {
+                    $errors['image'] = 'Erreur lors du téléchargement de l\'image.';
+                }
+            }
+
+
+            $errors = array_merge($errors, getErrorForm($item));
+
+            if (!empty($errors)) {
                 return $this->twig->render('admin/Product/add.html.twig', [
                     'errors' => $errors,
                     'item' => $item,
@@ -95,6 +120,7 @@ class ProductController extends AbstractController
             // ajouter au stock ce nouveau produit
             $stockManager = new StockManager();
             $stockManager->add($id, $qty);
+            $this->loggerProduct->productCreation($item['name'], $userId);
             return $this->twig->render('admin/Product/add.html.twig', [
                 'success' => true,
                 'categories' => $categories
@@ -113,7 +139,10 @@ class ProductController extends AbstractController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = trim($_GET['id']);
+            $userId = $_SESSION['user']['username'];
             $categorieManager = new ProductManager();
+            $item = $categorieManager->selectOneById((int)$id);
+            $this->loggerProduct->productDelete($item['name'], $userId);
             $categorieManager->delete((int)$id);
             header('Location:/admin/product');
         }
@@ -122,27 +151,71 @@ class ProductController extends AbstractController
 function getErrorForm(array $item): array
 {
     $errors = [];
+    $categoryManager = new CategorieManager();
+    $errors = array_merge($errors, validateProductname($item['name'] ?? ''));
+    $errors = array_merge($errors, validateProductdescription($item['description'] ?? ''));
+    $errors = array_merge($errors, validateProductdescriptionDetaille($item['descriptionDetail'] ?? ''));
+    $errors = array_merge($errors, validateProductprice($item['price'] ?? ''));
+    $errors = array_merge($errors, validateProductimage($item['image'] ?? ''));
+    $errors = array_merge($errors, validateProductquantity($item['quantity'] ?? ''));
+    $errors = array_merge($errors, validateProductcategory($item['category_id'] ?? '', $categoryManager));
 
-    if (empty($item['name']) || strlen($item['name']) > 255) {
-        $errors['name'] = 'Un nom est nécessaire et il ne doit pas dépasser 255 caractères.';
-    }
-    if (empty($item['description'])) {
-        $errors['description'] = 'Une description est obligatoire.';
-    }
-    if (empty($item['price']) || !filter_var($item['price'], FILTER_VALIDATE_FLOAT) || $item['price'] < 0) {
-        $errors['price'] = 'Le prix doit être un nombre valide.';
-    }
     return $errors;
 }
-function getErrorFormQuantity(array $item): array
+
+function validateProductname($name): array
 {
-    $categoryManager = new CategorieManager();
-    $errors = [];
-    if (empty($item['quantity']) || !filter_var($item['quantity'], FILTER_VALIDATE_INT) || $item['quantity'] <= 0) {
-        $errors['quantity'] = 'La quantité doit être supérieure ou égale à 0.';
+    if (empty($name) || strlen($name) > 255) {
+        return ['name' => "Un nom est nécessaire et il ne doit pas dépasser 255 caractères."];
     }
-    if (empty($item['category_id']) || !$categoryManager->selectOneById((int)$item['category_id'])) {
-        $errors['category_id'] = 'Category ID doit correspondre à une catégorie existante.';
+    return [];
+}
+
+function validateProductdescription($description): array
+{
+    if (empty($description)) {
+        return ['description' => "Une description courte est obligatoire."];
     }
-    return $errors;
+    return [];
+}
+
+function validateProductdescriptionDetaille($description): array
+{
+    if (empty($description)) {
+        return ['description' => "Une description detaillé est obligatoire."];
+    }
+    return [];
+}
+
+function validateProductprice($price): array
+{
+    if (empty($price) || !filter_var($price, FILTER_VALIDATE_FLOAT) || $price < 0) {
+        return ['price' => "Le prix doit être un nombre valide."];
+    }
+    return [];
+}
+
+function validateProductimage($image): array
+{
+    if (empty($image) || !preg_match('/\.(jpg|jpeg|png|gif)$/i', $image)) {
+        return ['image' => "Le format de l\'image doit être jpg, jpeg, png ou gif."];
+    }
+
+    return [];
+}
+
+function validateProductquantity($quantity): array
+{
+    if (empty($quantity) || !filter_var($quantity, FILTER_VALIDATE_INT) || $quantity <= 0) {
+        return ['quantity' => "La quantité doit être supérieure ou égale à 0."];
+    }
+    return [];
+}
+
+function validateProductcategory($category, $manager): array
+{
+    if (empty($category) || !$manager->selectOneById((int)$category)) {
+        return ['category_id' => "categorie doit correspondre à une catégorie existante."];
+    }
+    return [];
 }

@@ -1,0 +1,112 @@
+<div class="container mt-5">
+	<div class="row ">
+		<div class="col-md-12">
+			<div class="card w-100">
+				<div class="card-header">
+					<h2 class="card-title text-center">Formulaire Utilisateur</h2>
+					{% if success is defined %}
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<strong>Bravo !</strong> Le formulaire est valide, votre utilisateur a été ajouté.
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				{% if errors.username is defined %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Attention !</strong> {{ errors.username }}
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				{% if errors.password is defined %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Attention !</strong> {{ errors.password }}
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				{% if errors.email is defined %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Attention !</strong> {{ errors.email }}
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				{% if errors.role is defined %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Attention !</strong> {{ errors.role }}
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				{% if errors.first_name is defined %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Attention !</strong> {{ errors.first_name }}
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				{% if errors.last_name is defined %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Attention !</strong> {{ errors.last_name }}
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				{% if errors.phone is defined %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Attention !</strong> {{ errors.phone }}
+						<button type="button" class="close btn btn-link" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true"><i class="bi bi-x-square"></i></span>
+						</button>
+					</div>
+				{% endif %}
+				<div class="card-body">
+					<form method="post">
+						<div class="form-group">
+							<label for="username">Nom d'utilisateur :</label>
+							<input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+						</div>
+						<div class="form-group">
+							<label for="password">Mot de passe :</label>
+							<input type="password" class="form-control" id="password" name="password" value="">
+						</div>
+						<div class="form-group">
+							<label for="email">Email :</label>
+							<input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+						</div>
+						<div class="form-group">
+							<label for="role">Rôle :</label>
+							<select class="form-control" id="role" name="role">
+								<option value="user" {% if item.role == 'user' %}selected{% endif %}>User</option>
+								<option value="admin" {% if item.role == 'admin' %}selected{% endif %}>Admin</option>
+								<option value="éditeur" {% if item.role == 'éditeur' %}selected{% endif %}>Éditeur</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="first_name">Prénom :</label>
+							<input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+						</div>
+						<div class="form-group">
+							<label for="last_name">Nom :</label>
+							<input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+						</div>
+						<div class="form-group">
+							<label for="phone">Téléphone :</label>
+							<input type="text" class="form-control" id="phone" name="phone" value="{{ user.phone }}">
+						</div>
+						<input type="hidden" id="id" name="id" value="{{ user.id }}">
+						<button type="submit" class="btn btn-primary btn-block mt-3">Envoyer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
