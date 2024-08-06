@@ -11,7 +11,7 @@
     
     <div class="tab-content">
         <div id="authentification">   
-            <h2>Content de vous revoir</h2>
+            <h2 class="main">Content de vous revoir</h2>
 
             {% if errors is defined and errors|length > 0 %}
                 <div class="errors">
@@ -38,7 +38,7 @@
                     <input type="password" id="password_login" name="password" value="{{ data.password }}" required autocomplete="off"/>
                 </div>
                 
-                <p class="forgot"><a href="/forgot_password">Mot de passe oublié</a></p>
+                <p class="forgot"><a href="/forgot_password" class="modify">Mot de passe oublié</a></p>
                 
                 <button type="submit" class="button button-block">Se connecter</button>
             </form>

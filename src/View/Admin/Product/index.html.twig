@@ -1,125 +1,3 @@
-<<<<<<< HEAD
-{% extends 'layout_admin.html.twig' %}
-{% block stylesheet %}
-<style>
-    .tiles {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        -moz-column-gap: 1rem;
-        column-gap: 1rem;
-        row-gap: 1rem;
-        margin-top: 1.25rem;
-    }
-</style>
-{% endblock %}
-{% block content %}
-
-     <section class="service-section">
-                    <h2>Section Categories</h2>
-                    <div class="service-section-header">
-                        
-                    </div>
-                    <div class="mobile-only">
-                        <button class="flat-button">
-                            Toggle search
-                        </button>
-                    </div>
-                    <div class="tiles">
-                        <article class="tile">
-                            <div class="tile-header">
-                                <h3>
-                                    <span>Nombre de Produit</span>
-                                    <span>{{ items|length  }} categories</span>
-                                </h3>
-                            </div>
-                            <a href="/admin/product/add">
-                                <span>Ajouter Produit</span>
-                                <span class="icon-button">
-                                    <i class="bi bi-plus-circle-dotted"></i>
-                                </span>
-                            </a>
-                        </article>
-                        <article class="tile">
-                            <div class="tile-header">
-                                <h3>
-                                    <span>Categories Lié</span>
-                                    <span></span>
-                                </h3>
-                            </div>
-                            <a href="/admin/categorie">
-                                <span>Aller a la section Categorie</span>
-                                <span class="icon-button">
-                                    <i class="bi bi-plus-circle-dotted"></i>
-                                </span>
-                            </a>
-                        </article>
-
-                    </div>
-                    <div class="service-section-footer">
-                        <p><i class="bi bi-exclamation-square"></i> Attention a gerer vos Categories  </p>
-                    </div>
-                </section>
-                <section class="transfer-section">
-                    <div class="transfer-section-header">
-                        <h2>Liste des Produits</h2>
-                        <div class="filter-options">
-                            <p>Attention a toutes Modification.</p>
-                            <button class="icon-button">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <button class="icon-button">
-                                <i class="bi bi-plus-circle-dotted"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <table class="table table-bordered text-light rounded">
-                        <thead>
-                          <tr class="">
-                            <th scope="col">ID</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Prix</th>
-                            <th scope="col">Categorie</th>
-                            <th scope="col">Stock</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in items %}
-                            <tr>
-                                <th scope="row">{{ item.id }}</th>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.description[:10] }}...</td>
-                                <td>{{ item.price|intToCurrency }}</td>
-                                <td>{{ item.category_name }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.image[:15] }}</td>
-                                <td class="table_action">
-                                    <a href="/admin/product/show?id={{ item.id }}"><i class="bi bi-eye"></i></a>
-                                    <a href="/admin/product/delete?id={{ item.id }}"><i class="bi bi-x-square"></i></a>
-                                    <a href="/admin/product/edit?id={{ item.id }}"><i class="bi bi-pencil-square"></i></a>
-                                </td>
-                              </tr>
-                              {% else %}
-                              <tr>
-                                  <th scope="row">Rien a afficher</th>
-                                </tr>
-                            {% endfor %}
-
-                        </tbody>
-                      </table>
-                </section> 
-{% endblock %}
-
-
-{% block content_side %}
-
-
-
-
-{% endblock %}
-=======
 {% extends 'layout_admin.html.twig' %}
 {% block stylesheet %}
 <style>
@@ -168,7 +46,7 @@
                                 </h3>
                             </div>
                             <a href="/admin/categorie">
-                                <span>Aller a la section Categorie</span>
+                                <span>Aller à la section Categorie</span>
                                 <span class="icon-button">
                                     <i class="bi bi-plus-circle-dotted"></i>
                                 </span>
@@ -177,7 +55,7 @@
 
                     </div>
                     <div class="service-section-footer">
-                        <p><i class="bi bi-exclamation-square"></i> Attention a gerer vos Categories  </p>
+                        <p><i class="bi bi-exclamation-square"></i> Attention à gerer vos Categories  </p>
                     </div>
                 </section>
                 <section class="transfer-section">
@@ -238,4 +116,3 @@
 
 
 {% endblock %}
->>>>>>> 26d6c5caeb4c2ac41d70afda10ad72dcf602e2c9

@@ -1,59 +1,3 @@
-<<<<<<< HEAD
-{% extends 'layout.html.twig' %}
-
-{% block stylesheet %}
-<link rel="stylesheet" href="/assets/css/cart/cart.css">
-{% endblock %}
-
-{% block content %}
-<div class="display-title">
-    <h1>Votre panier !</h1>
-    {% if status == "updated" %}<h3 class="align"> - Quantité mise à jour</h3>{% endif %}
-    {% if status == "deleted" %}<h3 class="align"> - Produit supprimé</h3>{% endif %}
-    {% if status == "added" %}<h3 class="align"> - Produit ajouté</h3>{% endif %}
-    {% if status == "falseQuantity" %}<h3 class="align"> - La quantité est invalide</h3>{% endif %}
-    {% if status == "unavailableQuantity" %}<h3 class="align red"> - Le produit n'est pas disponible dans cette quantité !</h3>{% endif %}
-</div>
-<h2 class="display">Vos articles</h2>
-<div class="display">
-    <div class="basket">
-        {% for productAndQty in cart %}
-        <div class="card">
-            {# Pas d'images pour le moment #}
-            <div class="card-title">{{ productAndQty.product.name }} <br> {{ productAndQty.product.price|intToCurrency
-                }} x{{ productAndQty.qty }}
-            </div>
-            <div class="card-descrpition">
-                <div class="card-subtitle">{{ productAndQty.product.description }}</div>
-                <div class="card-quantity">Quantité restante : {{ productAndQty.stock }}</div>
-            </div>
-            <hr class="card-divider">
-            <form action="/cart/update" method="POST">
-                <input type="hidden" name="id" value="{{ productAndQty.product.id }}">
-                <input type="number" class="modify inp-numb" name="qty" value="{{ productAndQty.qty }}">
-                <button class="c-button cart-button">Modifier</button>
-            </form>
-            <div class="card-footer">
-                <div class="card-price">
-                    <p class="take-all-space">{{ (productAndQty.product.price * productAndQty.qty) | intToCurrency }}
-                    </p>
-                </div>
-                <form action="/cart/delete" method="POST">
-                    <input type="hidden" class="card-btn" name="id" value="{{ productAndQty.product.id }}">
-                    <button class="card-btn">Supprimer</button>
-                </form>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    <div class="checkout">
-        <p>Sous-total ({{ totalItem }}) articles: total {{ total|intToCurrency }}</p>
-        <form action="/cart/order" method="POST">
-            <button class="c-button">Passer la commande</button>
-        </form>
-    </div>
-</div>
-=======
 {% extends 'layout.html.twig' %}
 
 {% block stylesheet %}
@@ -112,5 +56,4 @@
         </div>
     </div>
 </div>
->>>>>>> 26d6c5caeb4c2ac41d70afda10ad72dcf602e2c9
 {% endblock %}

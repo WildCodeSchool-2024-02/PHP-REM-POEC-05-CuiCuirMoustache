@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\CartService;
-use App\Service\Logger;
+use App\Service\LoggerProduct;
 use App\Model\admin\StockManager;
 use App\Model\OrderedManager;
 use App\Model\OrderitemManager;
@@ -122,7 +122,11 @@ class CartController extends AbstractController
         }
 
         $orderedManager = new OrderedManager();
-        $orderedId = $orderedManager->createOrder(1, $totalAmount, "order");
+        if (empty($_SESSION['user']['id'])) {
+            header('Location: /login');
+            exit();
+        }
+        $orderedId = $orderedManager->createOrder($_SESSION['user']['id'], $totalAmount, "order");
 
         // moins de commandes effectuer (mais moins DRY)
         $orderitemManager = new OrderitemManager();
@@ -130,12 +134,11 @@ class CartController extends AbstractController
         foreach ($cart as $id => $qty) {
             $product = $productManager->selectOneById($id);
             $stock = $stockManager->getStockById($id);
+            $username = $_SESSION['user']['username'];
             if ($stock['quantity'] >= $qty) {
-                // createOrder(1, ...) est le user que j'ai crée directement dans la bdd,
-                // il faudra le remplacer par une variable
                 $stockManager->updateStockFromCart($product['id'], $qty);
                 $orderitemManager->addProductToOrder($orderedId, $product['id'], $qty, $product['price']);
-                //$this->logger->logPurchase(1, $product['name'], $qty, $product['price']);
+                $this->loggerProduct->logPurchase($username, $product['name'], $qty, $product['price']);
             } else {
                 header('Location: /cart?status=unavailableQuantity');
                 exit();

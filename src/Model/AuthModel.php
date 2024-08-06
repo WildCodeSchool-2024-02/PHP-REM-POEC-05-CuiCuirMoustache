@@ -15,7 +15,8 @@ class AuthModel extends AbstractManager
         string $lastName,
         string $email,
         string $password,
-        string $phone
+        string $phone,
+        string $role
     ): bool {
         $query = "INSERT INTO " . self::TABLE . " (username, first_name, last_name, email, password, phone, role) 
                   VALUES (:username, :first_name, :last_name, :email, :password, :phone, :role)";
@@ -28,7 +29,7 @@ class AuthModel extends AbstractManager
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT),
             'phone' => $phone,
-            'role' => 'user',
+            'role' => $role,
         ]);
     }
 

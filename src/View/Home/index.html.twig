@@ -30,12 +30,12 @@
 
 
 <!-- For scrolling -->
-<section class="col-12 bg-white d-none d-md-flex justify-content-center  " style="height: 100px; ">
+<section class="col-12 bg-white d-none d-md-flex justify-content-center  " style="height: 115px; ">
 
     {% for categorie in categories %}
         {% if categorie.parent_id is null %}
             <div class="pt-4 text-center" style="width: 150px;">
-                <a href="#" class="text-black text-decoration-none">
+                <a href="category?id={{categorie.id}}" class="text-black text-decoration-none">
                     {% if categorie.image is defined %}
                         <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
                     {% else %}
@@ -56,35 +56,195 @@
 <h1 class="mb-4 title-section">Nos produits</h1>
 <section class="w-100 rounded bg-white d-flex justify-content-center flex-wrap mb-4 pb-4">
 
-    {% for product in products %}
- 
-    <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px;">
+    
         
-            <div class="card bg-transparent p-3 ">
-                <div class="about-product text-center mt-2">
-                    <a href="/product/show?id={{product.id}}">
-                    {% if product.image is defined %}
-                    <img src="/assets/images/uploads/{{product.image}}" width="100%">
-                    {% else %}
-                    <img src="/assets/images/test.png" width="100%">
-                    {% endif %}
-                    </a>
-                    <div>
-                        <h4>{{product.name}}</h4>
-                        <h6 class="mt-0 text-black-50">{{product.category_name}}</h6>
+        <div class=" px-4 mt-4 mb-4 col-12">
+            <div class="row">
+                <div class="d-none d-md-block col-md-2">
+                    <input class="form-control mb-3" id="searchUser" type="text" placeholder="Barre de Recherche">
+                    <div class="card">
+                        <div class="filter-group">
+                            <header class="card-header">
+                                <a href="#" data-bs-toggle="collapse" data-bs-target="#collapse_1" aria-expanded="true">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Categories</h6>
+                                </a>
+                            </header>
+                            <div class="filter-content collapse " id="collapse_1">
+                                <div class="card-body">
+                                    
+                                    <ul class="list-group" style="font-size: 0.8em;">
+                                        {% for categorie in categories %}
+                                            {% if categorie.parent_id is null %}
+                                            <li class="list-group-item"><a href="category?id={{categorie.id}}">
+                                                {% if categorie.image is defined %}
+                                                    <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
+                                                {% else %}
+                                                    <img src="/assets/images/test.png" width="32px">
+                                                {% endif %}
+                                            {{categorie.name}} </a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <header class="card-header">
+                                <a href="#" data-bs-toggle="collapse" data-bs-target="#collapse_2" aria-expanded="true">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Sous Categories </h6>
+                                </a>
+                            </header>
+                            <div class="filter-content collapse " id="collapse_2">
+                                <div class="card-body">
+
+                                    <ul class="list-group" style="font-size: 0.8em;">
+                                        {% for categorie in categories %}
+                                            {% if categorie.parent_id is not null %}
+                                            <li class="list-group-item"><a href="category?id={{categorie.id}}">
+                                                {% if categorie.image is defined %}
+                                                    <img src="/assets/images/uploads/{{categorie.image}}" width="32px">
+                                                {% else %}
+                                                    <img src="/assets/images/test.png" width="32px">
+                                                {% endif %}
+                                            {{categorie.name}} </a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <header class="card-header">
+                                <a href="#" data-bs-toggle="collapse" data-bs-target="#collapse_3" aria-expanded="true">
+                                    <i class="icon-control fa fa-chevron-down"></i>
+                                    <h6 class="title">Prix </h6>
+                                </a>
+                            </header>
+                            <div class="filter-content collapse show" id="collapse_3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Min</label>
+                                            <input class="form-control" name="min-price" placeholder="0€" type="number">
+                                </div>
+                                            <div class="form-group text-right col-md-6">
+                                                <label>Max</label>
+                                                <input class="form-control" name="max-price" placeholder="1,0000€" type="number">
+                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <header class="card-header">
+                                        <a href="#" data-bs-toggle="collapse" data-bs-target="#collapse_4" aria-expanded="true">
+                                            <i class="icon-control fa fa-chevron-down"></i>
+                                            <h6 class="title">Taille </h6>
+                                        </a>
+                                    </header>
+                                    <div class="filter-content collapse show" id="collapse_4">
+                                        <div class="card-body">
+                                            <label class="checkbox-btn">
+                             <input type="checkbox"  name="size-filter" value="S">
+                             <span class="btn btn-light"> S </span>
+                             </label>
+                                            <label class="checkbox-btn">
+                             <input type="checkbox" name="size-filter" value="M">
+                             <span class="btn btn-light"> M </span>
+                             </label>
+                                            <label class="checkbox-btn">
+                             <input type="checkbox" name="size-filter" value="L">
+                             <span class="btn btn-light"> L </span>
+                             </label>
+                                            <label class="checkbox-btn">
+                             <input type="checkbox" name="size-filter" value="XL">
+                             <span class="btn btn-light"> XL </span>
+                             </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <header class="card-header">
+                                        <a href="#" data-bs-toggle="collapse" data-bs-target="#collapse_5"
+                                            aria-expanded="false">
+                                            <i class="icon-control fa fa-chevron-down"></i>
+                                            <h6 class="title">Filtrer par </h6>
+                                        </a>
+                                    </header>
+
+                            <div class="filter-content collapse show" id="collapse_5">
+                                <div class="card-body">
+
+                                            <label class="custom-control custom-radio col-12 d-flex">
+                                <input type="radio" name="myfilter_radio" checked="" class="custom-control-input" value="default">
+                                <div class="custom-control-label mx-2">Defaut</div>
+                            </label>
+                            <hr>
+                                            <label class="custom-control custom-radio col-12 d-flex">
+                                <input type="radio" name="myfilter_radio" class="custom-control-input" value="recent">
+                                <div class="custom-control-label mx-2">Plus recent </div>
+                            </label>
+                            <hr>
+                                            <label class="custom-control custom-radio col-12 d-flex">
+                                <input type="radio" name="myfilter_radio" class="custom-control-input" value="stock">
+                                <div class="custom-control-label mx-2">Stock</div>
+                            </label>
+                            <hr>
+                                            <label class="custom-control custom-radio col-12 d-flex">
+                                <input type="radio" name="myfilter_radio" class="custom-control-input" value="old">
+                                <div class="custom-control-label mx-2">Plus vieux </div>
+                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-md-10 d-flex justify-content-center flex-wrap mb-4 pb-4 elements-filtering">
+
+                            {% for product in products %}
+                            
+                            <div class="d-flex justify-content-center container mt-5 bg-transparent" style="width: 300px; height: 460px;" data-stock="{{product.quantity}}" data-date="{{product.updated_at}}">
+                                
+                                    <div class="card bg-transparent p-3 ">
+                                        <div class="about-product text-center mt-2">
+                                            <a href="/product/show?id={{product.id}}">
+                                            {% if product.image is defined %}
+                                            <img src="/assets/images/uploads/{{product.image}}" width="100%">
+                                            {% else %}
+                                            <img src="/assets/images/test.png" width="100%">
+                                            {% endif %}
+                                            </a>
+                                            <div>
+                                                <h4>{{product.name}}</h4>
+                                                <h6 class="mt-0 text-black-50">{{product.category_name}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="stats mt-2">
+                                            <span>{{product.description}}</span>
+                                        
+                                        </div>
+                                        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>{{product.price|intToCurrency}}</span><span><a href="/product/show?id={{product.id}}"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
+                                    </div>
+                                
+                            </div>
+                        
+                            {% endfor %}
+                        
+                        </div>
+
+
                     </div>
                 </div>
-                <div class="stats mt-2">
-                    <span>{{product.description}}</span>
-                
-                </div>
-                <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>{{product.price}}€</span><span><a href="/product/show?id={{product.id}}"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
-            </div>
-        
-    </div>
 
-    {% endfor %}
+    
 
+    
     
 </section>
 
@@ -125,9 +285,8 @@
                             </div>
                             <div class="stats mt-2">
                                 <span>{{product.description}}</span>
-                            
                             </div>
-                            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>{{product.price}}€</span><span><a href="/product/show?id={{product.id}}"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
+                            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>{{product.price|intToCurrency}}</span><span><a href="/product/show?id={{product.id}}"><i class="bi bi-cart-plus text-dark"></i></a></span></div>
                         </div>
                     
                 </div>
@@ -145,6 +304,8 @@
 
 </div>
 
+{% endblock %}
 
-
+{% block javascript %}
+<script type="text/javaScript" src="/assets/js/filter.js"></script>
 {% endblock %}

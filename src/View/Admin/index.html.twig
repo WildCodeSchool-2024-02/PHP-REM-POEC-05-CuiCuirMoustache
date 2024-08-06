@@ -1,12 +1,200 @@
 {% extends 'layout_admin.html.twig' %}
 
-{% block content %}
-    <h1>Administration</h1>
-    <p>Ici est la base home de la page admin</p>
+{% block stylesheet %}
+<style>
+    .super-div {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .dash-width {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        width: 100%;
+    }
+
+    .side {
+        max-width: 400px;
+        border-bottom: solid white;
+    }
+
+    .warning {
+        max-width: 100%;
+    }
+
+    .warning-li {
+        color: red;
+    }
+
+    @media (max-width: 809px) {
+        .super-div {
+            flex-wrap: wrap;
+        }
+    }
+</style>
 {% endblock %}
 
+{% block content %}
+<div class="super-div">
+    <div class="dash-width">
+        <h1>Accueil Administration</h1>
+        <p>Gérez efficacement votre site marchand à partir de cette interface.</p>
 
-{% block content_side %}
-    <h1>coté side</h1>
-    <p>Ici est la base side </p>
+        <h2>1. Gérer les Produits</h2>
+        <p>Pour gérer les produits de votre site, accédez à la section "Produits" dans le menu d'administration.</p>
+        <ul>
+            <li><strong>Ajouter un nouveau produit :</strong>
+                <ul>
+                    <li>Cliquez sur "Ajouter un produit".</li>
+                    <li>Remplissez les informations requises : nom, description, prix, catégorie, stock et image.</li>
+                    <li>Cliquez sur "Envoyer" pour ajouter le produit à votre catalogue.</li>
+                </ul>
+            </li>
+            <li><strong>Modifier un produit existant :</strong>
+                <ul>
+                    <li>Sélectionnez le produit que vous souhaitez modifier dans la liste des produits.</li>
+                    <li>Cliquez sur "Modifier".</li>
+                    <li>Apportez les modifications nécessaires.</li>
+                    <li>Cliquez sur "Envoyer" pour mettre à jour le produit.</li>
+                </ul>
+            </li>
+            <li><strong>Supprimer un produit :</strong>
+                <ul>
+                    <li>Sélectionnez le produit que vous souhaitez supprimer.</li>
+                    <li>Cliquez sur la croix.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>2. Gérer les Catégories</h2>
+        <p>La gestion des catégories vous permet de structurer vos produits.</p>
+        <ul>
+            <li><strong>Ajouter une nouvelle catégorie :</strong>
+                <ul>
+                    <li>Cliquez sur "Ajouter une catégorie".</li>
+                    <li>Saisissez le nom de la catégorie et une description.</li>
+                    <li>Cliquez sur "Envoyer".</li>
+                </ul>
+            </li>
+            <li><strong>Modifier une catégorie existante :</strong>
+                <ul>
+                    <li>Sélectionnez la catégorie à modifier.</li>
+                    <li>Cliquez sur "Modifier".</li>
+                    <li>Apportez les modifications nécessaires.</li>
+                    <li>Cliquez sur "Envoyer".</li>
+                </ul>
+            </li>
+            <li><strong>Supprimer une catégorie :</strong>
+                <ul>
+                    <li>Sélectionnez la catégorie à supprimer.</li>
+                    <li>Cliquez sur la croix.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>3. Gérer le Stock</h2>
+        <p>La gestion du stock est cruciale pour maintenir un inventaire précis.</p>
+        <ul>
+            <li><strong>Mettre à jour le stock :</strong>
+                <ul>
+                    <li>Accédez à la section "Stock".</li>
+                    <li>Trouvez le produit pour lequel vous souhaitez mettre à jour le stock.</li>
+                    <li>Saisissez la nouvelle quantité en stock.</li>
+                    <li>Cliquez sur "Quantité".</li>
+                </ul>
+            </li>
+            <li><strong>Vérifier les niveaux de stock bas :</strong>
+                <ul>
+                    <li>Consultez les alertes de stock bas dans le tableau de bord.</li>
+                    <li>Mettez à jour le stock en conséquence.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>4. Gérer les Utilisateurs</h2>
+        <p>Vous pouvez gérer les utilisateurs enregistrés sur votre site.</p>
+        <ul>
+            <li><strong>Ajouter un nouvel utilisateur :</strong>
+                <ul>
+                    <li>Cliquez sur "Ajouter un utilisateur".</li>
+                    <li>Remplissez les informations de l'utilisateur : nom, email, rôle, etc.</li>
+                    <li>Cliquez sur "Envoyer".</li>
+                </ul>
+            </li>
+            <li><strong>Modifier un utilisateur existant :</strong>
+                <ul>
+                    <li>Sélectionnez l'utilisateur à modifier.</li>
+                    <li>Cliquez sur "Modifier".</li>
+                    <li>Apportez les modifications nécessaires.</li>
+                    <li>Cliquez sur "Envoyer".</li>
+                </ul>
+            </li>
+            <li><strong>Supprimer un utilisateur :</strong>
+                <ul>
+                    <li>Sélectionnez l'utilisateur à supprimer.</li>
+                    <li>Cliquez sur la croix.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>5. Gérer les Commandes</h2>
+        <p>La gestion des commandes vous permet de suivre et de traiter les commandes des clients.</p>
+        <ul>
+            <li><strong>Voir toutes les commandes :</strong>
+                <ul>
+                    <li>Accédez à la section "Commandes".</li>
+                    <li>Consultez la liste des commandes.</li>
+                </ul>
+            </li>
+            <li><strong>Détails de la commande :</strong>
+                <ul>
+                    <li>Cliquez sur une commande pour voir les détails complets : produits commandés, etc.</li>
+                    <li>Mettez à jour les informations si nécessaire.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>6. Consulter le Fichier Log</h2>
+        <p>Le fichier log enregistre les activités et les erreurs sur le site.</p>
+        <ul>
+            <li><strong>Accéder au fichier log :</strong>
+                <ul>
+                    <li>Accédez à la section "Logs".</li>
+                    <li>Consultez les entrées du log pour surveiller les activités et identifier les erreurs.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <p>En suivant ce tutoriel, vous serez en mesure de gérer efficacement tous les aspects de votre site marchand
+            depuis
+            l'interface d'administration. <br> Pour toute question ou assistance supplémentaire, n'hésitez pas à
+            contacter
+            le support technique.</p>
+    </div>
+
+    <div class="side">
+        <div class="warning">
+            <h1>Stock faible :</h1>
+            <p>Les articles suivants ont un stock faible :</p>
+            <ul>
+
+                {% set error = false %}
+
+                {% for prod in product %}
+                {% if prod.quantity <= 20 %}
+                <li>{{ prod.name }} -> <span  class="warning-li">{{ prod.quantity }}</span></li>
+                {% set error = true %}
+                {% endif %}
+                {% endfor %}
+
+                {% if error == false %}
+                    <p>Pas de problème de stock.</p>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

@@ -18,6 +18,12 @@ class AuthController extends AbstractController
         $this->authModel = new AuthModel();
     }
 
+    public function dashboard()
+    {
+        $this->requireAdmin();
+        return $this->twig->render('Admin/dashboard.html.twig');
+    }
+
     public function authentification()
     {
         $errors = [];
@@ -40,9 +46,10 @@ class AuthController extends AbstractController
                         'lastname' => $user['last_name'],
                         'email' => $user['email'],
                         'phone' => $user['phone'],
+                        'role' => $user['role'],
                     ];
                     // Redirection en cas de succès
-                    //$this->logger->logConnection($user['username']);
+                    $this->loggerConnection->logConnection($user['username']);
                     header('Location: /');
                     exit();
                 } else {
@@ -71,6 +78,7 @@ class AuthController extends AbstractController
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
             $phone = $_POST['phone'] ?? '';
+            $role = 'user';
             $userData = [
                 'userName' => $username,
                 'firstName' => $firstName,
@@ -78,6 +86,8 @@ class AuthController extends AbstractController
                 'email' => $email,
                 'password' => $password,
                 'phone' => $phone,
+                'role' => $role,
+
             ];
 
             $errors = $this->validationForm($userData);
@@ -89,10 +99,11 @@ class AuthController extends AbstractController
                     $lastName,
                     $email,
                     $password,
-                    $phone
+                    $phone,
+                    $role
                 );
                 if ($success) {
-                    //$this->logger->logCreation($userData['userName']);
+                    $this->loggerConnection->logCreation($userData['userName']);
                     header('Location: /');
                     exit();
                 } else {
@@ -118,6 +129,7 @@ class AuthController extends AbstractController
             } else {
                 $token = bin2hex(random_bytes(32));
                 if ($this->authModel->storeResetToken($email, $token)) {
+                    $this->loggerConnection->logForgotPassword($email);
                     $success = true;
                 } else {
                     $errors[] = 'Erreur lors de la génération du token';
@@ -185,7 +197,7 @@ class AuthController extends AbstractController
             session_start();
         }
         // Détruire la session
-        //$this->logger->logDisconnection($_SESSION['user']['username']);
+        $this->loggerConnection->logDisconnection($_SESSION['user']['username']);
         session_destroy();
 
         // Redirection vers la page de login

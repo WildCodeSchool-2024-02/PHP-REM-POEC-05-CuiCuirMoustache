@@ -52,4 +52,6 @@ return [
     'admin/log' => ['admin\\LogController', 'index',],
     'about' => ['AboutController', 'index',],
     'privacy-policy' => ['PrivacyPolicyController', 'index',],
+    'legal' => ['LegalController', 'index',],
+    'category' => ['CategoryController', 'index', ['id']],
 ];
