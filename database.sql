@@ -20,48 +20,6 @@ SET time_zone = "+00:00";
 -- Base de données :  `simple-mvc`
 --
 
--- --------------------------------------------------------
-
---
--- Structure de la table `item`
---
-
-CREATE TABLE `item` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `title` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `item`
---
-
-INSERT INTO `item` (`id`, `title`) VALUES
-(1, 'Stuff'),
-(2, 'Doodads');
-
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `item`
---
-ALTER TABLE `item`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 
 /* CREATION TABLE  */
 
@@ -318,10 +276,22 @@ INSERT INTO product (name, description, descriptionDetail, price, image, categor
 -- cuirs et peaux
 --
 INSERT INTO product (name, description, descriptionDetail, price, image, category_id) VALUES
-('Cuir de Vachette Pleine Fleur', 'Cuir de haute qualité', 'Le cuir de vachette pleine fleur est l\'un des matériaux les plus prisés dans le domaine de la maroquinerie. Reconnu pour sa durabilité, sa résistance et son aspect luxueux, ce type de cuir est idéal pour la fabrication de nombreux articles, tels que des sacs, ceintures, portefeuilles et chaussures. Ce cuir est fabriqué à partir de la couche supérieure de la peau de vache, ce qui lui confère une texture douce et naturelle. Contrairement à d\'autres types de cuir, le cuir pleine fleur conserve les imperfections naturelles de la peau, ajoutant un caractère unique à chaque pièce. Avec le temps, il développe une patine riche qui en rehausse encore la beauté. Le cuir de vachette pleine fleur est également apprécié pour sa capacité à respirer, ce qui le rend confortable à porter. Utilisé par les artisans du monde entier, il est le choix idéal pour ceux qui recherchent la qualité et l\'élégance.', 50.00, 
+('Cuir de Vachette Pleine Fleur - S', 'Cuir de haute qualité', 'Le cuir de vachette pleine fleur est l\'un des matériaux les plus prisés dans le domaine de la maroquinerie. Reconnu pour sa durabilité, sa résistance et son aspect luxueux, ce type de cuir est idéal pour la fabrication de nombreux articles, tels que des sacs, ceintures, portefeuilles et chaussures. Ce cuir est fabriqué à partir de la couche supérieure de la peau de vache, ce qui lui confère une texture douce et naturelle. Contrairement à d\'autres types de cuir, le cuir pleine fleur conserve les imperfections naturelles de la peau, ajoutant un caractère unique à chaque pièce. Avec le temps, il développe une patine riche qui en rehausse encore la beauté. Le cuir de vachette pleine fleur est également apprécié pour sa capacité à respirer, ce qui le rend confortable à porter. Utilisé par les artisans du monde entier, il est le choix idéal pour ceux qui recherchent la qualité et l\'élégance.', 15.00, 
+    '../peau-vache.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
+('Cuir de Vachette Pleine Fleur - M', 'Cuir de haute qualité', 'Le cuir de vachette pleine fleur est l\'un des matériaux les plus prisés dans le domaine de la maroquinerie. Reconnu pour sa durabilité, sa résistance et son aspect luxueux, ce type de cuir est idéal pour la fabrication de nombreux articles, tels que des sacs, ceintures, portefeuilles et chaussures. Ce cuir est fabriqué à partir de la couche supérieure de la peau de vache, ce qui lui confère une texture douce et naturelle. Contrairement à d\'autres types de cuir, le cuir pleine fleur conserve les imperfections naturelles de la peau, ajoutant un caractère unique à chaque pièce. Avec le temps, il développe une patine riche qui en rehausse encore la beauté. Le cuir de vachette pleine fleur est également apprécié pour sa capacité à respirer, ce qui le rend confortable à porter. Utilisé par les artisans du monde entier, il est le choix idéal pour ceux qui recherchent la qualité et l\'élégance.', 25.00, 
+    '../peau-vache.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
+('Cuir de Vachette Pleine Fleur - L', 'Cuir de haute qualité', 'Le cuir de vachette pleine fleur est l\'un des matériaux les plus prisés dans le domaine de la maroquinerie. Reconnu pour sa durabilité, sa résistance et son aspect luxueux, ce type de cuir est idéal pour la fabrication de nombreux articles, tels que des sacs, ceintures, portefeuilles et chaussures. Ce cuir est fabriqué à partir de la couche supérieure de la peau de vache, ce qui lui confère une texture douce et naturelle. Contrairement à d\'autres types de cuir, le cuir pleine fleur conserve les imperfections naturelles de la peau, ajoutant un caractère unique à chaque pièce. Avec le temps, il développe une patine riche qui en rehausse encore la beauté. Le cuir de vachette pleine fleur est également apprécié pour sa capacité à respirer, ce qui le rend confortable à porter. Utilisé par les artisans du monde entier, il est le choix idéal pour ceux qui recherchent la qualité et l\'élégance.', 35.00, 
+    '../peau-vache.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
+('Cuir de Vachette Pleine Fleur - XL', 'Cuir de haute qualité', 'Le cuir de vachette pleine fleur est l\'un des matériaux les plus prisés dans le domaine de la maroquinerie. Reconnu pour sa durabilité, sa résistance et son aspect luxueux, ce type de cuir est idéal pour la fabrication de nombreux articles, tels que des sacs, ceintures, portefeuilles et chaussures. Ce cuir est fabriqué à partir de la couche supérieure de la peau de vache, ce qui lui confère une texture douce et naturelle. Contrairement à d\'autres types de cuir, le cuir pleine fleur conserve les imperfections naturelles de la peau, ajoutant un caractère unique à chaque pièce. Avec le temps, il développe une patine riche qui en rehausse encore la beauté. Le cuir de vachette pleine fleur est également apprécié pour sa capacité à respirer, ce qui le rend confortable à porter. Utilisé par les artisans du monde entier, il est le choix idéal pour ceux qui recherchent la qualité et l\'élégance.', 45.00, 
     '../peau-vache.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
 
-('Peau de Chèvre', 'Cuir souple et résistant', 'La peau de chèvre est un matériau extrêmement polyvalent et apprécié dans la fabrication d\'articles en cuir. Connue pour sa souplesse, sa légèreté et sa durabilité, elle est idéale pour des applications variées telles que les gants, vêtements, accessoires et articles de maroquinerie. Le tannage végétal de cette peau de chèvre lui confère une finition naturelle et respectueuse de l\'environnement, tout en renforçant ses qualités intrinsèques. La texture fine et le grain distinctif de la peau de chèvre ajoutent une touche d\'élégance et de sophistication à chaque pièce fabriquée. En outre, ce type de cuir est résistant à l\'usure et vieillit magnifiquement, développant une patine unique au fil du temps. Que vous soyez un artisan professionnel ou un amateur passionné, la peau de chèvre vous permettra de créer des produits en cuir à la fois esthétiques et durables.', 30.00, 
+('Peau de Chèvre - S', 'Cuir souple et résistant', 'La peau de chèvre est un matériau extrêmement polyvalent et apprécié dans la fabrication d\'articles en cuir. Connue pour sa souplesse, sa légèreté et sa durabilité, elle est idéale pour des applications variées telles que les gants, vêtements, accessoires et articles de maroquinerie. Le tannage végétal de cette peau de chèvre lui confère une finition naturelle et respectueuse de l\'environnement, tout en renforçant ses qualités intrinsèques. La texture fine et le grain distinctif de la peau de chèvre ajoutent une touche d\'élégance et de sophistication à chaque pièce fabriquée. En outre, ce type de cuir est résistant à l\'usure et vieillit magnifiquement, développant une patine unique au fil du temps. Que vous soyez un artisan professionnel ou un amateur passionné, la peau de chèvre vous permettra de créer des produits en cuir à la fois esthétiques et durables.', 5.00, 
+    '../cuir-chevre.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
+('Peau de Chèvre - M', 'Cuir souple et résistant', 'La peau de chèvre est un matériau extrêmement polyvalent et apprécié dans la fabrication d\'articles en cuir. Connue pour sa souplesse, sa légèreté et sa durabilité, elle est idéale pour des applications variées telles que les gants, vêtements, accessoires et articles de maroquinerie. Le tannage végétal de cette peau de chèvre lui confère une finition naturelle et respectueuse de l\'environnement, tout en renforçant ses qualités intrinsèques. La texture fine et le grain distinctif de la peau de chèvre ajoutent une touche d\'élégance et de sophistication à chaque pièce fabriquée. En outre, ce type de cuir est résistant à l\'usure et vieillit magnifiquement, développant une patine unique au fil du temps. Que vous soyez un artisan professionnel ou un amateur passionné, la peau de chèvre vous permettra de créer des produits en cuir à la fois esthétiques et durables.', 10.00, 
+    '../cuir-chevre.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
+('Peau de Chèvre - L', 'Cuir souple et résistant', 'La peau de chèvre est un matériau extrêmement polyvalent et apprécié dans la fabrication d\'articles en cuir. Connue pour sa souplesse, sa légèreté et sa durabilité, elle est idéale pour des applications variées telles que les gants, vêtements, accessoires et articles de maroquinerie. Le tannage végétal de cette peau de chèvre lui confère une finition naturelle et respectueuse de l\'environnement, tout en renforçant ses qualités intrinsèques. La texture fine et le grain distinctif de la peau de chèvre ajoutent une touche d\'élégance et de sophistication à chaque pièce fabriquée. En outre, ce type de cuir est résistant à l\'usure et vieillit magnifiquement, développant une patine unique au fil du temps. Que vous soyez un artisan professionnel ou un amateur passionné, la peau de chèvre vous permettra de créer des produits en cuir à la fois esthétiques et durables.', 15.00, 
+    '../cuir-chevre.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux')),
+('Peau de Chèvre - XL', 'Cuir souple et résistant', 'La peau de chèvre est un matériau extrêmement polyvalent et apprécié dans la fabrication d\'articles en cuir. Connue pour sa souplesse, sa légèreté et sa durabilité, elle est idéale pour des applications variées telles que les gants, vêtements, accessoires et articles de maroquinerie. Le tannage végétal de cette peau de chèvre lui confère une finition naturelle et respectueuse de l\'environnement, tout en renforçant ses qualités intrinsèques. La texture fine et le grain distinctif de la peau de chèvre ajoutent une touche d\'élégance et de sophistication à chaque pièce fabriquée. En outre, ce type de cuir est résistant à l\'usure et vieillit magnifiquement, développant une patine unique au fil du temps. Que vous soyez un artisan professionnel ou un amateur passionné, la peau de chèvre vous permettra de créer des produits en cuir à la fois esthétiques et durables.', 20.00, 
     '../cuir-chevre.webp', (SELECT id FROM Category WHERE name = 'Cuirs et Peaux'));
 
 
