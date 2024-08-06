@@ -24,4 +24,14 @@ class HomeController extends AbstractController
             'latestProducts' => $latestProducts
         ]);
     }
+
+    public function indexAbout(): string
+    {
+        return $this->twig->render('Infos/index.html.twig');
+    }
+
+    public function indexLegal(): string
+    {
+        return $this->twig->render('Legal/index.html.twig');
+    }
 }
