@@ -45,12 +45,14 @@
                                 <div class="dropdown-menu">
                                     {% if not isLoggedIn %}
                                     <a class="dropdown-item" href="/login">Connexion</a>
-                                    <a class="dropdown-item" href="/admin">Administration</a>
                                     {% else %}
                                     <a class="dropdown-item" href="/account">Mon compte</a>
-                                    <a class="dropdown-item" href="/admin">Administration</a>
                                     <a class="dropdown-item" href="/logout">Se Déconnecter</a>
                                     {% endif %}
+                                    {% if isAdmin %}
+                                    <a class="dropdown-item" href="/admin">Administration</a>
+                                    {% endif %}
+                                    
                                 </div>
                             </li>
                         </ul>

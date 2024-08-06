@@ -43,7 +43,13 @@
                             <div class="tile-header">
                                 <h3>
                                     <span>Utilisateur Admin</span>
-                                    <span>{{ items|length  }}</span>
+                                    {% set ad = 0 %}
+                                    {% for admin in items %}
+                                        {% if admin.role == "admin" %}
+                                            {% set ad = ad + 1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <span>{{ ad }} Admin</span>
                                 </h3>
                             </div>
                             
