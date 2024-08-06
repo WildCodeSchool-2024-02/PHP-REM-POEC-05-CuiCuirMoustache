@@ -32,6 +32,7 @@ abstract class AbstractController
 
         // Vérifier si l'utilisateur est connecté
         $isLoggedIn = isset($_SESSION['user']);
+        $isAdmin = $isLoggedIn && $_SESSION['user']['role'] === 'admin';
 
         $loader = new FilesystemLoader(APP_VIEW_PATH);
         $this->loggerConnection = new LoggerConnection(self::LOG_DIR);
@@ -51,6 +52,7 @@ abstract class AbstractController
         // Ajouter isLoggedIn comme variable globale à Twig
         $this->twig->addGlobal('isLoggedIn', $isLoggedIn);
         $this->twig->addGlobal('categoriesMenu', $this->getCategories());
+        $this->twig->addGlobal('isAdmin', $isAdmin);
 
         //Ajout d'une fonction fitre a twig
         $filter = new TwigFilter('intToCurrency', 'App\\Helper\\Currency::intToCurrency');
@@ -61,6 +63,14 @@ abstract class AbstractController
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
+    }
+
+    protected function requireAdmin()
+    {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+            header('Location: /login');
+            exit();
         }
     }
 }

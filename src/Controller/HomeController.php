@@ -34,4 +34,9 @@ class HomeController extends AbstractController
     {
         return $this->twig->render('Legal/index.html.twig');
     }
+
+    public function indexPrivacy(): string
+    {
+        return $this->twig->render('Privacy/index.html.twig');
+    }
 }

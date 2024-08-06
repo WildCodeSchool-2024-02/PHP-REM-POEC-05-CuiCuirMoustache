@@ -26,7 +26,7 @@ class UserManager extends AbstractManager
             VALUES (:username, :password, :email, :role, :first_name, :last_name, :phone)");
 
         $statement->bindValue('username', $user['username'], PDO::PARAM_STR);
-        $statement->bindValue('password', encodePassword($user['password'], APP_KEY_CRYP), PDO::PARAM_STR);
+        $statement->bindValue('password', password_hash($user['password'], PASSWORD_BCRYPT), PDO::PARAM_STR);
         $statement->bindValue('email', $user['email'], PDO::PARAM_STR);
         $statement->bindValue('role', $user['role'], PDO::PARAM_STR);
         $statement->bindValue('first_name', $user['first_name'], PDO::PARAM_STR);
@@ -54,7 +54,7 @@ class UserManager extends AbstractManager
 
         $statement->bindValue('id', $user['id'], PDO::PARAM_INT);
         $statement->bindValue('username', $user['username'], PDO::PARAM_STR);
-        $statement->bindValue('password', encodePassword($user['password'], APP_KEY_CRYP), PDO::PARAM_STR);
+        $statement->bindValue('password', password_hash($user['password'], PASSWORD_BCRYPT), PDO::PARAM_STR);
         $statement->bindValue('email', $user['email'], PDO::PARAM_STR);
         $statement->bindValue('role', $user['role'], PDO::PARAM_STR);
         $statement->bindValue('first_name', $user['first_name'], PDO::PARAM_STR);
@@ -63,14 +63,4 @@ class UserManager extends AbstractManager
 
         return $statement->execute();
     }
-}
-function encodePassword($password, $encryptionKey)
-{
-    $md5 = md5($password);
-    $sha256 = hash('sha256', $md5);
-    $ivOpenssl = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
-    $encrypted = openssl_encrypt($sha256, 'aes-256-cbc', $encryptionKey, 0, $ivOpenssl);
-    $encryptedIv = base64_encode($ivOpenssl . $encrypted);
-
-    return $encryptedIv;
 }
