@@ -81,7 +81,7 @@ class CategorieManager extends AbstractManager
         return $stm->fetchAll();
     }
 
-    private function getSubCategories(int $category): array
+    public function getSubCategories(int $category): array
     {
         $query = "SELECT id, name, image FROM category WHERE parent_id = $category";
         $stm = $this->pdo->query($query);
