@@ -317,7 +317,8 @@ INSERT INTO product (name, description, descriptionDetail, price, image, categor
 
 
 INSERT INTO
-    stock (product_id, quantity, supplier_id) VALUES (1, 100, 1),
+    stock (product_id, quantity, supplier_id) VALUES 
+    (1, 100, 1),
     (2, 50, 1),
     (3, 75, 1),
     (4, 23, 2),
@@ -325,7 +326,13 @@ INSERT INTO
     (6, 33, 2),
     (7, 82, 1),
     (8, 452, 1),
-    (9, 389, 2);
+    (9, 389, 2),
+    (10, 329, 1),
+    (11, 212, 1),
+    (12, 50, 1),
+    (13, 93, 1),
+    (14, 108, 1),
+    (15, 220, 1);
 
 INSERT INTO
     ordered (user_id, total_amount, status)
