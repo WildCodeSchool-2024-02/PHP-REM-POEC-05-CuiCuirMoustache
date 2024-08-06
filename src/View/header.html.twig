@@ -21,8 +21,8 @@
                             <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/categories"
                                     role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/product">Tous les produits</a>
+                                <div class="dropdown-menu bg-white">
+                                    <a class="dropdown-item" href="/product"><b>Tous les produits</b></a>
                                     {% for category in categoriesMenu %}
                                     <a class="dropdown-item" href="/category?id={{ category.id }}">
                                         {{ category.name }}</a>
@@ -42,7 +42,7 @@
                                     aria-haspopup="true" aria-expanded="false">
                                     <i class="bi bi-person-fill"></i> Compte
                                 </a>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu bg-white">
                                     {% if not isLoggedIn %}
                                     <a class="dropdown-item" href="/login">Connexion</a>
                                     {% else %}
